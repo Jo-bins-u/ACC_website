@@ -1,0 +1,105 @@
+/*------------------ PRELOADER Style Begins Here -------------------------*/
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-primary);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Subtle background glowing orb in preloader */
+#preloader::before {
+    content: '';
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(7, 9, 14, 0) 70%);
+    filter: blur(20px);
+    pointer-events: none;
+    animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+.loader {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 150px;
+}
+
+.horizontal {
+    border-radius: 4px;
+    width: 80px;
+    height: 6px;
+    background-color: var(--accent-gold);
+    position: absolute;
+    top: 55px; /* Positioned cross horizontal bar */
+    box-shadow: 0 0 15px var(--accent-gold-glow);
+    animation: pulseHorizontal 2s infinite ease-in-out;
+}
+
+.vertical {
+    border-radius: 4px;
+    width: 6px;
+    height: 120px;
+    background-color: var(--accent-gold);
+    position: absolute;
+    box-shadow: 0 0 15px var(--accent-gold-glow);
+    animation: pulseVertical 2s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseHorizontal {
+    0%, 100% {
+        transform: scaleX(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scaleX(1.15);
+        filter: brightness(1.3);
+        box-shadow: 0 0 25px var(--accent-gold);
+    }
+}
+
+@keyframes pulseVertical {
+    0%, 100% {
+        transform: scaleY(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scaleY(1.1);
+        filter: brightness(1.3);
+        box-shadow: 0 0 25px var(--accent-gold);
+    }
+}
+
+/* Responsive fixes */
+@media (max-width: 900px) {
+    .horizontal {
+        width: 70px;
+        height: 5px;
+        top: 50px;
+    }
+    .vertical {
+        width: 5px;
+        height: 100px;
+    }
+}
+/*------------------ PRELOADER Style Ends Here -------------------------*/

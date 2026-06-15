@@ -1,0 +1,387 @@
+/* Home Page Specific Stylesheet */
+
+/* Hero Section */
+.inner-container {
+    height: 100vh;
+    min-height: 500px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.vdo-bnr {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: var(--video-opacity, 0.45); /* Darken for readability */
+    filter: brightness(0.65) contrast(1.1);
+}
+
+/* Gradient overlay on video banner */
+.inner-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--inner-container-gradient);
+    z-index: 1;
+}
+
+.over-text {
+    width: 100%;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+.over-text h1 {
+    font-family: var(--font-curvy);
+    color: var(--text-primary);
+    font-weight: 400;
+    font-size: 7.5rem;
+    letter-spacing: normal;
+    text-transform: none;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    transition: var(--transition-smooth);
+}
+
+.over-text h1:hover {
+    color: var(--accent-gold);
+    text-shadow: 0 0 25px var(--accent-gold-glow);
+}
+
+.over-text a {
+    margin-top: 25px;
+}
+
+/* Verse Section */
+.verse {
+    padding: 6rem 0;
+    background: var(--verse-gradient);
+    position: relative;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.verse::before {
+    content: '"';
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10rem;
+    font-family: var(--font-serif);
+    color: var(--quote-mark-color, rgba(212, 175, 55, 0.06));
+    line-height: 1;
+}
+
+.versetxt {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.versetxt h1 {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-primary);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    transition: var(--transition-smooth);
+}
+
+.versetxt p {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+/* About Us Section */
+.abtimg {
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 15px 35px var(--shadow-subtle);
+    transition: var(--transition-smooth);
+}
+
+.abtimg:hover {
+    transform: translateY(-5px) scale(1.01);
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 20px 45px rgba(212, 175, 55, 0.1);
+}
+
+#abt {
+    padding-left: 30px;
+}
+
+#abt h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+#abt p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 25px;
+}
+
+#abt a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+}
+
+#abt a:hover {
+    color: var(--accent-gold-hover);
+    letter-spacing: 1px;
+}
+
+/* Service Timings */
+#serv-time {
+    padding: 5rem 20px;
+}
+
+#serv-time h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+#serv-time hr {
+    width: 100px !important;
+    height: 3px;
+    background-color: var(--accent-gold) !important;
+    border: none;
+    opacity: 1;
+    margin: 0 auto 50px auto !important;
+    border-radius: 2px;
+}
+
+/* Redesigned Timings Grid */
+#serv-time .row {
+    gap: 24px;
+    justify-content: center;
+}
+
+#serv-time .col-md-4 {
+    flex: 0 0 calc(33.333% - 16px);
+    max-width: calc(33.333% - 16px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 30px 20px !important;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    transition: var(--transition-smooth);
+}
+
+#serv-time .col-md-4:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.06);
+}
+
+#serv-time h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--accent-gold);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+#serv-time h2 + hr {
+    width: 40px !important;
+    height: 1px;
+    background-color: var(--border-subtle) !important;
+    margin: 0 auto 15px auto !important;
+}
+
+#serv-time p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+#serv-time h6 {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+/* Facts Section (Carousel) */
+.texfac {
+    padding: 5rem 0;
+    background: var(--facts-gradient);
+}
+
+.texfac h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+}
+
+.texfac hr {
+    width: 60px !important;
+    height: 3px;
+    background-color: var(--accent-gold) !important;
+    border: none;
+    opacity: 1;
+    margin: 0 auto 40px auto !important;
+}
+
+.slide-text h3 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Events Slider */
+.texent {
+    padding: 5rem 0;
+}
+
+.texent h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+}
+
+.texent hr {
+    width: 80px !important;
+    height: 3px;
+    background-color: var(--accent-gold) !important;
+    border: none;
+    opacity: 1;
+    margin: 0 auto 40px auto !important;
+}
+
+.slider {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.slider-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-smooth);
+    opacity: 0.4;
+    transform: scale(0.9);
+}
+
+.slider .owl-item.active.center .slider-card {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+}
+
+.slider-card img {
+    border-radius: 12px;
+    max-height: 250px;
+    object-fit: contain;
+    border: 1px solid var(--border-subtle);
+}
+
+/* Owl Carousel Custom Arrows */
+.owl-nav button {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--accent-gold) !important;
+    width: 44px;
+    height: 44px;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth) !important;
+}
+
+.owl-nav button:hover {
+    background: var(--accent-gold) !important;
+    color: #07090e !important;
+    border-color: var(--accent-gold) !important;
+    box-shadow: 0 0 15px var(--accent-gold-glow);
+}
+
+.owl-nav .owl-prev {
+    left: -20px !important;
+}
+
+.owl-nav .owl-next {
+    right: -20px !important;
+}
+
+.owl-dots .owl-dot {
+    height: 8px !important;
+    width: 8px !important;
+    background: var(--border-subtle) !important;
+    margin: 0 4px !important;
+    border-radius: 50% !important;
+    transition: var(--transition-smooth) !important;
+}
+
+.owl-dots .owl-dot.active {
+    background: var(--accent-gold) !important;
+    width: 20px !important;
+    border-radius: 4px !important;
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 991px) {
+    .over-text h1 {
+        font-size: 5.5rem;
+    }
+    #serv-time .col-md-4 {
+        flex: 0 0 calc(50% - 12px);
+        max-width: calc(50% - 12px);
+    }
+}
+
+@media (max-width: 767px) {
+    .over-text h1 {
+        font-size: 4.2rem;
+    }
+    #abt {
+        padding-left: 0;
+        margin-top: 30px;
+    }
+    #serv-time .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .versetxt h1 {
+        font-size: 1.6rem;
+    }
+    .slide-text h3 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Site Metas -->
+  <meta name="description" content="ACC Website standalone Administration Portal." />
+  <meta name="author" content="ACC Team" />
+
+  <title>Administration Portal | ACC</title>
+  <link rel="icon" href="../Images/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- Style Links Local -->
+  <link rel="stylesheet" href="../css/theme.css" type="text/css">
+  <link rel="stylesheet" href="../css/preloader.css" type="text/css">
+  <link rel="stylesheet" href="../css/indexstyle.css" type="text/css">
+  <link rel="stylesheet" href="../css/hnfstyle.css" type="text/css">
+  <link rel="stylesheet" href="../css/calendarstyle.css" type="text/css">
+</head>
+
+<body>
+
+  <!-- Ambient background glows -->
+  <div class="ambient-glow" style="top: 15%; left: -10%;"></div>
+  <div class="ambient-glow" style="top: 55%; right: -15%;"></div>
+
+  <div id="preloader">
+    <div class="loader">
+      <div class="horizontal"></div>
+      <div class="vertical"></div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container-fluid py-2">
+      <div class="row align-items-center">
+        <div class="col-md-6 col-7">
+          <a href="../index.html">
+            <img src="../Images/ACC_WHITE.png" alt="ACC Logo" class="img-fluid acc-logo" width="180" height="auto">
+          </a>
+        </div>
+        <div class="col-md-6 col-5">
+          <nav class="navbar navbar-expand-lg navbar-dark p-0 justify-content-end">
+            <div class="collapse navbar-collapse text-start" id="navbarNavAltMarkup">
+              <div class="navbar-nav ms-auto align-items-center">
+                <a class="nav-item nav-link" href="../index.html">Home</a>
+                <a class="nav-item nav-link" href="../about.html">About</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Domains
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="../animation.html">Animation</a></li>
+                    <li><a class="dropdown-item" href="../liturgy.html">Liturgy</a></li>
+                    <li><a class="dropdown-item" href="../outreach.html">Outreach</a></li>
+                    <li><a class="dropdown-item" href="../audiovisual.html">Audio & Visual</a></li>
+                    <li><a class="dropdown-item" href="../logistic.html">Logistics & Hospitality</a></li>
+                    <li><a class="dropdown-item" href="../mediadoc.html">Media & Communication</a></li>
+                  </ul>
+                </li>
+                <a class="nav-item nav-link" href="../prayer.html">Prayers</a>
+                <a class="nav-item nav-link" href="../calendar.html">Calendar</a>
+                <a class="nav-item nav-link" href="../media.html">Media</a>
+                <a class="nav-item nav-link" href="../contactus.html">Contact Us</a>
+              </div>
+            </div>
+            <button id="theme-toggle" class="btn-theme-toggle ms-lg-3 ms-auto" aria-label="Toggle Theme">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around ms-3"
+              type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="toggler-icon top-bar"></span>
+              <span class="toggler-icon middle-bar"></span>
+              <span class="toggler-icon bottom-bar"></span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="py-5" style="min-height: 70vh;">
+    <!-- 1. LOGIN SCREEN -->
+    <div id="admin-login-container" class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-5 col-sm-8" data-aos="zoom-in" data-aos-duration="1000">
+          <div class="glass-card text-center p-5">
+            <i class="fas fa-user-shield text-orange mb-3" style="font-size: 3rem; text-shadow: 0 0 15px var(--accent-gold-glow);"></i>
+            <h2 class="font-serif mb-3 text-primary">Admin Access</h2>
+            <p class="text-secondary small mb-4">Enter passcode to unlock administration controls</p>
+            <div class="mb-4 text-start">
+              <label for="admin-passcode" class="form-label text-secondary small">Passcode</label>
+              <input type="password" id="admin-passcode" class="form-control custom-input" placeholder="••••••••">
+              <div id="login-error" class="text-danger small mt-2 d-none"><i class="fas fa-circle-exclamation"></i> Incorrect passcode. (Hint: admin123)</div>
+            </div>
+            <button id="submit-login-btn" class="btn-gold w-100 py-2">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. EXPANDED ADMIN PANEL (Hidden by default until auth) -->
+    <div id="admin-dashboard-container" class="container py-3 d-none">
+      <div class="row">
+        <div class="col-12" data-aos="fade-up" data-aos-duration="800">
+          <div class="glass-card p-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 border-bottom border-subtle pb-3">
+              <div class="d-flex align-items-center gap-3">
+                <i class="fas fa-sliders-h text-orange" style="font-size: 1.8rem;"></i>
+                <h2 class="font-serif mb-0 text-primary">ACC Administration Portal</h2>
+              </div>
+              <button id="admin-logout-btn" class="btn-gold py-1 px-4 mt-3 mt-sm-0" style="font-size: 0.9rem;">Logout</button>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="admin-tabs">
+              <button class="admin-tab-btn active" data-tab="tab-events"><i class="fas fa-calendar-alt"></i> Events</button>
+              <button class="admin-tab-btn" data-tab="tab-team"><i class="fas fa-users"></i> Core Team</button>
+              <button class="admin-tab-btn" data-tab="tab-gallery"><i class="fas fa-images"></i> Domain Galleries</button>
+            </div>
+
+            <!-- 2.1 Events Management Tab -->
+            <div id="tab-events" class="admin-tab-content active">
+              <div class="row g-4">
+                <!-- Add Event Form -->
+                <div class="col-md-5 border-end border-subtle pe-md-4">
+                  <h4 class="font-serif text-primary h5 mb-3">Add New Event</h4>
+                  <form id="add-event-form">
+                    <div class="mb-3">
+                      <label for="event-title" class="form-label text-secondary small">Event Title</label>
+                      <input type="text" id="event-title" class="form-control custom-input" required
+                        placeholder="e.g. Feast of St. Joseph">
+                    </div>
+                    <div class="mb-3">
+                      <label for="event-date" class="form-label text-secondary small">Date</label>
+                      <input type="date" id="event-date" class="form-control custom-input" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="event-time" class="form-label text-secondary small">Time</label>
+                      <input type="text" id="event-time" class="form-control custom-input" required
+                        placeholder="e.g. All Day or 09:00 AM - 11:30 AM">
+                    </div>
+                    <div class="mb-3">
+                      <label for="event-category" class="form-label text-secondary small">Category</label>
+                      <select id="event-category" class="form-select custom-input" required>
+                        <option value="feast">Feast Day</option>
+                        <option value="acc">ACC General Event</option>
+                        <option value="liturgy">Liturgy & Prayers</option>
+                        <option value="outreach">Outreach & Charity</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="event-desc" class="form-label text-secondary small">Description</label>
+                      <textarea id="event-desc" class="form-control custom-input" rows="3"
+                        placeholder="Describe the event details..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-gold w-100 py-2">Add to Calendar</button>
+                  </form>
+                </div>
+
+                <!-- Manage Existing Events List -->
+                <div class="col-md-7 ps-md-4">
+                  <h4 class="font-serif text-primary h5 mb-3">Existing Events</h4>
+                  <div id="admin-events-list" class="admin-events-list-container">
+                    <!-- Populated dynamically with delete buttons -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.2 Core Team Management Tab -->
+            <div id="tab-team" class="admin-tab-content">
+              <div class="row g-4">
+                <!-- Edit Member Form -->
+                <div class="col-md-5 border-end border-subtle pe-md-4">
+                  <h4 class="font-serif text-primary h5 mb-3" id="team-form-title">Select Member to Edit</h4>
+                  <form id="edit-team-form" class="disabled-form opacity-50" style="pointer-events: none;">
+                    <input type="hidden" id="member-id">
+                    <div class="mb-3">
+                      <label for="member-name" class="form-label text-secondary small">Full Name</label>
+                      <input type="text" id="member-name" class="form-control custom-input" required disabled placeholder="Select a member from the list...">
+                    </div>
+                    <div class="mb-3">
+                      <label for="member-role" class="form-label text-secondary small">Role / Title</label>
+                      <input type="text" id="member-role" class="form-control custom-input" required disabled placeholder="Select a member from the list...">
+                    </div>
+                    <div class="mb-3">
+                      <label for="member-linkedin" class="form-label text-secondary small">LinkedIn URL</label>
+                      <input type="url" id="member-linkedin" class="form-control custom-input" disabled placeholder="e.g. https://linkedin.com/in/...">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label text-secondary small">Profile Photo (URL or Upload)</label>
+                      <input type="text" id="member-img-url" class="form-control custom-input mb-2" disabled placeholder="Image URL (e.g. Images/CORE TEAM/...)">
+                      <input type="file" id="member-img-file" class="form-control custom-input" disabled accept="image/*">
+                      <div class="image-preview-wrapper mt-2">
+                        <div class="image-preview-placeholder" id="member-img-preview-placeholder">No Image Chosen</div>
+                        <img id="member-img-preview" class="d-none" src="" alt="Preview">
+                      </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button type="button" id="btn-cancel-team-edit" class="btn btn-outline-light btn-sm flex-grow-1" disabled>Cancel</button>
+                      <button type="submit" id="btn-save-team-profile" class="btn-gold btn-sm flex-grow-1 py-2" disabled>Save Profile</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Team List Section -->
+                <div class="col-md-7 ps-md-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="font-serif text-primary h5 mb-0">ACC Team Roster</h4>
+                    <select id="filter-team-category" class="form-select custom-input py-1 px-2" style="width: auto; font-size: 0.85rem;">
+                      <option value="all">All Categories</option>
+                      <option value="coordinators">Coordinators</option>
+                      <option value="student_coordinators">Student Coordinators</option>
+                      <option value="domain_heads">Domain Heads</option>
+                      <option value="department_heads">Department Heads</option>
+                    </select>
+                  </div>
+                  <div id="admin-team-list" class="admin-list-container">
+                    <!-- Dynamically populated with team members and edit buttons -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.3 Domain Galleries Management Tab -->
+            <div id="tab-gallery" class="admin-tab-content">
+              <div class="row g-4">
+                <!-- Gallery Controls Form -->
+                <div class="col-md-5 border-end border-subtle pe-md-4">
+                  <h4 class="font-serif text-primary h5 mb-3">Upload Domain Photo</h4>
+                  <form id="add-gallery-form">
+                    <div class="mb-3">
+                      <label for="gallery-domain-select" class="form-label text-secondary small">Select Domain</label>
+                      <select id="gallery-domain-select" class="form-select custom-input" required>
+                        <option value="animation">Animation</option>
+                        <option value="liturgy">Liturgy</option>
+                        <option value="outreach">Outreach</option>
+                        <option value="audiovisual">Audio & Visual</option>
+                        <option value="logistic">Logistics & Hospitality</option>
+                        <option value="mediadoc">Media & Communication</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label text-secondary small">Add Photo (URL or File Upload)</label>
+                      <input type="text" id="gallery-img-url" class="form-control custom-input mb-2" placeholder="Image URL (e.g. Images/...)">
+                      <input type="file" id="gallery-img-file" class="form-control custom-input" accept="image/*">
+                      <div class="image-preview-wrapper mt-2">
+                        <div class="image-preview-placeholder" id="gallery-img-preview-placeholder">No Image Chosen</div>
+                        <img id="gallery-img-preview" class="d-none" src="" alt="Preview">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-gold w-100 py-2">Add Photo to Gallery</button>
+                  </form>
+                </div>
+
+                <!-- Gallery List / Grid -->
+                <div class="col-md-7 ps-md-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="font-serif text-primary h5 mb-0">Gallery Preview</h4>
+                    <span class="text-secondary small" id="gallery-count-label">0 Images</span>
+                  </div>
+                  <div id="admin-gallery-preview-grid" class="admin-gallery-grid">
+                    <!-- Dynamically populated grid of gallery images -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-5">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-lg-3 mb-3">
+          <p class="d-flex align-items-center mb-2">
+            <span class="fs-5"><b>Association of Christian Christites</b></span>
+          </p>
+          <ul class="list-unstyled small text-muted">
+            <li class="mb-3">
+              <a id="lcft" href="https://g.co/kgs/7q6tTKC" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-map-marker-alt"></i>
+                CHRIST (Deemed to be University), Kengeri Campus, Bengaluru, 560074.
+              </a>
+            </li>
+            <li>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+                width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+          <h5><b>Quick Links</b></h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="../index.html">Home</a></li>
+            <li class="mb-2"><a href="../about.html">About Us</a></li>
+            <li class="mb-2"><a href="../prayer.html">Prayers</a></li>
+            <li class="mb-2"><a href="../calendar.html">Calendar</a></li>
+            <li class="mb-2"><a href="../media.html">Media</a></li>
+            <li class="mb-2"><a href="../contactus.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5><b>Domains</b></h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="../animation.html">Animation</a></li>
+            <li class="mb-2"><a href="../liturgy.html">Liturgy</a></li>
+            <li class="mb-2"><a href="../outreach.html">Outreach</a></li>
+            <li class="mb-2"><a href="../audiovisual.html">Audio &amp; Visual</a></li>
+            <li class="mb-2"><a href="../logistic.html">Logistics &amp; Hospitality</a></li>
+            <li class="mb-2"><a href="../mediadoc.html">Media &amp; Documentation</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5><b>Campuses</b></h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="https://www.instagram.com/acc_christ/" target="_blank">Central Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_kengeri/" target="_blank">Kengeri Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_bgr/" target="_blank">Bannerghatta Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_byc/" target="_blank">Yeshwanthpur Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_christ_ncr/" target="_blank">Delhi NCR Off
+                Campus</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5><b>Social Media</b></h5>
+          <ul class="list-unstyled">
+            <a href="https://christuniversity.in/" target="_blank"><img class="img-fluid mt-2 fim uni-logo"
+                src="../Images/University_logo_WH.png" alt="University Logo"></a>
+            <div class="social-links pt-3">
+              <a href="https://www.instagram.com/acc_kengeri/" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://chat.whatsapp.com/KoTpbOt0HZB8Uq0PbNUqrj" target="_blank"><i
+                  class="fab fa-whatsapp"></i></a>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!--JavaScript Begins Here-->
+  <script src="https://kit.fontawesome.com/6d286a1171.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="../js/preloader.js"></script>
+  <script src="../js/dynamic_loader.js"></script>
+  <script src="admin.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 800
+    });
+  </script>
+  <!--JavaScript Ends Here-->
+</body>
+
+</html>

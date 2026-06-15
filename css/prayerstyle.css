@@ -1,0 +1,268 @@
+/* Prayers Page Specific Stylesheet */
+
+/* Landing Banner */
+.bnr {
+    height: 60vh;
+    min-height: 350px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.bnr img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--video-opacity, 0.45);
+    filter: brightness(0.6) contrast(1.1);
+}
+
+.bnr::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--inner-container-gradient);
+    z-index: 1;
+}
+
+.welctext-pry {
+    z-index: 2;
+}
+
+.welctext-pry h1 {
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Introduction Text */
+.abttext-pry {
+    margin: 4rem 0 3rem 0;
+    text-align: center;
+}
+
+.abttext-pry h2 {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--accent-gold-glow);
+}
+
+.abttext-pry p {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Prayer Layout */
+#prys {
+    padding-bottom: 5rem;
+}
+
+#prys h1 {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Left Sidebar Navigation */
+.prayer-nav-card {
+    position: sticky;
+    top: 100px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+}
+
+.prayer-nav-card h4 {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.prayer-nav-links {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.prayer-nav-links li {
+    margin-bottom: 8px;
+}
+
+.prayer-nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+}
+
+.prayer-nav-links a:hover {
+    background: var(--social-bg);
+    color: var(--accent-gold);
+    padding-left: 16px;
+}
+
+/* Prayer Sections & Accordion Card design */
+.prayer-section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 120px; /* offset for sticky header */
+}
+
+.prayer-section h4 {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--accent-gold);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.prayer-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.prayer-card:hover {
+    border-color: var(--accent-gold-glow);
+    box-shadow: 0 5px 15px var(--accent-gold-glow);
+}
+
+.prayer-header {
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: var(--transition-smooth);
+}
+
+.prayer-header h5 {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.prayer-header:hover h5 {
+    color: var(--accent-gold);
+}
+
+.prayer-header .toggle-icon {
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+    font-size: 0.95rem;
+}
+
+.prayer-header:hover .toggle-icon {
+    color: var(--accent-gold);
+}
+
+.prayer-card.open .toggle-icon {
+    transform: rotate(180deg);
+    color: var(--accent-gold);
+}
+
+.prayer-card.open .prayer-header h5 {
+    color: var(--accent-gold);
+}
+
+.prayer-body {
+    display: none; /* Controlled by jQuery slideToggle */
+    padding: 0 24px 24px 24px;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-tertiary);
+}
+
+.prayer-body h6 {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.prayer-text {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin: 12px 0 0 0;
+    white-space: pre-line; /* Preserves line breaks */
+}
+
+/* Leader / Response Indicators */
+.prayer-text i.fa-regular.fa-user {
+    color: var(--accent-gold);
+    margin-right: 8px;
+    font-size: 0.9rem;
+}
+
+.prayer-text i.fa.fa-users {
+    color: #a5c7f7;
+    margin-right: 8px;
+    font-size: 0.9rem;
+}
+
+.prayer-text span {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+/* Litany Layout Modifications */
+.litany-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.litany-item {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.litany-item span {
+    color: var(--accent-gold);
+    font-style: italic;
+}
+
+/* Responsiveness */
+@media (max-width: 991px) {
+    .prayer-nav-card {
+        position: relative;
+        top: 0;
+        margin-bottom: 30px;
+    }
+}

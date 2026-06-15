@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Site Metas -->
+  <meta name="keywords"
+    content="acc-kengeri, calendar page, feasts, events, association of christian christites, acc, christ university kengeri,
+                                  acc, christ university, christ university (deemed to be university), animation domain acc,
+                                  liturgy domain acc, media and communication domain acc, outreach domain acc, audio & visual domain acc" />
+
+  <meta name="description"
+    content="Stay updated with the liturgical feasts and events organized by the Association of Christian Christites (ACC), Christ University Kengeri Campus." />
+  <meta name="author" content="Alphy Jose" />
+
+  <title>Events & Feasts Calendar | ACC</title>
+  <link rel="icon" href="Images/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- Style Links Local -->
+  <link rel="stylesheet" href="css/theme.css" type="text/css">
+  <link rel="stylesheet" href="css/preloader.css" type="text/css">
+  <link rel="stylesheet" href="css/indexstyle.css" type="text/css">
+  <link rel="stylesheet" href="css/hnfstyle.css" type="text/css">
+  <link rel="stylesheet" href="css/calendarstyle.css" type="text/css">
+</head>
+
+<body>
+
+  <!-- Ambient background glows -->
+  <div class="ambient-glow" style="top: 15%; left: -10%;"></div>
+  <div class="ambient-glow" style="top: 55%; right: -15%;"></div>
+
+  <div id="preloader">
+    <div class="loader">
+      <div class="horizontal"></div>
+      <div class="vertical"></div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container-fluid py-2">
+      <div class="row align-items-center">
+        <div class="col-md-6 col-7">
+          <a href="index.html">
+            <img src="Images/ACC_WHITE.png" alt="ACC Logo" class="img-fluid acc-logo" width="180" height="auto">
+          </a>
+        </div>
+        <div class="col-md-6 col-5">
+          <nav class="navbar navbar-expand-lg navbar-dark p-0 justify-content-end">
+            <div class="collapse navbar-collapse text-start" id="navbarNavAltMarkup">
+              <div class="navbar-nav ms-auto align-items-center">
+                <a class="nav-item nav-link" href="index.html">Home</a>
+                <a class="nav-item nav-link" href="about.html">About</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Domains
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="animation.html">Animation</a></li>
+                    <li><a class="dropdown-item" href="liturgy.html">Liturgy</a></li>
+                    <li><a class="dropdown-item" href="outreach.html">Outreach</a></li>
+                    <li><a class="dropdown-item" href="audiovisual.html">Audio & Visual</a></li>
+                    <li><a class="dropdown-item" href="logistic.html">Logistics & Hospitality</a></li>
+                    <li><a class="dropdown-item" href="mediadoc.html">Media & Communication</a></li>
+                  </ul>
+                </li>
+                <a class="nav-item nav-link" href="prayer.html">Prayers</a>
+                <a class="nav-item nav-link active" href="calendar.html">Calendar</a>
+                <a class="nav-item nav-link" href="media.html">Media</a>
+                <a class="nav-item nav-link" href="contactus.html">Contact Us</a>
+              </div>
+            </div>
+            <button id="theme-toggle" class="btn-theme-toggle ms-lg-3 ms-auto" aria-label="Toggle Theme">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around ms-3"
+              type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="toggler-icon top-bar"></span>
+              <span class="toggler-icon middle-bar"></span>
+              <span class="toggler-icon bottom-bar"></span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Landing Banner -->
+    <section>
+      <div class="bnr d-flex align-items-center justify-content-center text-center">
+        <img src="Images/Chapel_photo.png" alt="Events Calendar Banner">
+        <div class="row w-95 position-absolute">
+          <div class="welctext-abt col-12 text-center" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="glass-title-capsule">
+              <h1 class="calendar-hero-title mb-0">ACC Calendar</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Interactive System -->
+    <section class="py-5 calendar-section-container">
+      <div class="container py-3">
+        <div class="row g-4">
+          <!-- Calendar Grid Section -->
+          <div class="col-lg-8" data-aos="fade-right" data-aos-duration="1000">
+            <div class="glass-card calendar-card p-4">
+              <!-- Calendar Navigation Header -->
+              <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div class="calendar-nav d-flex align-items-center gap-3">
+                  <button id="prev-month-btn" class="calendar-nav-btn" aria-label="Previous Month">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <h2 id="current-month-year" class="mb-0 font-serif text-primary px-2">June 2026</h2>
+                  <button id="next-month-btn" class="calendar-nav-btn" aria-label="Next Month">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="mt-3 mt-sm-0">
+                  <button id="today-btn" class="btn-gold py-1 px-4" style="font-size: 0.95rem;">Today</button>
+                </div>
+              </div>
+
+              <!-- Calendar Container -->
+              <div class="calendar-wrapper">
+                <!-- Weekdays Header -->
+                <div class="weekdays-row mb-2">
+                  <div class="weekday-label">Sun</div>
+                  <div class="weekday-label">Mon</div>
+                  <div class="weekday-label">Tue</div>
+                  <div class="weekday-label">Wed</div>
+                  <div class="weekday-label">Thu</div>
+                  <div class="weekday-label">Fri</div>
+                  <div class="weekday-label">Sat</div>
+                </div>
+                <!-- Days Grid -->
+                <div id="calendar-days-grid" class="days-grid">
+                  <!-- Generated dynamically via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar Filters & Details -->
+          <div class="col-lg-4" data-aos="fade-left" data-aos-duration="1000">
+            <!-- Filter Options -->
+            <div class="glass-card mb-4 filter-card">
+              <h3 class="font-serif mb-3 text-primary h4 gold-glow-text">Event Categories</h3>
+              <div class="filter-options d-flex flex-column gap-2">
+                <button class="filter-option-btn active" data-category="all">
+                  <span class="indicator-dot all-dot"></span>
+                  <span class="filter-label">All Events</span>
+                </button>
+                <button class="filter-option-btn" data-category="feast">
+                  <span class="indicator-dot feast-dot"></span>
+                  <span class="filter-label">Feast Days</span>
+                </button>
+                <button class="filter-option-btn" data-category="acc">
+                  <span class="indicator-dot acc-dot"></span>
+                  <span class="filter-label">ACC General</span>
+                </button>
+                <button class="filter-option-btn" data-category="liturgy">
+                  <span class="indicator-dot liturgy-dot"></span>
+                  <span class="filter-label">Liturgy & Prayers</span>
+                </button>
+                <button class="filter-option-btn" data-category="outreach">
+                  <span class="indicator-dot outreach-dot"></span>
+                  <span class="filter-label">Outreach & Charity</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Selected Date Events / Upcoming Events Panel -->
+            <div class="glass-card details-card">
+              <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2 border-subtle">
+                <h3 class="font-serif text-primary h4 mb-0" id="details-title">Selected Date Events</h3>
+                <span class="badge btn-gold py-1 px-2 mb-0" id="selected-date-badge"
+                  style="font-size: 0.8rem; pointer-events: none;">June 15</span>
+              </div>
+              <div id="events-details-container" class="events-list-container">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-5">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-lg-3 mb-3">
+          <p class="d-flex align-items-center mb-2">
+            <span class="fs-5"><b>Association of Christian Christites</b></span>
+            <a href="admin/index.html" id="admin-hidden-trigger"
+              style="opacity: 0.15; margin-left: 8px; color: inherit; text-decoration: none;"
+              aria-label="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8rem;"></i></a>
+          </p>
+          <ul class="list-unstyled small text-muted">
+            <li class="mb-3">
+              <a id="lcft" href="https://g.co/kgs/7q6tTKC" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-map-marker-alt"></i>
+                CHRIST (Deemed to be University), Kengeri Campus, Bengaluru, 560074.
+              </a>
+            </li>
+            <li>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+                width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+          <h5><b>Quick Links</b></h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="index.html">Home</a></li>
+            <li class="mb-2"><a href="about.html">About Us</a></li>
+            <li class="mb-2"><a href="prayer.html">Prayers</a></li>
+            <li class="mb-2"><a href="calendar.html">Calendar</a></li>
+            <li class="mb-2"><a href="media.html">Media</a></li>
+            <li class="mb-2"><a href="contactus.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5><b>Domains</b></h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="animation.html">Animation</a></li>
+            <li class="mb-2"><a href="liturgy.html">Liturgy</a></li>
+            <li class="mb-2"><a href="outreach.html">Outreach</a></li>
+            <li class="mb-2"><a href="audiovisual.html">Audio &amp; Visual</a></li>
+            <li class="mb-2"><a href="logistic.html">Logistics &amp; Hospitality</a></li>
+            <li class="mb-2"><a href="mediadoc.html">Media &amp; Documentation</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5><b>Campuses</b></h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="https://www.instagram.com/acc_christ/" target="_blank">Central Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_kengeri/" target="_blank">Kengeri Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_bgr/" target="_blank">Bannerghatta Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_byc/" target="_blank">Yeshwanthpur Campus</a></li>
+            <li class="mb-2"><a href="https://www.instagram.com/acc_christ_ncr/" target="_blank">Delhi NCR Off
+                Campus</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5><b>Social Media</b></h5>
+          <ul class="list-unstyled">
+            <a href="https://christuniversity.in/" target="_blank"><img class="img-fluid mt-2 fim uni-logo"
+                src="Images/University_logo_WH.png" alt="University Logo"></a>
+            <div class="social-links pt-3">
+              <a href="https://www.instagram.com/acc_kengeri/" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://chat.whatsapp.com/KoTpbOt0HZB8Uq0PbNUqrj" target="_blank"><i
+                  class="fab fa-whatsapp"></i></a>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!--JavaScript Begins Here-->
+  <script src="https://kit.fontawesome.com/6d286a1171.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/preloader.js"></script>
+  <script src="js/calendar.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 800
+    });
+  </script>
+  <!--JavaScript Ends Here-->
+</body>
+
+</html>

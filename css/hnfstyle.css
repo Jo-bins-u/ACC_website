@@ -1,0 +1,301 @@
+/*------------------ Header Style Begins Here -------------------------*/
+header {
+    background: var(--header-bg) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 30px var(--shadow-subtle);
+    transition: var(--transition-smooth);
+}
+
+header:hover {
+    border-bottom-color: rgba(212, 175, 55, 0.2);
+}
+
+header img.img-fluid {
+    transition: var(--transition-smooth);
+    filter: drop-shadow(0 0 4px rgba(255,255,255,0.1));
+}
+
+header img.img-fluid:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+}
+
+/* Custom NavBar ICON */
+.navbar-toggler {
+    width: 28px;
+    height: 20px;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.toggler-icon {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: var(--text-primary);
+    border-radius: 2px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Positioning the bars */
+.navbar-toggler.collapsed .top-bar {
+    top: 0px;
+    transform: rotate(0deg);
+}
+.navbar-toggler.collapsed .middle-bar {
+    top: 9px;
+    opacity: 1;
+}
+.navbar-toggler.collapsed .bottom-bar {
+    top: 18px;
+    transform: rotate(0deg);
+}
+
+/* When navigation is clicked (open state) */
+.navbar-toggler:not(.collapsed) .top-bar {
+    top: 9px;
+    transform: rotate(135deg);
+    background: var(--accent-gold);
+}
+.navbar-toggler:not(.collapsed) .middle-bar {
+    opacity: 0;
+}
+.navbar-toggler:not(.collapsed) .bottom-bar {
+    top: 9px;
+    transform: rotate(-135deg);
+    background: var(--accent-gold);
+}
+
+/* Navbar Links and Font Styles */
+.navbar-nav {
+    margin-top: 0.5em;
+    font-family: var(--font-sans);
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-secondary) !important;
+    font-size: 0.95rem;
+    padding: 8px 16px !important;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--accent-gold) !important;
+}
+
+/* Smooth golden underline on hover */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    background-color: var(--accent-gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Glassmorphic Dropdown Menu */
+.dropdown-menu {
+    background: var(--dropdown-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 8px 0;
+    margin-top: 10px !important;
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-smooth);
+}
+
+.dropdown-item {
+    color: var(--text-secondary) !important;
+    font-family: var(--font-sans);
+    font-weight: 450;
+    padding: 10px 20px;
+    transition: var(--transition-smooth);
+}
+
+.dropdown-item:hover {
+    background: var(--dropdown-hover-bg) !important;
+    color: var(--accent-gold) !important;
+    padding-left: 24px; /* Slide effect */
+}
+
+/* Active links inside dropdowns */
+.dropdown-item.active, 
+.dropdown-item:active {
+    background: rgba(212, 175, 55, 0.1) !important;
+    color: var(--accent-gold) !important;
+}
+
+/*------------------ Header Style Ends Here -------------------------*/
+
+
+/*------------------ Footer Style Begins Here -------------------------*/
+footer {
+    background-color: var(--footer-bg) !important;
+    border-top: 1px solid var(--glass-border) !important;
+    color: var(--text-secondary);
+}
+
+footer h5 {
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+footer h5::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: var(--accent-gold);
+    margin-top: 8px;
+}
+
+footer ul {
+    padding-left: 0;
+}
+
+footer ul li {
+    margin-bottom: 12px;
+}
+
+footer ul li a {
+    color: var(--text-secondary) !important;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    font-size: 0.92rem;
+}
+
+footer ul li a:hover {
+    color: var(--accent-gold) !important;
+    padding-left: 5px;
+}
+
+#lcft {
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+}
+
+#lcft i {
+    color: var(--accent-gold);
+    margin-top: 4px;
+}
+
+/* Interactive Embedded Map */
+footer iframe {
+    border-radius: 12px;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 8px 24px var(--shadow-subtle) !important;
+    transition: var(--transition-smooth);
+}
+
+footer iframe:hover {
+    border-color: rgba(212, 175, 55, 0.4) !important;
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.1) !important;
+}
+
+/* Social Media Icons Group */
+.social-links {
+    display: flex;
+    gap: 12px;
+}
+
+.social-links a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    width: 42px;
+    background-color: var(--social-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--text-primary) !important;
+    transition: var(--transition-smooth);
+}
+
+.social-links a:hover {
+    background-color: var(--accent-gold);
+    color: var(--bg-primary) !important;
+    border-color: var(--accent-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--accent-gold-glow);
+}
+
+/* University Logo Styling */
+.fim {
+    max-width: 80%;
+    height: auto;
+    max-height: 44px;
+    background-color: var(--fim-bg);
+    border: 1px solid var(--glass-border);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+}
+
+.fim:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+}
+
+/* Responsive fixes for footer layout */
+@media (max-width: 991px) {
+    .fttr {
+        text-align: center;
+    }
+    .fttr > div {
+        margin-bottom: 2rem;
+    }
+    footer h5::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .social-links {
+        justify-content: center;
+    }
+    #lcft {
+        justify-content: center;
+    }
+    footer iframe {
+        max-width: 100%;
+    }
+}
+/*------------------ Footer Style Ends Here ------------------------- */

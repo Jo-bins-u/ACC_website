@@ -1,0 +1,284 @@
+/* Domain Details Page Specific Stylesheet */
+
+/* Landing Banner */
+.bnr {
+    height: 60vh;
+    min-height: 350px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.bnr img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--video-opacity, 0.45);
+    filter: brightness(0.65) contrast(1.1);
+}
+
+.bnr::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--inner-container-gradient);
+    z-index: 1;
+}
+
+.welctext-dom {
+    z-index: 2;
+}
+
+.welctext-dom h1 {
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+}
+
+.welctext-dom p {
+    color: var(--accent-gold);
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-shadow: 0 0 10px var(--accent-gold-glow);
+    margin-top: 10px;
+}
+
+/* History Text */
+#domhis h1 {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+}
+
+#domhis p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Gallery Images Row */
+.team {
+    padding: 3rem 0;
+}
+
+.work {
+    margin-bottom: 24px;
+}
+
+.work .img-box {
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-smooth);
+}
+
+.work .img-box:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-gold-glow);
+    box-shadow: 0 10px 25px var(--accent-gold-glow);
+}
+
+.work img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.work .img-box:hover img {
+    transform: scale(1.05);
+}
+
+/* Contribution and Head Layout */
+.divider {
+    border-right: 1px solid var(--border-subtle);
+    padding-right: 30px;
+}
+
+#domhis ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#domhis li {
+    color: var(--text-secondary);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    position: relative;
+}
+
+#domhis li::before {
+    content: '\f105';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: var(--accent-gold);
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+#domhis li span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Domain Head profile card block */
+.profile-section-wrapper {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.profile-section-wrapper:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-5px);
+}
+
+.profile-img-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--glass-border);
+    margin-bottom: 20px;
+    transition: var(--transition-smooth);
+}
+
+.profile-section-wrapper:hover .profile-img-circle {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-gold-glow);
+}
+
+.profile-img-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.proftext {
+    text-align: center;
+}
+
+.proftext h3 {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.profile-section-wrapper:hover .proftext h3 {
+    color: var(--accent-gold);
+}
+
+.proftext h4 {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.proftext .social-media-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.proftext .social-media-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--social-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.proftext .social-media-icons a:hover {
+    background: var(--accent-gold);
+    color: #07090e;
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px var(--accent-gold-glow);
+}
+
+/* More on Us Section */
+.domabt {
+    padding: 4rem 0;
+}
+
+.domabt h1 {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.domabt h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent-gold);
+    margin: 15px auto 0 auto;
+    border-radius: 2px;
+}
+
+.domabt p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: justify;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+}
+
+/* Responsiveness */
+@media (max-width: 991px) {
+    .welctext-dom h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .welctext-dom h1 {
+        font-size: 2.2rem;
+    }
+    .divider {
+        border-right: none;
+        padding-right: 0;
+        margin-bottom: 40px;
+    }
+}

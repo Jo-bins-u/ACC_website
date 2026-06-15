@@ -1,0 +1,301 @@
+/* About Us Page Specific Stylesheet */
+
+/* Landing Banner */
+.bnr {
+    height: 60vh;
+    min-height: 350px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.bnr img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--video-opacity, 0.45);
+    filter: brightness(0.6) contrast(1.1);
+}
+
+.bnr::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--inner-container-gradient);
+    z-index: 1;
+}
+
+.welctext-abt {
+    z-index: 2;
+}
+
+.welctext-abt h1 {
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* History Text */
+#abthis h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--accent-gold-glow);
+}
+
+#abthis p {
+    color: var(--text-secondary);
+    font-size: 1.08rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Mission & Vision Section */
+.misnvis {
+    background: var(--misnvis-gradient);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 5rem 0;
+    margin: 4rem 0;
+    position: relative;
+}
+
+.misnvis::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: var(--ambient-gradient);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.misnvis > div {
+    position: relative;
+    z-index: 1;
+}
+
+.mistext, .vistext {
+    padding: 20px;
+}
+
+.mistext h1, .vistext h1 {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--accent-gold);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.mistext p, .vistext p {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-weight: 300;
+}
+
+.quotext {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    font-style: italic;
+    text-shadow: 0 0 20px var(--shadow-subtle);
+    line-height: 1.5;
+    padding: 30px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    margin: 2rem 0;
+}
+
+.quotext h5 {
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Core Team Profiles Section */
+.team {
+    padding: 4rem 0;
+}
+
+.team h1 {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+.team h1::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 3px;
+    background-color: var(--accent-gold);
+    margin: 15px auto 0 auto;
+    border-radius: 2px;
+}
+
+.team h2 {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--accent-gold);
+    margin-top: 3.5rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.team h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background-color: var(--border-subtle);
+    margin: 10px auto 0 auto;
+}
+
+.profile {
+    margin-top: 30px;
+}
+
+/* Rounded Square Glassmorphic Profile Card */
+.profile-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px 16px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    transition: var(--transition-smooth);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-card:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(212, 175, 55, 0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.08);
+}
+
+.profile .img-box {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--glass-border);
+    transition: var(--transition-smooth);
+}
+
+.profile-card:hover .img-box {
+    border-color: var(--accent-gold);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--accent-gold-glow);
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile h3 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 20px;
+    margin-bottom: 6px;
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.profile-card:hover h3 {
+    color: var(--accent-gold);
+}
+
+.profile h4 {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Integrated Hover Social Media Overlay */
+.profile-card .social-media-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 8px;
+    opacity: 0.7;
+    transition: var(--transition-smooth);
+}
+
+.profile-card:hover .social-media-icons {
+    opacity: 1;
+}
+
+.profile-card .social-media-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--social-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.profile-card .social-media-icons a:hover {
+    background: var(--accent-gold);
+    color: #07090e;
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px var(--accent-gold-glow);
+}
+
+/* Responsiveness */
+@media (max-width: 991px) {
+    .welctext-abt h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .welctext-abt h1 {
+        font-size: 2.2rem;
+    }
+    .misnvis {
+        padding: 3rem 0;
+        text-align: center;
+    }
+    .mistext, .vistext {
+        text-align: center !important;
+    }
+    .quotext {
+        font-size: 1.3rem;
+        margin: 1.5rem 0;
+    }
+}
