@@ -164,14 +164,31 @@ header img.img-fluid:hover {
 /*------------------ Footer Style Begins Here -------------------------*/
 footer {
     background-color: var(--footer-bg) !important;
-    border-top: 1px solid var(--glass-border) !important;
+    border-top: 1px solid var(--border-subtle) !important;
     color: var(--text-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top glow line */
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
 }
 
 footer h5 {
     color: var(--text-primary);
     font-family: var(--font-sans);
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
     margin-bottom: 1.5rem;
     position: relative;
 }
@@ -179,10 +196,15 @@ footer h5 {
 footer h5::after {
     content: '';
     display: block;
-    width: 30px;
+    width: 24px;
     height: 2px;
     background-color: var(--accent-gold);
     margin-top: 8px;
+    transition: var(--transition-smooth);
+}
+
+footer h5:hover::after {
+    width: 45px;
 }
 
 footer ul {
@@ -190,19 +212,35 @@ footer ul {
 }
 
 footer ul li {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 footer ul li a {
     color: var(--text-secondary) !important;
     text-decoration: none;
     transition: var(--transition-smooth);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+footer ul li a::before {
+    content: '→';
+    position: absolute;
+    left: -15px;
+    opacity: 0;
+    color: var(--accent-gold);
+    transition: var(--transition-smooth);
 }
 
 footer ul li a:hover {
     color: var(--accent-gold) !important;
-    padding-left: 5px;
+    transform: translateX(15px);
+}
+
+footer ul li a:hover::before {
+    opacity: 1;
 }
 
 #lcft {
@@ -210,25 +248,55 @@ footer ul li a:hover {
     display: inline-flex;
     align-items: flex-start;
     gap: 8px;
-    line-height: 1.4;
+    line-height: 1.5;
+    color: var(--text-secondary) !important;
+    transition: var(--transition-smooth);
+}
+
+#lcft:hover {
+    color: var(--text-primary) !important;
 }
 
 #lcft i {
     color: var(--accent-gold);
     margin-top: 4px;
+    transition: transform 0.3s ease;
+}
+
+#lcft:hover i {
+    transform: scale(1.2) translateY(-2px);
+    text-shadow: 0 0 8px var(--accent-gold-glow);
 }
 
 /* Interactive Embedded Map */
-footer iframe {
-    border-radius: 12px;
-    border: 1px solid var(--glass-border) !important;
-    box-shadow: 0 8px 24px var(--shadow-subtle) !important;
+.footer-map-card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
     transition: var(--transition-smooth);
 }
 
-footer iframe:hover {
-    border-color: rgba(212, 175, 55, 0.4) !important;
-    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.1) !important;
+.footer-map-card:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 10px 30px rgba(255, 111, 0, 0.15);
+}
+
+footer iframe {
+    width: 100%;
+    height: 180px;
+    border: 0;
+    display: block;
+    filter: grayscale(100%) contrast(120%) invert(90%);
+    transition: var(--transition-smooth);
+}
+
+body.light-theme footer iframe {
+    filter: grayscale(100%) contrast(100%) invert(0%);
+}
+
+.footer-map-card:hover iframe {
+    filter: grayscale(0%) contrast(100%) invert(0%);
 }
 
 /* Social Media Icons Group */
@@ -241,8 +309,8 @@ footer iframe:hover {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: 42px;
-    width: 42px;
+    height: 40px;
+    width: 40px;
     background-color: var(--social-bg);
     border: 1px solid var(--glass-border);
     border-radius: 50%;
@@ -252,21 +320,21 @@ footer iframe:hover {
 
 .social-links a:hover {
     background-color: var(--accent-gold);
-    color: var(--bg-primary) !important;
+    color: #ffffff !important;
     border-color: var(--accent-gold);
-    transform: translateY(-3px);
+    transform: translateY(-4px) scale(1.05);
     box-shadow: 0 5px 15px var(--accent-gold-glow);
 }
 
 /* University Logo Styling */
 .fim {
-    max-width: 80%;
+    max-width: 100%;
     height: auto;
-    max-height: 44px;
+    max-height: 48px;
     background-color: var(--fim-bg);
     border: 1px solid var(--glass-border);
-    padding: 6px 12px;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
     transition: var(--transition-smooth);
 }
 
@@ -274,6 +342,12 @@ footer iframe:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: var(--accent-gold);
     transform: translateY(-2px);
+}
+
+/* Copyright Row */
+.footer-bottom {
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 /* Responsive fixes for footer layout */
@@ -294,8 +368,11 @@ footer iframe:hover {
     #lcft {
         justify-content: center;
     }
-    footer iframe {
-        max-width: 100%;
+    footer ul li a:hover {
+        transform: none;
+    }
+    footer ul li a::before {
+        display: none;
     }
 }
 /*------------------ Footer Style Ends Here ------------------------- */

@@ -234,33 +234,6 @@
 }
 
 /* Facts Section (Carousel) */
-.texfac {
-    padding: 5rem 0;
-    background: var(--facts-gradient);
-}
-
-.texfac h1 {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-}
-
-.texfac hr {
-    width: 60px !important;
-    height: 3px;
-    background-color: var(--accent-gold) !important;
-    border: none;
-    opacity: 1;
-    margin: 0 auto 40px auto !important;
-}
-
-.slide-text h3 {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--text-primary);
-    font-weight: 500;
-    letter-spacing: 1px;
-}
-
 /* Events Slider */
 .texent {
     padding: 5rem 0;
@@ -278,6 +251,7 @@
     border: none;
     opacity: 1;
     margin: 0 auto 40px auto !important;
+    border-radius: 2px;
 }
 
 .slider {
@@ -285,30 +259,51 @@
     margin-bottom: 50px;
 }
 
+.slider .owl-stage-outer {
+    padding-top: 35px;
+    padding-bottom: 35px;
+    margin-top: -35px;
+    margin-bottom: -35px;
+}
+
 .slider-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 24px;
-    backdrop-filter: var(--glass-blur);
-    box-shadow: var(--glass-shadow);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     transition: var(--transition-smooth);
-    opacity: 0.4;
+    opacity: 0.55;
     transform: scale(0.9);
+}
+
+.slider-card img {
+    border-radius: 14px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1.41;
+    object-fit: contain;
+    background: transparent;
+    transition: var(--transition-smooth);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .slider .owl-item.active.center .slider-card {
     opacity: 1;
     transform: scale(1.05);
-    border-color: rgba(212, 175, 55, 0.4);
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+    border-color: var(--accent-gold);
+    box-shadow: 0 15px 35px var(--accent-gold-glow);
 }
 
-.slider-card img {
-    border-radius: 12px;
-    max-height: 250px;
-    object-fit: contain;
-    border: 1px solid var(--border-subtle);
+.slider .owl-item.active.center .slider-card img {
+    transform: scale(1.02);
+}
+
+/* Hover states */
+.slider-card:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 15px 35px var(--accent-gold-glow);
+    opacity: 1;
 }
 
 /* Owl Carousel Custom Arrows */
