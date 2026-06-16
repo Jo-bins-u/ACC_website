@@ -165,7 +165,7 @@
     }
   }
 
-  // Seeding routine for blank database
+  // Seeding routine for blank database - Parallelized for performance
   async function runAutoSeeding() {
     console.log("Seeding calendar events...");
     const eventMutations = defaultEvents.map(evt => ({
@@ -181,15 +181,17 @@
       }
     }));
 
-    console.log("Uploading and seeding team profiles...");
-    const teamMutations = [];
-    for (let i = 0; i < defaultTeam.length; i++) {
-      const member = defaultTeam[i];
+    console.log("Uploading and seeding team profiles (parallel)...");
+    const teamMutations = await Promise.all(defaultTeam.map(async (member, idx) => {
       let imgVal = member.image;
       if (member.image) {
-        imgVal = await uploadLocalImage(member.image);
+        try {
+          imgVal = await uploadLocalImage(member.image);
+        } catch (e) {
+          console.warn("Failed to upload team image:", member.image, e);
+        }
       }
-      teamMutations.push({
+      return {
         create: {
           _type: "teamMember",
           _id: `team-${member.id}`,
@@ -199,31 +201,31 @@
           category: member.category,
           image: imgVal,
           links: member.links,
-          sort_order: i
+          sort_order: idx
         }
-      });
-    }
+      };
+    }));
 
-    console.log("Uploading and seeding domain galleries...");
-    const galleryMutations = [];
-    const domains = Object.keys(defaultGalleries);
-    for (let d = 0; d < domains.length; d++) {
-      const domain = domains[d];
+    console.log("Uploading and seeding domain galleries (parallel)...");
+    const galleryMutations = await Promise.all(Object.keys(defaultGalleries).map(async (domain) => {
       const imagePaths = defaultGalleries[domain];
-      const uploadedImages = [];
-      for (let p = 0; p < imagePaths.length; p++) {
-        const imgVal = await uploadLocalImage(imagePaths[p]);
-        uploadedImages.push(imgVal);
-      }
-      galleryMutations.push({
+      const uploadedImages = await Promise.all(imagePaths.map(async (path) => {
+        try {
+          return await uploadLocalImage(path);
+        } catch (e) {
+          console.warn("Failed to upload gallery image:", path, e);
+          return path;
+        }
+      }));
+      return {
         create: {
           _type: "gallery",
           _id: `gallery-${domain}`,
           domain: domain,
           images: uploadedImages
         }
-      });
-    }
+      };
+    }));
 
     const mutations = [...eventMutations, ...teamMutations, ...galleryMutations];
     const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${window.SANITY_DATASET}`;
@@ -235,8 +237,11 @@
       },
       body: JSON.stringify({ mutations })
     });
+    
     if (!res.ok) {
-      throw new Error(`Auto-seeding transaction failed: ${res.statusText}`);
+      const errText = await res.text();
+      console.error("Sanity Mutation API error details:", errText);
+      throw new Error(`Auto-seeding transaction failed: ${res.statusText}. Details: ${errText}`);
     }
     console.log("Sanity database auto-seeded successfully!");
   }
@@ -264,46 +269,51 @@
           const noTeam = !result.team || result.team.length === 0;
           if (noEvents && noTeam && window.SANITY_WRITE_TOKEN && window.SANITY_WRITE_TOKEN !== "your-write-token-here") {
             console.log("Sanity database is empty. Auto-seeding initial data...");
-            await runAutoSeeding();
-            window.ACC_DB_CACHE = null;
-            await ensureCacheLoaded();
+            try {
+              await runAutoSeeding();
+              window.ACC_DB_CACHE = null;
+              await ensureCacheLoaded();
+              return;
+            } catch (seedErr) {
+              console.error("Auto-seeding failed. Falling back to LocalStorage.", seedErr);
+              // Fall through to LocalStorage loading below
+            }
+          } else {
+            const parsedEvents = (result.events || []).map(evt => ({
+              id: Number(evt.id),
+              title: evt.title,
+              date: evt.date,
+              category: evt.category,
+              time: evt.time || "All Day",
+              description: evt.description || ""
+            }));
+            
+            const parsedTeam = (result.team || []).map(m => ({
+              id: m.id,
+              name: m.name,
+              role: m.role,
+              category: m.category,
+              image: getSanityImageUrl(m.image),
+              links: m.links || []
+            }));
+            
+            const parsedGallery = {};
+            ["animation", "liturgy", "outreach", "audiovisual", "logistic", "mediadoc"].forEach(domain => {
+              parsedGallery[domain] = [];
+            });
+            (result.gallery || []).forEach(g => {
+              if (g.domain) {
+                parsedGallery[g.domain] = (g.images || []).map(img => getSanityImageUrl(img));
+              }
+            });
+            
+            window.ACC_DB_CACHE = {
+              events: parsedEvents,
+              team: parsedTeam,
+              gallery: parsedGallery
+            };
             return;
           }
-          
-          const parsedEvents = (result.events || []).map(evt => ({
-            id: Number(evt.id),
-            title: evt.title,
-            date: evt.date,
-            category: evt.category,
-            time: evt.time || "All Day",
-            description: evt.description || ""
-          }));
-          
-          const parsedTeam = (result.team || []).map(m => ({
-            id: m.id,
-            name: m.name,
-            role: m.role,
-            category: m.category,
-            image: getSanityImageUrl(m.image),
-            links: m.links || []
-          }));
-          
-          const parsedGallery = {};
-          ["animation", "liturgy", "outreach", "audiovisual", "logistic", "mediadoc"].forEach(domain => {
-            parsedGallery[domain] = [];
-          });
-          (result.gallery || []).forEach(g => {
-            if (g.domain) {
-              parsedGallery[g.domain] = (g.images || []).map(img => getSanityImageUrl(img));
-            }
-          });
-          
-          window.ACC_DB_CACHE = {
-            events: parsedEvents,
-            team: parsedTeam,
-            gallery: parsedGallery
-          };
-          return;
         } else {
           console.error("Sanity query fetch error:", response.statusText);
         }
