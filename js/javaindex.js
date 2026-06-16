@@ -32,11 +32,11 @@ $(document).ready(function(){
 
 document.addEventListener("DOMContentLoaded", function() {
     const verses = [
-      { title: "For where two or three gather in my name, there I am with them.", reference: "Mathew 18:20" },
-      { title: "The grace of our Lord Jesus Christ be with you.", reference: "1 Thessalonica 5:28" },
+      { title: "For where two or three gather in my name, there I am with them.", reference: "Matthew 18:20" },
+      { title: "The grace of our Lord Jesus Christ be with you.", reference: "1 Thessalonians 5:28" },
       { title: "Beloved, if God so loved us, we also ought to love one another.", reference: "1 John 4:11" },
       { title: "Faith is the assurance of things hoped for and the conviction of things not seen.", reference: "Hebrews 11:1" },
-      { title: "Children, obey your parents in the Lord. It is reasonable.", reference: "Ephesus 6:1" },
+      { title: "Children, obey your parents in the Lord. It is reasonable.", reference: "Ephesians 6:1" },
       { title: "You are Christ's, and Christ is God's.", reference: "1 Corinthians 3:23" }
     ];
 

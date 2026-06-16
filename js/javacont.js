@@ -17,7 +17,7 @@ $(document).ready(function() {
     },
     messages: {
       Name: {
-        required: "Please enter your fullname"
+        required: "Please enter your full name"
       },
       MailId: {
         required: "Please enter your Christ University email",
@@ -78,7 +78,7 @@ $("#submit-form").submit(function(e){
         window.location.href = "success.html"; // Redirect to local success.html
       },
       error:function (err){
-        alert("Something Error")
+        alert("An error occurred. Please try again.")
       }
     });
   }

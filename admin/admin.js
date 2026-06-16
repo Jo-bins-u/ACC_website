@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  // Invalidate cache at startup in admin portal to force fresh fetch from Sanity CMS
+  // Invalidate cache at startup in admin portal to force fresh reload
   window.ACC_DB_CACHE = null;
 
   // 1. SESSION MANAGEMENT & LOGOUT
@@ -176,7 +176,7 @@ $(document).ready(function() {
 
   // Event deletion
   $(document).on("click", ".btn-delete-event", async function() {
-    const idToDelete = parseInt($(this).data("id'));
+    const idToDelete = parseInt($(this).data("id"));
     const btn = $(this);
     if (confirm("Are you sure you want to delete this event?")) {
       btn.attr("disabled", true);
