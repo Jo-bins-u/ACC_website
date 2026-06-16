@@ -36,12 +36,7 @@ $(document).ready(function() {
     { id: 32, title: "Feast of St. Stephen", date: "2026-12-26", category: "feast", time: "All Day", description: "Feast of the first Christian martyr." }
   ];
 
-  // Load from localStorage or save defaults (Version 2 database)
-  let eventsData = JSON.parse(localStorage.getItem('acc_calendar_events_v2'));
-  if (!eventsData) {
-    eventsData = defaultEvents;
-    localStorage.setItem('acc_calendar_events_v2', JSON.stringify(eventsData));
-  }
+  let eventsData = [];
 
   // 2. Calendar State Variables
   let currentDate = new Date(2026, 5, 15); // Start on June 15, 2026
@@ -64,9 +59,19 @@ $(document).ready(function() {
   const detailsDateBadge = $("#selected-date-badge");
   const eventsContainer = $("#events-details-container");
 
-  // Render Initial Calendar View
-  renderCalendar();
-  updateEventsSidebar(selectedDate, true); // default view shows current month's events
+  // Render Initial Calendar View after loading from DB
+  async function initCalendar() {
+    try {
+      eventsData = await window.getEventsDB();
+    } catch (e) {
+      console.error("Failed to load events database:", e);
+      eventsData = [];
+    }
+    renderCalendar();
+    updateEventsSidebar(selectedDate, true);
+  }
+
+  initCalendar();
 
   // 3. Render Calendar Grid function
   function renderCalendar() {

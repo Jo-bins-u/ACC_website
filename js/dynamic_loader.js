@@ -1,17 +1,47 @@
 // ACC Website Dynamic Content Loader & Database Engine
 (function() {
-  // 1. Default Database Baseline
+  // 1. Baseline Datasets for Seeding
+  const defaultEvents = [
+    { id: 1, title: "Feast of Mary, Mother of God", date: "2026-01-01", category: "feast", time: "All Day", description: "Solemnity of Mary, Holy Mother of God." },
+    { id: 2, title: "Feast of St. Kuriakose Elias Chavara", date: "2026-01-03", category: "feast", time: "All Day", description: "Feast of the founder of the CMI congregation and Patron of Christ University." },
+    { id: 3, title: "The Epiphany of the Lord", date: "2026-01-06", category: "feast", time: "All Day", description: "Commemorating the visit of the Magi to the Christ child." },
+    { id: 4, title: "Conversion of St. Paul", date: "2026-01-25", category: "feast", time: "All Day", description: "Feast of the conversion of the Apostle Paul." },
+    { id: 5, title: "Presentation of the Lord", date: "2026-02-02", category: "feast", time: "All Day", description: "Feast of the presentation of Jesus in the temple." },
+    { id: 6, title: "Feast of St. Joseph", date: "2026-03-19", category: "feast", time: "All Day", description: "Solemnity of Saint Joseph, Husband of the Blessed Virgin Mary." },
+    { id: 7, title: "Feast of the Annunciation", date: "2026-03-25", category: "feast", time: "All Day", description: "Annunciation of the Lord by Angel Gabriel to Mary." },
+    { id: 8, title: "Good Friday", date: "2026-04-03", category: "feast", time: "All Day", description: "Commemoration of the Crucifixion of Jesus Christ." },
+    { id: 9, title: "Easter Sunday", date: "2026-04-05", category: "feast", time: "All Day", description: "Celebrating the glorious Resurrection of our Lord Jesus Christ." },
+    { id: 10, title: "Pentecost Sunday", date: "2026-05-24", category: "feast", time: "All Day", description: "Commemorating the descent of the Holy Spirit upon the Apostles." },
+    { id: 11, title: "Corpus Christi", date: "2026-06-04", category: "feast", time: "All Day", description: "Solemnity of the Most Holy Body and Blood of Christ." },
+    { id: 12, title: "Feast of St. Peter and St. Paul", date: "2026-06-29", category: "feast", time: "All Day", description: "Honoring the martyrdom of the two chief Apostles in Rome." },
+    { id: 13, title: "Feast of St. Thomas the Apostle", date: "2026-07-03", category: "feast", time: "All Day", description: "Patron Saint of India, who brought Christ's message to Indian shores." },
+    { id: 14, title: "Feast of St. Joachim and St. Anne", date: "2026-07-26", category: "feast", time: "All Day", description: "Feast of the parents of the Blessed Virgin Mary." },
+    { id: 15, title: "Feast of St. Ignatius of Loyola", date: "2026-07-31", category: "feast", time: "All Day", description: "Feast of the founder of the Society of Jesus (Jesuits)." },
+    { id: 16, title: "Transfiguration of the Lord", date: "2026-08-06", category: "feast", time: "All Day", description: "Commemorating the Transfiguration of Jesus on Mount Tabor." },
+    { id: 17, title: "Assumption of Mother Mary", date: "2026-08-15", category: "feast", time: "All Day", description: "The Assumption of the Blessed Virgin Mary into Heaven." },
+    { id: 18, title: "Feast of St. Augustine", date: "2026-08-28", category: "feast", time: "All Day", description: "Feast of Saint Augustine, Bishop and Doctor of the Church." },
+    { id: 19, title: "Nativity of Blessed Virgin Mary", date: "2026-09-08", category: "feast", time: "All Day", description: "Celebrating the birth of the Blessed Virgin Mary (Monti Fest)." },
+    { id: 20, title: "Feast of St. Vincent de Paul", date: "2026-09-27", category: "feast", time: "All Day", description: "Feast of the patron saint of charity." },
+    { id: 21, title: "Feast of the Archangels", date: "2026-09-29", category: "feast", time: "All Day", description: "Feast of Saints Michael, Gabriel, and Raphael." },
+    { id: 22, title: "Feast of St. Therese of Lisieux", date: "2026-10-01", category: "feast", time: "All Day", description: "Feast of the Little Flower, Patroness of missions." },
+    { id: 23, title: "Feast of St. Francis of Assisi", date: "2026-10-04", category: "feast", time: "All Day", description: "Patron Saint of animals and the environment." },
+    { id: 24, title: "Feast of St. Teresa of Avila", date: "2026-10-15", category: "feast", time: "All Day", description: "Feast of the great Carmelite mystic and doctor of the Church." },
+    { id: 25, title: "All Saints' Day", date: "2026-11-01", category: "feast", time: "All Day", description: "Solemnity honoring all the saints, known and unknown." },
+    { id: 26, title: "All Souls' Day", date: "2026-11-02", category: "feast", time: "All Day", description: "Day of prayer and remembrance for all the faithful departed." },
+    { id: 27, title: "Feast of St. Cecilia", date: "2026-11-22", category: "feast", time: "All Day", description: "Feast of St. Cecilia, patroness of musicians and singers." },
+    { id: 28, title: "Feast of St. Andrew the Apostle", date: "2026-11-30", category: "feast", time: "All Day", description: "Feast of Saint Andrew, Apostle of Christ." },
+    { id: 29, title: "Feast of St. Francis Xavier", date: "2026-12-03", category: "feast", time: "All Day", description: "Feast of the great Jesuit missionary to Asia." },
+    { id: 30, title: "Immaculate Conception", date: "2026-12-08", category: "feast", time: "All Day", description: "Solemnity of the Immaculate Conception of the Blessed Virgin Mary." },
+    { id: 31, title: "Christmas", date: "2026-12-25", category: "feast", time: "All Day", description: "The Nativity of our Lord and Savior Jesus Christ." },
+    { id: 32, title: "Feast of St. Stephen", date: "2026-12-26", category: "feast", time: "All Day", description: "Feast of the first Christian martyr." }
+  ];
+
   const defaultTeam = [
-    // Coordinators
     { id: "frshijin", name: "Fr. Shijin PJ CMI", role: "Coordinator", category: "coordinators", image: "Images/CORE TEAM/frshijin.jpg", links: [] },
     { id: "jeringeo", name: "Jerin Geo Jacob", role: "Faculty Coordinator", category: "coordinators", image: "", links: [] },
     { id: "jincy", name: "Jincy Cherian", role: "Faculty Coordinator", category: "coordinators", image: "", links: [] },
-    
-    // Student Coordinators
     { id: "edwin", name: "Edwin Jose Cyril", role: "Student Coordinator", category: "student_coordinators", image: "Images/CORE TEAM/edwin.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/edwin-jose-9b7b8221a/" }] },
     { id: "cherry", name: "Cherry Rose Prakash", role: "Student Coordinator", category: "student_coordinators", image: "Images/CORE TEAM/cherry.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/cherry-rose-prakash-470960254/" }] },
-    
-    // Domain Heads
     { id: "teresa", name: "Teresa Jose", role: "Animation Head", category: "domain_heads", image: "Images/CORE TEAM/teresa.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/teresa-jose-643330260/" }, { type: "instagram", url: "https://www.instagram.com/_alp_hy_/" }, { type: "whatsapp", url: "https://wa.me/qr/7YQ4BGDJNV6YM1" }] },
     { id: "alphy", name: "Alphy Jose", role: "Liturgy Head", category: "domain_heads", image: "Images/CORE TEAM/Alphy.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/alphyjose777/" }] },
     { id: "akhilesh", name: "Akhilesh Kumar", role: "Media Head", category: "domain_heads", image: "Images/CORE TEAM/Akhilesh.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/akhilesh-kumar-4402a8248/" }] },
@@ -21,8 +51,6 @@
     { id: "ashin", name: "Ashin Shibu Joseph", role: "Theatre Head", category: "domain_heads", image: "Images/CORE TEAM/ashin.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/ashin-shibu-joseph-68300126b/" }] },
     { id: "manjeera", name: "Manjeera Manoj", role: "Outreach Head", category: "domain_heads", image: "Images/CORE TEAM/manjeera.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/manjeera-manoj-088a7123b/" }] },
     { id: "elvin", name: "Elvin Davis", role: "Logistics & Hospitality Head", category: "domain_heads", image: "Images/CORE TEAM/elvin.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/elvin-davis-ba68a0246/" }] },
-    
-    // Department Heads
     { id: "williams", name: "Williams Palathingal", role: "Engineering Head", category: "department_heads", image: "Images/CORE TEAM/williams.jpg", links: [] },
     { id: "alex", name: "Alex OS", role: "Engineering Head", category: "department_heads", image: "Images/CORE TEAM/alex.jpg", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/os-alex/" }] },
     { id: "dona", name: "Dona Milton", role: "Architecture Head", category: "department_heads", image: "Images/CORE TEAM/dona.jpg", links: [] },
@@ -34,69 +62,438 @@
   ];
 
   const defaultGalleries = {
-    "animation": [
-      "Images/anim/anim1.png",
-      "Images/anim/anim2.png",
-      "Images/anim/anim3.JPG",
-      "Images/anim/anim4.jpg"
-    ],
-    "liturgy": [
-      "Images/lit/lit1.jpg",
-      "Images/lit/lit2.JPG",
-      "Images/lit/lit3.JPG",
-      "Images/lit/lit4.JPG"
-    ],
-    "outreach": [
-      "Images/outr/outr1.jpg",
-      "Images/outr/outr2.jpg",
-      "Images/outr/outr3.jpg",
-      "Images/outr/outr4.jpg"
-    ],
-    "audiovisual": [
-      "Images/AV/av1.JPG",
-      "Images/AV/av2.JPG",
-      "Images/AV/av3.JPG",
-      "Images/AV/av4.JPG"
-    ],
+    "animation": ["Images/anim/anim1.png", "Images/anim/anim2.png", "Images/anim/anim3.JPG", "Images/anim/anim4.jpg"],
+    "liturgy": ["Images/lit/lit1.jpg", "Images/lit/lit2.JPG", "Images/lit/lit3.JPG", "Images/lit/lit4.JPG"],
+    "outreach": ["Images/outr/outr1.jpg", "Images/outr/outr2.jpg", "Images/outr/outr3.jpg", "Images/outr/outr4.jpg"],
+    "audiovisual": ["Images/AV/av1.JPG", "Images/AV/av2.JPG", "Images/AV/av3.JPG", "Images/AV/av4.JPG"],
     "logistic": [],
-    "mediadoc": [
-      "Images/mnc/mnc1.JPG",
-      "Images/mnc/mnc2.png",
-      "Images/mnc/mnc3.png",
-      "Images/mnc/mnc4.PNG"
-    ]
+    "mediadoc": ["Images/mnc/mnc1.JPG", "Images/mnc/mnc2.png", "Images/mnc/mnc3.png", "Images/mnc/mnc4.PNG"]
   };
 
-  // 2. Database Load Helpers
-  window.getTeamDB = function() {
-    let db = localStorage.getItem('acc_db_team_v3');
-    if (!db) {
-      localStorage.setItem('acc_db_team_v3', JSON.stringify(defaultTeam));
-      return defaultTeam;
+  // 2. Database Status & Helpers
+  function isSanityActive() {
+    return window.SANITY_PROJECT_ID && 
+           window.SANITY_PROJECT_ID !== "your-project-id" && 
+           window.SANITY_PROJECT_ID !== "" &&
+           window.SANITY_DATASET;
+  }
+
+  // Convert Sanity asset ref to CDN URL
+  function getSanityImageUrl(imageVal) {
+    if (!imageVal) return '';
+    if (typeof imageVal === 'string') return imageVal;
+    
+    const assetRef = imageVal.asset ? (imageVal.asset._ref || imageVal.asset) : imageVal._ref;
+    if (!assetRef || typeof assetRef !== 'string') return '';
+    
+    const parts = assetRef.split('-');
+    if (parts[0] !== 'image' || parts.length < 4) return '';
+    
+    const hash = parts[1];
+    const dims = parts[2];
+    const ext = parts[3];
+    
+    return `https://cdn.sanity.io/images/${window.SANITY_PROJECT_ID}/${window.SANITY_DATASET}/${hash}-${dims}.${ext}`;
+  }
+
+  // Upload local static file to Sanity CDN
+  async function uploadLocalImage(localPath) {
+    try {
+      const filename = localPath.split('/').pop();
+      const response = await fetch(localPath);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const blob = await response.blob();
+      
+      const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/assets/images/${window.SANITY_DATASET}?filename=${encodeURIComponent(filename)}`;
+      const uploadRes = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${window.SANITY_WRITE_TOKEN}`,
+          "Content-Type": blob.type
+        },
+        body: blob
+      });
+      if (!uploadRes.ok) throw new Error(uploadRes.statusText);
+      const asset = await uploadRes.json();
+      return {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: asset.document._id
+        }
+      };
+    } catch (err) {
+      console.warn(`Could not upload default image ${localPath} to Sanity, using string path.`, err);
+      return localPath; 
     }
-    return JSON.parse(db);
+  }
+
+  // Upload Base64 image to Sanity CDN
+  async function uploadBase64ImageToSanity(base64Str, filename) {
+    try {
+      const parts = base64Str.split(';base64,');
+      const contentType = parts[0].split(':')[1];
+      const raw = window.atob(parts[1]);
+      const rawLength = raw.length;
+      const uInt8Array = new Uint8Array(rawLength);
+      for (let i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      const blob = new Blob([uInt8Array], { type: contentType });
+      
+      const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/assets/images/${window.SANITY_DATASET}?filename=${encodeURIComponent(filename)}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${window.SANITY_WRITE_TOKEN}`,
+          "Content-Type": contentType
+        },
+        body: blob
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      const asset = await res.json();
+      return {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: asset.document._id
+        }
+      };
+    } catch (e) {
+      console.error("Failed to upload base64 to Sanity:", e);
+      return base64Str;
+    }
+  }
+
+  // Seeding routine for blank database
+  async function runAutoSeeding() {
+    console.log("Seeding calendar events...");
+    const eventMutations = defaultEvents.map(evt => ({
+      create: {
+        _type: "event",
+        _id: `event-${evt.id}`,
+        id: evt.id,
+        title: evt.title,
+        date: evt.date,
+        category: evt.category,
+        time: evt.time,
+        description: evt.description
+      }
+    }));
+
+    console.log("Uploading and seeding team profiles...");
+    const teamMutations = [];
+    for (let i = 0; i < defaultTeam.length; i++) {
+      const member = defaultTeam[i];
+      let imgVal = member.image;
+      if (member.image) {
+        imgVal = await uploadLocalImage(member.image);
+      }
+      teamMutations.push({
+        create: {
+          _type: "teamMember",
+          _id: `team-${member.id}`,
+          id: member.id,
+          name: member.name,
+          role: member.role,
+          category: member.category,
+          image: imgVal,
+          links: member.links,
+          sort_order: i
+        }
+      });
+    }
+
+    console.log("Uploading and seeding domain galleries...");
+    const galleryMutations = [];
+    const domains = Object.keys(defaultGalleries);
+    for (let d = 0; d < domains.length; d++) {
+      const domain = domains[d];
+      const imagePaths = defaultGalleries[domain];
+      const uploadedImages = [];
+      for (let p = 0; p < imagePaths.length; p++) {
+        const imgVal = await uploadLocalImage(imagePaths[p]);
+        uploadedImages.push(imgVal);
+      }
+      galleryMutations.push({
+        create: {
+          _type: "gallery",
+          _id: `gallery-${domain}`,
+          domain: domain,
+          images: uploadedImages
+        }
+      });
+    }
+
+    const mutations = [...eventMutations, ...teamMutations, ...galleryMutations];
+    const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${window.SANITY_DATASET}`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${window.SANITY_WRITE_TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ mutations })
+    });
+    if (!res.ok) {
+      throw new Error(`Auto-seeding transaction failed: ${res.statusText}`);
+    }
+    console.log("Sanity database auto-seeded successfully!");
+  }
+
+  // Global cache Database layer
+  window.ACC_DB_CACHE = null;
+
+  async function ensureCacheLoaded() {
+    if (window.ACC_DB_CACHE) return;
+    
+    if (isSanityActive()) {
+      try {
+        const query = `{
+          "events": *[_type == "event"],
+          "team": *[_type == "teamMember"] | order(sort_order asc),
+          "gallery": *[_type == "gallery"]
+        }`;
+        const url = `https://${window.SANITY_PROJECT_ID}.apicdn.sanity.io/v2021-10-21/data/query/${window.SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+        const response = await fetch(url);
+        if (response.ok) {
+          const json = await response.json();
+          const result = json.result || {};
+          
+          const noEvents = !result.events || result.events.length === 0;
+          const noTeam = !result.team || result.team.length === 0;
+          if (noEvents && noTeam && window.SANITY_WRITE_TOKEN && window.SANITY_WRITE_TOKEN !== "your-write-token-here") {
+            console.log("Sanity database is empty. Auto-seeding initial data...");
+            await runAutoSeeding();
+            window.ACC_DB_CACHE = null;
+            await ensureCacheLoaded();
+            return;
+          }
+          
+          const parsedEvents = (result.events || []).map(evt => ({
+            id: Number(evt.id),
+            title: evt.title,
+            date: evt.date,
+            category: evt.category,
+            time: evt.time || "All Day",
+            description: evt.description || ""
+          }));
+          
+          const parsedTeam = (result.team || []).map(m => ({
+            id: m.id,
+            name: m.name,
+            role: m.role,
+            category: m.category,
+            image: getSanityImageUrl(m.image),
+            links: m.links || []
+          }));
+          
+          const parsedGallery = {};
+          ["animation", "liturgy", "outreach", "audiovisual", "logistic", "mediadoc"].forEach(domain => {
+            parsedGallery[domain] = [];
+          });
+          (result.gallery || []).forEach(g => {
+            if (g.domain) {
+              parsedGallery[g.domain] = (g.images || []).map(img => getSanityImageUrl(img));
+            }
+          });
+          
+          window.ACC_DB_CACHE = {
+            events: parsedEvents,
+            team: parsedTeam,
+            gallery: parsedGallery
+          };
+          return;
+        } else {
+          console.error("Sanity query fetch error:", response.statusText);
+        }
+      } catch (err) {
+        console.error("Sanity query exception:", err);
+      }
+    }
+    
+    // LocalStorage Fallback
+    console.log("Using LocalStorage fallback...");
+    let localEvents = JSON.parse(localStorage.getItem('acc_calendar_events_v2'));
+    if (!localEvents) {
+      localEvents = defaultEvents;
+      localStorage.setItem('acc_calendar_events_v2', JSON.stringify(localEvents));
+    }
+    
+    let localTeam = JSON.parse(localStorage.getItem('acc_db_team_v3'));
+    if (!localTeam) {
+      localTeam = defaultTeam;
+      localStorage.setItem('acc_db_team_v3', JSON.stringify(localTeam));
+    }
+    
+    let localGallery = JSON.parse(localStorage.getItem('acc_db_gallery_v3'));
+    if (!localGallery) {
+      localGallery = defaultGalleries;
+      localStorage.setItem('acc_db_gallery_v3', JSON.stringify(localGallery));
+    }
+    
+    window.ACC_DB_CACHE = {
+      events: localEvents,
+      team: localTeam,
+      gallery: localGallery
+    };
+  }
+
+  // 3. Centralized Database Operations (Promises / Async)
+
+  // 3.1 EVENTS API
+  window.getEventsDB = async function() {
+    await ensureCacheLoaded();
+    return window.ACC_DB_CACHE.events;
   };
 
-  window.saveTeamDB = function(data) {
+  window.saveEventsDB = async function(data) {
+    if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.events = data;
+    localStorage.setItem('acc_calendar_events_v2', JSON.stringify(data));
+    
+    if (isSanityActive() && window.SANITY_WRITE_TOKEN && window.SANITY_WRITE_TOKEN !== "your-write-token-here") {
+      try {
+        const mutations = [
+          { delete: { query: '*[_type == "event"]' } },
+          ...data.map(evt => ({
+            create: {
+              _type: "event",
+              _id: `event-${evt.id}`,
+              id: evt.id,
+              title: evt.title,
+              date: evt.date,
+              category: evt.category,
+              time: evt.time || "All Day",
+              description: evt.description || ""
+            }
+          }))
+        ];
+        
+        const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${window.SANITY_DATASET}`;
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${window.SANITY_WRITE_TOKEN}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ mutations })
+        });
+      } catch (err) {
+        console.error("Failed to save events to Sanity:", err);
+      }
+    }
+  };
+
+  // 3.2 TEAM API
+  window.getTeamDB = async function() {
+    await ensureCacheLoaded();
+    return window.ACC_DB_CACHE.team;
+  };
+
+  window.saveTeamDB = async function(data) {
+    if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.team = data;
     localStorage.setItem('acc_db_team_v3', JSON.stringify(data));
-  };
-
-  window.getGalleryDB = function() {
-    let db = localStorage.getItem('acc_db_gallery_v3');
-    if (!db) {
-      localStorage.setItem('acc_db_gallery_v3', JSON.stringify(defaultGalleries));
-      return defaultGalleries;
+    
+    if (isSanityActive() && window.SANITY_WRITE_TOKEN && window.SANITY_WRITE_TOKEN !== "your-write-token-here") {
+      try {
+        const processedData = [];
+        for (let i = 0; i < data.length; i++) {
+          const member = { ...data[i] };
+          if (member.image && member.image.startsWith('data:image')) {
+            member.image = await uploadBase64ImageToSanity(member.image, `${member.id}.png`);
+          }
+          processedData.push(member);
+        }
+        
+        const mutations = [
+          { delete: { query: '*[_type == "teamMember"]' } },
+          ...processedData.map((m, idx) => ({
+            create: {
+              _type: "teamMember",
+              _id: `team-${m.id}`,
+              id: m.id,
+              name: m.name,
+              role: m.role,
+              category: m.category,
+              image: m.image,
+              links: m.links || [],
+              sort_order: idx
+            }
+          }))
+        ];
+        
+        const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${window.SANITY_DATASET}`;
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${window.SANITY_WRITE_TOKEN}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ mutations })
+        });
+      } catch (err) {
+        console.error("Failed to save team to Sanity:", err);
+      }
     }
-    return JSON.parse(db);
   };
 
-  window.saveGalleryDB = function(data) {
+  // 3.3 GALLERY API
+  window.getGalleryDB = async function() {
+    await ensureCacheLoaded();
+    return window.ACC_DB_CACHE.gallery;
+  };
+
+  window.saveGalleryDB = async function(data) {
+    if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.gallery = data;
     localStorage.setItem('acc_db_gallery_v3', JSON.stringify(data));
+    
+    if (isSanityActive() && window.SANITY_WRITE_TOKEN && window.SANITY_WRITE_TOKEN !== "your-write-token-here") {
+      try {
+        const processedData = {};
+        const domains = Object.keys(data);
+        for (let d = 0; d < domains.length; d++) {
+          const domain = domains[d];
+          processedData[domain] = [];
+          const images = data[domain] || [];
+          for (let i = 0; i < images.length; i++) {
+            let img = images[i];
+            if (img && img.startsWith('data:image')) {
+              img = await uploadBase64ImageToSanity(img, `gallery-${domain}-${i}.png`);
+            }
+            processedData[domain].push(img);
+          }
+        }
+        
+        const mutations = [
+          { delete: { query: '*[_type == "gallery"]' } },
+          ...domains.map(domain => ({
+            create: {
+              _type: "gallery",
+              _id: `gallery-${domain}`,
+              domain: domain,
+              images: processedData[domain]
+            }
+          }))
+        ];
+        
+        const url = `https://${window.SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${window.SANITY_DATASET}`;
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${window.SANITY_WRITE_TOKEN}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ mutations })
+        });
+      } catch (err) {
+        console.error("Failed to save gallery to Sanity:", err);
+      }
+    }
   };
 
-  // 3. Render Helpers
-  window.renderAboutTeam = function() {
-    const db = window.getTeamDB();
+  // 4. Render Handlers (Async-Aware)
+  window.renderAboutTeam = async function() {
+    const db = await window.getTeamDB();
     
     const renderCategory = (category, containerId, title) => {
       const container = $(`#${containerId}`);
@@ -141,9 +538,9 @@
     renderCategory("department_heads", "dept-heads-container", "Department Heads");
   };
 
-  window.renderDomainHeadsAndGalleries = function(domainKey) {
-    const teamDb = window.getTeamDB();
-    const galleryDb = window.getGalleryDB();
+  window.renderDomainHeadsAndGalleries = async function(domainKey) {
+    const teamDb = await window.getTeamDB();
+    const galleryDb = await window.getGalleryDB();
     
     // Render Heads
     const headContainer = $("#domain-head-container");
@@ -266,11 +663,7 @@
     }
   };
 
-  // 4. Initialize Database on Page Load
-  window.getTeamDB();
-  window.getGalleryDB();
-
-  // 5. Auto Render Trigger
+  // 5. Auto Render Trigger on Document Ready
   $(document).ready(function() {
     const filename = window.location.pathname.split('/').pop().toLowerCase();
     if (filename === 'about.html') {
