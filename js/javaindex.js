@@ -2,30 +2,26 @@
 
 AOS.init(); //For Animation
 
-//For Facts slider
+//For Events slider
 $(document).ready(function(){
     $(".owl-carousel").owlCarousel({
-        loop:true,
-        margin:10,
-        nav:true,
-        autoplay:true,
-        autoplayTimeout:3000,
-        autoplayHoverPause:true,
+        loop: true,
+        margin: 20,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 3500,
+        autoplayHoverPause: true,
         center: true,
+        smartSpeed: 600,
         navText: [
             "<i class='fa fa-angle-left'></i>",
             "<i class='fa fa-angle-right'></i>"
         ],
         responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:1
-            },
-            1000:{
-                items:3
-            }
+            0:    { items: 1, margin: 10 },
+            600:  { items: 2, margin: 16 },
+            1000: { items: 3, margin: 20 }
         }
     });
 });

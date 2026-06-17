@@ -1,117 +1,266 @@
-// Immediately set theme based on localStorage to prevent FOUC (Flash of Unstyled Content)
+// Immediately set theme based on localStorage to prevent FOUC
 (function() {
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
     const isLight = savedTheme === 'light' || (!savedTheme && systemPrefersLight);
-    
     if (isLight) {
         document.documentElement.classList.add('light-theme');
-        // Also apply to body if it exists
-        if (document.body) {
-            document.body.classList.add('light-theme');
-        }
+        if (document.body) document.body.classList.add('light-theme');
     }
 })();
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Sync class between HTML and body
+    // Sync theme class to body
     if (document.documentElement.classList.contains('light-theme')) {
         document.body.classList.add('light-theme');
     }
 
-    // Initialize Theme Toggles and Logos on DOM Ready
     const isLight = document.body.classList.contains('light-theme');
     updateThemeUI(isLight);
 
-    // Click handler for theme toggle
+    // Theme toggle
     document.addEventListener('click', function(e) {
-        // Use closest to handle clicks on the icon inside the button
         const toggleBtn = e.target.closest('#theme-toggle');
         if (toggleBtn) {
             document.body.classList.toggle('light-theme');
             const nowLight = document.body.classList.contains('light-theme');
-            
-            if (nowLight) {
-                document.documentElement.classList.add('light-theme');
-            } else {
-                document.documentElement.classList.remove('light-theme');
-            }
-            
-            // Save to localStorage
+            document.documentElement.classList.toggle('light-theme', nowLight);
             localStorage.setItem('theme', nowLight ? 'light' : 'dark');
-            
-            // Update UI
             updateThemeUI(nowLight);
         }
     });
 
     function updateThemeUI(isLightMode) {
-        const toggleBtns = document.querySelectorAll('#theme-toggle');
-        toggleBtns.forEach(btn => {
-            if (isLightMode) {
-                btn.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                btn.innerHTML = '<i class="fas fa-moon"></i>';
-            }
+        document.querySelectorAll('#theme-toggle').forEach(btn => {
+            btn.innerHTML = '<i class="fas fa-moon"></i><i class="fas fa-sun"></i>';
         });
         updateLogos(isLightMode);
     }
 
     function updateLogos(isLightMode) {
-        // Update ACC Logos
-        const accLogos = document.querySelectorAll('.acc-logo');
-        accLogos.forEach(function(logo) {
-            const currentSrc = logo.getAttribute('src') || '';
+        document.querySelectorAll('.acc-logo').forEach(function(logo) {
+            const src = logo.getAttribute('src') || '';
             if (isLightMode) {
-                if (currentSrc.includes('ACC_LOGO_WH.png')) {
-                    logo.setAttribute('src', 'Images/ACC_LOGO_BLCK.png');
-                } else if (currentSrc.includes('ACC_WHITE.png')) {
-                    logo.setAttribute('src', 'Images/ACC_BLACK.png');
-                }
+                if (src.includes('ACC_LOGO_WH.png')) logo.setAttribute('src', 'Images/ACC_LOGO_BLCK.png');
+                else if (src.includes('ACC_WHITE.png')) logo.setAttribute('src', 'Images/ACC_BLACK.png');
             } else {
-                if (currentSrc.includes('ACC_LOGO_BLCK.png')) {
-                    logo.setAttribute('src', 'Images/ACC_LOGO_WH.png');
-                } else if (currentSrc.includes('ACC_BLACK.png')) {
-                    logo.setAttribute('src', 'Images/ACC_WHITE.png');
-                }
+                if (src.includes('ACC_LOGO_BLCK.png')) logo.setAttribute('src', 'Images/ACC_LOGO_WH.png');
+                else if (src.includes('ACC_BLACK.png')) logo.setAttribute('src', 'Images/ACC_WHITE.png');
             }
         });
-
-        // Update University Logos
-        const uniLogos = document.querySelectorAll('.uni-logo');
-        uniLogos.forEach(function(logo) {
-            if (isLightMode) {
-                logo.setAttribute('src', 'Images/UniversityLogo.png');
-            } else {
-                logo.setAttribute('src', 'Images/University_logo_WH.png');
-            }
+        document.querySelectorAll('.uni-logo').forEach(function(logo) {
+            logo.setAttribute('src', isLightMode ? 'Images/UniversityLogo.png' : 'Images/University_logo_WH.png');
         });
     }
+
+    // ─── Navbar Scroll Morph ─────────────────────────────────────────────
+    const header = document.querySelector('header');
+    if (header) {
+        const checkScroll = () => {
+            header.classList.toggle('nav-scrolled', window.scrollY > 60);
+        };
+        checkScroll();
+        window.addEventListener('scroll', checkScroll, { passive: true });
+    }
+
+    // ─── Mobile Nav Drawer ───────────────────────────────────────────────
+    buildMobileNav();
 });
 
-// Preloader Logic
+// ─── Mobile Nav (completely independent of Bootstrap collapse) ────────────
+function buildMobileNav() {
+    const toggler = document.querySelector('.navbar-toggler');
+    if (!toggler) return;
+
+    // Build link list from the desktop nav DOM
+    const desktopLinks = document.querySelectorAll(
+        '.navbar-nav a.nav-link:not(.dropdown-toggle), .navbar-nav a.dropdown-item'
+    );
+
+    let linksHTML = '';
+    desktopLinks.forEach((a, i) => {
+        const text = a.textContent.trim();
+        const href = a.getAttribute('href') || '#';
+        if (!text) return;
+        linksHTML += `<a href="${href}" class="mnav-link" style="--idx:${i}">${text}</a>`;
+    });
+
+    // Create the overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'mnav-overlay';
+    overlay.innerHTML = `
+        <div class="mnav-drawer" id="mnav-drawer">
+            <div class="mnav-header">
+                <img src="Images/ACC_WHITE.png" class="acc-logo mnav-logo" alt="ACC" style="height:34px;">
+                <button class="mnav-close-btn" id="mnav-close" aria-label="Close">
+                    <span></span><span></span>
+                </button>
+            </div>
+            <nav class="mnav-body">
+                ${linksHTML}
+            </nav>
+            <div class="mnav-footer">
+                <a href="https://www.instagram.com/acc_kengeri/" target="_blank" aria-label="Instagram" class="mnav-social"><i class="fab fa-instagram"></i></a>
+                <a href="https://chat.whatsapp.com/KoTpbOt0HZB8Uq0PbNUqrj" target="_blank" aria-label="WhatsApp" class="mnav-social"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Update logo when theme switches
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('#theme-toggle')) {
+            setTimeout(() => {
+                const logo = overlay.querySelector('.mnav-logo');
+                if (logo) {
+                    logo.setAttribute('src', document.body.classList.contains('light-theme')
+                        ? 'Images/ACC_BLACK.png' : 'Images/ACC_WHITE.png');
+                }
+            }, 50);
+        }
+    });
+
+    function openNav() {
+        overlay.classList.add('open');
+        document.body.classList.add('menu-open');
+        toggler.classList.remove('collapsed');
+        toggler.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeNav() {
+        overlay.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        toggler.classList.add('collapsed');
+        toggler.setAttribute('aria-expanded', 'false');
+    }
+
+    // Intercept Bootstrap's click handler using capture phase
+    toggler.addEventListener('click', function(e) {
+        e.stopImmediatePropagation();
+        overlay.classList.contains('open') ? closeNav() : openNav();
+    }, true);
+
+    document.getElementById('mnav-close').addEventListener('click', closeNav);
+
+    // Close on backdrop click
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeNav();
+    });
+
+    // Close on nav link click (page navigation)
+    overlay.querySelectorAll('.mnav-link').forEach(a => {
+        a.addEventListener('click', closeNav);
+    });
+}
+
+// ─── Hero Writing Reveal (CSS clip-path, not JS typewriter) ───────────────
+function startHeroTypewriter() {
+    const h1 = document.querySelector('.over-text h1');
+    if (!h1) return;
+
+    const btn = document.querySelector('.over-text a.btn-gold');
+
+    // Small pause, then trigger the fade-up reveal
+    setTimeout(() => {
+        h1.classList.add('hero-reveal');
+
+        // Reveal button slightly after text fades up
+        setTimeout(() => {
+            if (btn) {
+                btn.style.transition = 'opacity 1.5s ease, transform 1.5s cubic-bezier(0.16,1,0.3,1)';
+                btn.style.opacity = '1';
+                btn.style.transform = 'translateY(0)';
+            }
+        }, 800);
+
+        startRotator();
+    }, 250);
+}
+
+function startRotator() {
+    var words = ['Faith', 'Grace', 'Love', 'Purpose'];
+    var el = document.getElementById('rotatorWord');
+    if (!el) return;
+    var idx = 0;
+
+    var HOLD = 2600;        // how long each word stays visible, ms
+    var TRANSITION = 600;   // must match the CSS transition duration above
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var timer = null;
+
+    function showNextWord() {
+        idx = (idx + 1) % words.length;
+
+        if (reduceMotion) {
+            el.textContent = words[idx];
+            return;
+        }
+
+        el.classList.add('exiting');
+
+        setTimeout(function () {
+            el.style.transition = 'none';
+            el.classList.remove('exiting');
+            el.classList.add('entering');
+            el.textContent = words[idx];
+            void el.offsetWidth; // force reflow so the entering state applies instantly
+            el.style.transition = '';
+            requestAnimationFrame(function () {
+                el.classList.remove('entering');
+            });
+        }, TRANSITION);
+    }
+
+    function start() {
+        if (timer) return;
+        timer = setInterval(showNextWord, HOLD);
+    }
+
+    function stop() {
+        clearInterval(timer);
+        timer = null;
+    }
+
+    start();
+
+    // pause while the tab isn't visible, resume when it is
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            stop();
+        } else {
+            start();
+        }
+    });
+}
+
+// ─── Preloader Logic ──────────────────────────────────────────────────────
 function hidePreloader() {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        preloader.style.transition = 'opacity 0.6s ease';
+        preloader.style.transition = 'opacity 0.5s ease';
         preloader.style.opacity = '0';
         setTimeout(function() {
-            if (preloader.parentNode) {
-                preloader.parentNode.removeChild(preloader);
-            }
-        }, 600);
+            if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+            startHeroTypewriter();
+        }, 520);
+    } else {
+        startHeroTypewriter();
     }
 }
 
 window.addEventListener('load', function() {
-    // Wait for Drive gallery or timeout after 9 seconds, whichever comes first
     if (window._driveGalleryLoaded) {
         hidePreloader();
     } else {
-        const fallbackTimer = setTimeout(hidePreloader, 9000);
+        // Only wait long on pages with a drive gallery component
+        const hasDriveGallery = !!document.querySelector('.gallery-container, #media-gallery, [data-drive-gallery]');
+        const timeout = hasDriveGallery ? 9000 : 1800;
+
+        const fallbackTimer = setTimeout(hidePreloader, timeout);
         document.addEventListener('driveGalleryReady', function() {
             clearTimeout(fallbackTimer);
             hidePreloader();
-        });
+        }, { once: true });
     }
 });

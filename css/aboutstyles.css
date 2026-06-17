@@ -33,7 +33,7 @@
 }
 
 .welctext-abt h1 {
-    color: var(--text-primary);
+    color: #ffffff;
     font-family: var(--font-serif);
     font-weight: 700;
     font-size: 3.5rem;
@@ -85,42 +85,124 @@
     z-index: 1;
 }
 
-.mistext, .vistext {
-    padding: 20px;
+/* Mission & Vision Premium Styling */
+.mv-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.mistext h1, .vistext h1 {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
+.mv-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 111, 0, 0.4);
+    box-shadow: 0 15px 35px rgba(255, 111, 0, 0.15);
+}
+
+.mv-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 111, 0, 0.1);
     color: var(--accent-gold);
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+    font-size: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 1px solid rgba(255, 111, 0, 0.2);
+    transition: all 0.4s ease;
 }
 
-.mistext p, .vistext p {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    font-weight: 300;
+.mv-card:hover .mv-icon {
+    background: var(--accent-gold);
+    color: #ffffff;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 20px rgba(255, 111, 0, 0.4);
 }
 
-.quotext {
+.mv-card h1 {
     font-family: var(--font-serif);
     font-size: 1.8rem;
     color: var(--text-primary);
-    font-style: italic;
-    text-shadow: 0 0 20px var(--shadow-subtle);
-    line-height: 1.5;
-    padding: 30px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    backdrop-filter: blur(8px);
-    margin: 2rem 0;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
 }
 
-.quotext h5 {
+.mv-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--accent-gold);
+    margin: 0 auto 20px;
+}
+
+.mv-card p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
     margin: 0;
-    font-weight: 400;
+}
+
+.mv-quote-card {
+    background: linear-gradient(135deg, rgba(255, 111, 0, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid rgba(255, 111, 0, 0.3);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+body.light-theme .mv-quote-card {
+    background: linear-gradient(135deg, rgba(255, 111, 0, 0.05) 0%, rgba(212, 175, 55, 0.02) 100%);
+}
+
+.mv-quote-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(255, 111, 0, 0.2);
+}
+
+.quote-icon-bg {
+    position: absolute;
+    font-size: 8rem;
+    color: rgba(255, 111, 0, 0.05);
+    top: -15px;
+    left: -15px;
+    z-index: 0;
+    transform: rotate(-10deg);
+}
+
+.mv-quote-card h5 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-style: italic;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.highlight-acc {
+    display: block;
+    margin-top: 15px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    font-style: normal;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Core Team Profiles Section */

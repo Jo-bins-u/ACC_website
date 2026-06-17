@@ -1,9 +1,19 @@
-/* Home Page Specific Stylesheet */
+/* ============================================================
+   Home Page Specific Stylesheet — Premium Rewrite
+   ============================================================ */
 
-/* Hero Section */
+/* ── Body offset for fixed header ──────────────────────────── */
+body {
+    padding-top: 0; /* hero is full viewport, header overlays it */
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+
 .inner-container {
     height: 100vh;
-    min-height: 500px;
+    min-height: 560px;
     overflow: hidden;
     position: relative;
     background: #000;
@@ -19,111 +29,359 @@
     height: auto;
     transform: translate(-50%, -50%);
     object-fit: cover;
-    opacity: var(--video-opacity, 0.45); /* Darken for readability */
-    filter: brightness(0.65) contrast(1.1);
+    opacity: var(--video-opacity, 0.45);
+    filter: brightness(0.62) contrast(1.05) saturate(1.1);
+    transition: opacity 1s ease;
 }
 
-/* Gradient overlay on video banner */
+/* In light mode, video should look brighter (not darkened as much) */
+body.light-theme .vdo-bnr {
+    filter: brightness(0.88) contrast(1.0) saturate(1.05);
+}
+
+/* Multi-layer cinematic gradient overlay */
 .inner-container::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--inner-container-gradient);
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 60% 40%, rgba(255,111,0,0.06) 0%, transparent 60%),
+        linear-gradient(to bottom,
+            rgba(7,9,14,0.2) 0%,
+            rgba(7,9,14,0.1) 40%,
+            rgba(7,9,14,0.85) 100%);
     z-index: 1;
 }
 
+/* Hero text container */
 .over-text {
     width: 100%;
     z-index: 2;
     padding: 0 20px;
 }
 
-.over-text h1 {
-    font-family: var(--font-curvy);
-    color: var(--text-primary);
+/* ── Typewriter / Blur-Reveal animation ─────────────────────── */
+@keyframes heroFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(12px);
+        letter-spacing: 0.8em;
+    }
+    60% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+@keyframes textBreatheSoft {
+    0%, 100% {
+        text-shadow:
+            0 8px 30px rgba(0,0,0,0.9),
+            0 0 30px rgba(255,111,0,0.07);
+    }
+    50% {
+        text-shadow:
+            0 8px 30px rgba(0,0,0,0.9),
+            0 0 70px rgba(255,111,0,0.28),
+            0 0 120px rgba(255,111,0,0.08);
+    }
+}
+
+.over-text h1.hero-title-rotating {
     font-weight: 400;
-    font-size: 7.5rem;
+    line-height: 1.1;
     letter-spacing: normal;
-    text-transform: none;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    transition: var(--transition-smooth);
+    text-shadow: 0 8px 30px rgba(0,0,0,0.9);
+    display: block;
+    margin: 0 auto;
+    clip-path: none;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
-.over-text h1:hover {
+.over-text h1.hero-reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-line-1, .hero-line-3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hero-line-2 {
+    font-family: var(--font-curvy);
+    font-size: clamp(4rem, 8vw, 8rem);
     color: var(--accent-gold);
-    text-shadow: 0 0 25px var(--accent-gold-glow);
+    margin: -10px 0;
+    text-shadow: 0 0 30px rgba(255,111,0,0.15);
 }
 
+/* screen-reader-only fallback: the full sentence, read once, no repeats */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---- the rotating word ---- */
+.rotator-word {
+    display: inline-block;
+    transition:
+        opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        filter 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+.rotator-word.exiting {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(-15px);
+}
+
+.rotator-word.entering {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(15px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rotator-word {
+        transition: none;
+    }
+}
+
+/* CTA button — sits BELOW the h1, hidden until JS reveals it */
 .over-text a {
-    margin-top: 25px;
+    margin-top: 36px;
+    opacity: 0;
+    transform: translateY(14px);
+    display: inline-block;    /* inline-block keeps it centered under the h1 */
+    /* JS sets transition + opacity:1 + transform:none after writing finishes */
 }
 
-/* Verse Section */
+/* Hero button always white text on video */
+.over-text a.btn-gold {
+    color: #ffffff !important;
+}
+
+
+/* Scroll indicator arrow */
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation:
+        heroBtnFade 0.8s ease 3s forwards,
+        scrollHintBounce 2.5s ease-in-out 3.8s infinite;
+}
+
+@keyframes scrollHintBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.hero-scroll-hint span {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+}
+
+.hero-scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255,111,0,0.7), transparent);
+    animation: scrollLine 2s ease-in-out 3.5s infinite;
+}
+
+@keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    50.1%{ transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+
+/* ============================================================
+   VERSE SECTION
+   ============================================================ */
+
 .verse {
-    padding: 6rem 0;
+    padding: 7rem 0;
     background: var(--verse-gradient);
     position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
 }
 
+/* Large decorative quote mark */
 .verse::before {
-    content: '"';
+    content: '\201C';
     position: absolute;
-    top: 2rem;
+    top: -1rem;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 10rem;
+    font-size: 16rem;
     font-family: var(--font-serif);
-    color: var(--quote-mark-color, rgba(212, 175, 55, 0.06));
+    color: rgba(255,111,0,0.04);
     line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Animated golden line accent */
+.verse::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    box-shadow: 0 0 12px var(--accent-gold-glow);
 }
 
 .versetxt {
-    max-width: 800px;
+    max-width: 820px;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .versetxt h1 {
     font-family: var(--font-serif);
-    font-size: 2.2rem;
+    font-size: 2.3rem;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--text-primary);
     font-style: italic;
-    letter-spacing: 0.5px;
-    transition: var(--transition-smooth);
+    letter-spacing: 0.3px;
+    transition: all 0.6s ease;
 }
 
 .versetxt p {
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     color: var(--accent-gold);
-    margin-top: 20px;
-    font-size: 0.95rem;
+    margin-top: 24px;
+    font-size: 0.85rem;
+    opacity: 0.85;
 }
 
-/* About Us Section */
+
+/* ============================================================
+   SECTION TITLE STYLE (shared)
+   ============================================================ */
+
+.section-title-block {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.section-title-block h1 {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    color: var(--accent-gold);
+    text-shadow: 0 0 15px var(--accent-gold-glow);
+    margin-bottom: 0;
+}
+
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.section-divider::before,
+.section-divider::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-gold));
+}
+
+.section-divider::after {
+    background: linear-gradient(to left, transparent, var(--accent-gold));
+}
+
+.section-divider span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-gold);
+    display: inline-block;
+}
+
+
+/* ============================================================
+   ABOUT US SECTION
+   ============================================================ */
+
 .abtimg {
-    border-radius: 16px;
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 15px 35px var(--shadow-subtle);
-    transition: var(--transition-smooth);
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    z-index: 1;
+    display: block;
 }
 
 .abtimg:hover {
-    transform: translateY(-5px) scale(1.01);
-    border-color: rgba(212, 175, 55, 0.3);
-    box-shadow: 0 20px 45px rgba(212, 175, 55, 0.1);
+    transform: scale(1.025) translateY(-6px);
+    border-color: rgba(255,111,0,0.4);
+    box-shadow:
+        0 30px 60px rgba(255, 111, 0, 0.15),
+        inset 0 2px 2px rgba(255, 255, 255, 0.12);
 }
 
 #abt {
-    padding-left: 30px;
+    padding-left: 36px;
 }
 
 #abt h1 {
@@ -131,252 +389,373 @@
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 20px;
-    color: var(--text-primary);
+    color: var(--accent-gold);
+    text-shadow: 0 0 20px var(--accent-gold-glow);
 }
 
 #abt p {
     color: var(--text-secondary);
     font-size: 1.05rem;
-    line-height: 1.8;
+    line-height: 1.85;
     text-align: justify;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
 }
 
 #abt a {
     color: var(--accent-gold);
     text-decoration: none;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: var(--transition-smooth);
+    transition: all 0.4s ease;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
 }
 
 #abt a:hover {
     color: var(--accent-gold-hover);
-    letter-spacing: 1px;
+    gap: 14px;
+    border-bottom-color: var(--accent-gold-hover);
 }
 
-/* Service Timings */
+
+/* ============================================================
+   SERVICE TIMINGS SECTION
+   ============================================================ */
+
 #serv-time {
-    padding: 5rem 20px;
+    padding: 5rem 20px 6rem;
+    position: relative;
 }
 
 #serv-time h1 {
     font-family: var(--font-serif);
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: var(--text-primary);
+    font-size: 2.6rem;
+    margin-bottom: 0;
 }
 
 #serv-time hr {
-    width: 100px !important;
-    height: 3px;
-    background-color: var(--accent-gold) !important;
-    border: none;
-    opacity: 1;
-    margin: 0 auto 50px auto !important;
-    border-radius: 2px;
+    display: none; /* replaced by .section-divider */
 }
 
-/* Redesigned Timings Grid */
+/* Grid layout */
 #serv-time .row {
-    gap: 24px;
     justify-content: center;
 }
 
 #serv-time .col-md-4 {
-    flex: 0 0 calc(33.333% - 16px);
-    max-width: calc(33.333% - 16px);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 30px 20px !important;
-    box-shadow: var(--glass-shadow);
+    border-radius: 20px;
+    padding: 36px 24px !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.07),
+        0 8px 32px rgba(0,0,0,0.3);
     backdrop-filter: var(--glass-blur);
-    transition: var(--transition-smooth);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Subtle inner top shine edge */
+#serv-time .col-md-4::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+#serv-time .col-md-4:hover::before {
+    opacity: 1;
 }
 
 #serv-time .col-md-4:hover {
     background: var(--glass-bg-hover);
-    border-color: rgba(212, 175, 55, 0.3);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.06);
+    border-color: rgba(255,111,0,0.4);
+    transform: translateY(-8px);
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.1),
+        0 20px 40px rgba(255, 111, 0, 0.15);
+}
+
+.serv-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 111, 0, 0.1);
+    color: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 111, 0, 0.2);
+    box-shadow: 0 0 20px rgba(255, 111, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#serv-time .col-md-4:hover .serv-icon {
+    background: var(--accent-gold);
+    color: #ffffff;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 30px rgba(255, 111, 0, 0.4);
+}
+
+.serv-time-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+    transition: all 0.4s ease;
+}
+
+body.light-theme .serv-time-badge {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#serv-time .col-md-4:hover .serv-time-badge {
+    border-color: rgba(255, 111, 0, 0.3);
+    color: var(--accent-gold);
+    background: rgba(255, 111, 0, 0.05);
+}
+
+.serv-note {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    font-style: italic;
+    opacity: 0.9;
 }
 
 #serv-time h2 {
     font-family: var(--font-serif);
-    font-size: 1.4rem;
-    color: var(--accent-gold);
-    margin-bottom: 12px;
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    margin-bottom: 14px;
     font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-#serv-time h2 + hr {
-    width: 40px !important;
-    height: 1px;
-    background-color: var(--border-subtle) !important;
-    margin: 0 auto 15px auto !important;
+#serv-time .col-md-4:hover h2 {
+    color: var(--accent-gold);
 }
 
 #serv-time p {
     color: var(--text-secondary);
     font-size: 0.95rem;
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: 0;
 }
 
-#serv-time h6 {
-    color: var(--text-muted);
-    font-style: italic;
-    margin-bottom: 8px;
-}
 
-/* Facts Section (Carousel) */
-/* Events Slider */
+
+/* ============================================================
+   EVENTS SLIDER SECTION
+   ============================================================ */
+
 .texent {
-    padding: 5rem 0;
+    padding: 5rem 0 6rem;
 }
 
 .texent h1 {
     font-family: var(--font-serif);
-    font-size: 2.5rem;
+    font-size: 2.6rem;
 }
 
 .texent hr {
-    width: 80px !important;
-    height: 3px;
-    background-color: var(--accent-gold) !important;
-    border: none;
-    opacity: 1;
-    margin: 0 auto 40px auto !important;
-    border-radius: 2px;
+    display: none; /* replaced by .section-divider */
 }
 
 .slider {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 50px;
 }
 
+/* Allow overflow so scaled center card doesn't get clipped */
 .slider .owl-stage-outer {
-    padding-top: 35px;
-    padding-bottom: 35px;
-    margin-top: -35px;
-    margin-bottom: -35px;
+    overflow: visible !important;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    margin-top: -30px;
+    margin-bottom: -40px;
 }
 
+/* Base card state: dimmed and shrunk */
 .slider-card {
     background: var(--bg-secondary);
-    border: 1px solid var(--border-subtle);
-    border-radius: 20px;
-    padding: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    transition: var(--transition-smooth);
-    opacity: 0.55;
-    transform: scale(0.9);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.45;
+    transform: scale(0.86);
+    position: relative;
+}
+
+/* Light mode slider cards */
+body.light-theme .slider-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .slider-card img {
-    border-radius: 14px;
+    border-radius: 16px;
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1.41;
     object-fit: contain;
     background: transparent;
-    transition: var(--transition-smooth);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
 }
 
+/* Active center card — full scale, glowing border */
 .slider .owl-item.active.center .slider-card {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.06);
     border-color: var(--accent-gold);
-    box-shadow: 0 15px 35px var(--accent-gold-glow);
+    box-shadow:
+        0 0 0 1px var(--accent-gold),
+        0 20px 50px rgba(255,111,0,0.3),
+        0 0 60px rgba(255,111,0,0.08);
 }
 
-.slider .owl-item.active.center .slider-card img {
-    transform: scale(1.02);
-}
-
-/* Hover states */
+/* Hover on any card — brighten and lift */
 .slider-card:hover {
-    border-color: var(--accent-gold);
-    box-shadow: 0 15px 35px var(--accent-gold-glow);
-    opacity: 1;
+    opacity: 0.95;
+    border-color: rgba(255,111,0,0.6);
+    box-shadow:
+        0 20px 40px rgba(255,111,0,0.2),
+        0 0 30px rgba(255,111,0,0.08);
+    transform: scale(0.9);
 }
 
-/* Owl Carousel Custom Arrows */
+.slider .owl-item.active.center .slider-card:hover {
+    transform: scale(1.07);
+}
+
+/* Owl carousel nav arrows — premium pill style */
 .owl-nav button {
-    background: var(--glass-bg) !important;
-    border: 1px solid var(--glass-border) !important;
+    background: rgba(14,17,26,0.8) !important;
+    border: 1px solid rgba(255,111,0,0.3) !important;
     color: var(--accent-gold) !important;
-    width: 44px;
-    height: 44px;
+    width: 50px !important;
+    height: 50px !important;
     border-radius: 50% !important;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    transition: var(--transition-smooth) !important;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: blur(10px);
+    font-size: 1.1rem !important;
+}
+
+/* Light mode: arrows need a light background so they're visible */
+body.light-theme .owl-nav button {
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-color: rgba(230, 74, 25, 0.35) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
+    color: var(--accent-gold) !important;
 }
 
 .owl-nav button:hover {
     background: var(--accent-gold) !important;
-    color: #07090e !important;
+    color: #fff !important;
     border-color: var(--accent-gold) !important;
-    box-shadow: 0 0 15px var(--accent-gold-glow);
+    box-shadow:
+        0 0 0 4px rgba(255,111,0,0.15),
+        0 8px 20px rgba(255,111,0,0.35) !important;
+    transform: scale(1.08);
 }
 
-.owl-nav .owl-prev {
-    left: -20px !important;
+body.light-theme .owl-nav button:hover {
+    color: #fff !important;
 }
 
-.owl-nav .owl-next {
-    right: -20px !important;
+.owl-nav .owl-prev { margin-right: 8px; }
+.owl-nav .owl-next { margin-left: 8px; }
+
+
+/* Carousel dots */
+.owl-dots {
+    margin-top: 20px !important;
 }
 
-.owl-dots .owl-dot {
-    height: 8px !important;
-    width: 8px !important;
-    background: var(--border-subtle) !important;
+.owl-dots .owl-dot span {
+    height: 6px !important;
+    width: 6px !important;
+    background: var(--glass-border) !important;
     margin: 0 4px !important;
-    border-radius: 50% !important;
-    transition: var(--transition-smooth) !important;
+    border-radius: 3px !important;
+    transition: all 0.4s cubic-bezier(0.16,1,0.3,1) !important;
+    display: block;
 }
 
-.owl-dots .owl-dot.active {
+.owl-dots .owl-dot.active span {
     background: var(--accent-gold) !important;
-    width: 20px !important;
-    border-radius: 4px !important;
+    width: 22px !important;
+    border-radius: 3px !important;
+    box-shadow: 0 0 8px var(--accent-gold-glow) !important;
 }
 
-/* Responsiveness adjustments */
+
+/* ============================================================
+   AOS ENHANCEMENTS
+   ============================================================ */
+
+[data-aos="fade-up"] {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
 @media (max-width: 991px) {
-    .over-text h1 {
-        font-size: 5.5rem;
-    }
+    .over-text h1 { font-size: 5.5rem; }
+
     #serv-time .col-md-4 {
-        flex: 0 0 calc(50% - 12px);
-        max-width: calc(50% - 12px);
+        flex: 0 0 calc(50% - 10px);
+        max-width: calc(50% - 10px);
     }
 }
 
 @media (max-width: 767px) {
-    .over-text h1 {
-        font-size: 4.2rem;
-    }
+    .over-text h1 { font-size: 4rem; }
+
     #abt {
         padding-left: 0;
         margin-top: 30px;
     }
+
     #serv-time .col-md-4 {
         flex: 0 0 100%;
         max-width: 100%;
     }
-    .versetxt h1 {
-        font-size: 1.6rem;
-    }
-    .slide-text h3 {
-        font-size: 1.5rem;
-    }
+
+    .versetxt h1 { font-size: 1.65rem; }
+
+    .section-title-block h1 { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .over-text h1 { font-size: 3.2rem; }
 }
