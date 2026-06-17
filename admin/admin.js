@@ -519,3 +519,70 @@ $(document).ready(function() {
     }
   });
 });
+
+// ── Media Drive Tab — vanilla JS (no jQuery) ──────────────────
+(function() {
+  const DRIVE_KEY = "acc_drive_url";
+
+  function refreshDriveUI() {
+    const saved = localStorage.getItem(DRIVE_KEY);
+    const display = document.getElementById("drive-url-display");
+    const input = document.getElementById("drive-script-url");
+    if (display) display.textContent = saved || "None";
+    if (input && saved) input.value = saved;
+  }
+
+  function initDriveTab() {
+    refreshDriveUI();
+
+    const saveBtn = document.getElementById("btn-save-drive-url");
+    const clearBtn = document.getElementById("btn-clear-drive-url");
+    const status = document.getElementById("drive-url-status");
+
+    if (saveBtn) {
+      saveBtn.addEventListener("click", function() {
+        const input = document.getElementById("drive-script-url");
+        const val = input ? input.value.trim() : "";
+        if (!val) {
+          status.textContent = "Please enter a URL.";
+          status.style.color = "var(--accent-danger, #e05)";
+          return;
+        }
+        localStorage.setItem(DRIVE_KEY, val);
+        refreshDriveUI();
+        status.textContent = "✓ Saved successfully.";
+        status.style.color = "var(--accent-green, #4c8)";
+        setTimeout(() => { status.textContent = ""; }, 3000);
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", function() {
+        if (confirm("Remove the saved Drive URL? The media gallery will stop loading Drive events.")) {
+          localStorage.removeItem(DRIVE_KEY);
+          const input = document.getElementById("drive-script-url");
+          if (input) input.value = "";
+          refreshDriveUI();
+          status.textContent = "URL cleared.";
+          status.style.color = "var(--text-muted, #888)";
+          setTimeout(() => { status.textContent = ""; }, 3000);
+        }
+      });
+    }
+  }
+
+  // Init when tab becomes visible — hook into the existing tab button
+  document.addEventListener("DOMContentLoaded", function() {
+    // Run once on load in case tab-drive is already active
+    refreshDriveUI();
+
+    // Re-run when the tab button is clicked
+    const driveTabBtn = document.querySelector('.admin-tab-btn[data-tab="tab-drive"]');
+    if (driveTabBtn) {
+      driveTabBtn.addEventListener("click", function() {
+        // Small delay to let jQuery show the tab panel first
+        setTimeout(initDriveTab, 50);
+      });
+    }
+  });
+})();

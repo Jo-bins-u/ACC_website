@@ -124,6 +124,7 @@
               <button class="admin-tab-btn active" data-tab="tab-events"><i class="fas fa-calendar-alt"></i> Events</button>
               <button class="admin-tab-btn" data-tab="tab-team"><i class="fas fa-users"></i> Core Team</button>
               <button class="admin-tab-btn" data-tab="tab-gallery"><i class="fas fa-images"></i> Domain Galleries</button>
+              <button class="admin-tab-btn" data-tab="tab-drive"><i class="fas fa-cloud"></i> Media Drive</button>
             </div>
 
             <!-- 2.1 Events Management Tab -->
@@ -269,6 +270,31 @@
                   </div>
                   <div id="admin-gallery-preview-grid" class="admin-gallery-grid">
                     <!-- Dynamically populated grid of gallery images -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.4 Media Drive Settings Tab -->
+            <div id="tab-drive" class="admin-tab-content">
+              <div class="row g-4">
+                <div class="col-md-7">
+                  <h4 class="font-serif text-primary h5 mb-3">Google Drive Gallery Settings</h4>
+                  <p class="text-secondary small mb-4">
+                    Paste your Google Apps Script Web App URL below. The media gallery will automatically load event folders from your connected Google Drive. To add a new event, simply create a new folder inside your Drive root folder and upload photos — no code changes needed.
+                  </p>
+                  <div class="mb-3">
+                    <label for="drive-script-url" class="form-label text-secondary small">Apps Script Web App URL</label>
+                    <input type="url" id="drive-script-url" class="form-control custom-input" placeholder="https://script.google.com/macros/s/...">
+                  </div>
+                  <div class="d-flex gap-2 align-items-center">
+                    <button type="button" id="btn-save-drive-url" class="btn-gold py-2 px-4">Save URL</button>
+                    <button type="button" id="btn-clear-drive-url" class="btn btn-outline-danger btn-sm py-2 px-3">Clear</button>
+                    <span id="drive-url-status" class="small ms-2"></span>
+                  </div>
+                  <div class="mt-4 p-3 rounded" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                    <p class="text-secondary small mb-1"><i class="fas fa-info-circle text-orange"></i> <strong>Current saved URL:</strong></p>
+                    <p id="drive-url-display" class="small font-monospace text-muted mb-0" style="word-break: break-all;">None</p>
                   </div>
                 </div>
               </div>

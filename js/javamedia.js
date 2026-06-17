@@ -1,3 +1,4 @@
+window._driveGalleryLoaded = false;
 // Media Gallery Lightbox Logic
 const eventMedia = {
     "bereshith": {
@@ -66,116 +67,208 @@ const eventMedia = {
 let currentGallery = null;
 let currentIndex = 0;
 
-$(document).ready(function() {
-    // Open Lightbox when clicking a card
-    $(".media-card").click(function() {
-        const galleryKey = $(this).data("gallery");
-        if (eventMedia[galleryKey]) {
-            currentGallery = eventMedia[galleryKey];
-            currentIndex = 0;
-            openLightbox();
-        }
-    });
+document.addEventListener("DOMContentLoaded", () => {
+    // Bind click events to existing static cards
+    bindMediaCardClicks();
 
-    // Close Lightbox
-    $(".lightbox-close").click(closeLightbox);
+    const lightboxCloseBtn = document.querySelector(".lightbox-close");
+    if (lightboxCloseBtn) {
+        lightboxCloseBtn.addEventListener("click", closeLightbox);
+    }
     
-    // Clicking outside content area
-    $(".lightbox-overlay").click(function(e) {
-        if ($(e.target).hasClass("lightbox-overlay")) {
-            closeLightbox();
-        }
-    });
+    const lightboxOverlay = document.querySelector(".lightbox-overlay");
+    if (lightboxOverlay) {
+        lightboxOverlay.addEventListener("click", (e) => {
+            if (e.target.classList.contains("lightbox-overlay")) {
+                closeLightbox();
+            }
+        });
+    }
 
-    // Navigation arrows
-    $(".lightbox-prev").click(showPrev);
-    $(".lightbox-next").click(showNext);
+    const prevBtn = document.querySelector(".lightbox-prev");
+    if (prevBtn) {
+        prevBtn.addEventListener("click", showPrev);
+    }
+    
+    const nextBtn = document.querySelector(".lightbox-next");
+    if (nextBtn) {
+        nextBtn.addEventListener("click", showNext);
+    }
 
-    // Keyboard controls
-    $(document).keydown(function(e) {
-        if ($(".lightbox-overlay").is(":visible")) {
+    document.addEventListener("keydown", (e) => {
+        const overlay = document.querySelector(".lightbox-overlay");
+        if (overlay && overlay.style.display === "flex") {
             if (e.key === "Escape") closeLightbox();
             if (e.key === "ArrowLeft") showPrev();
             if (e.key === "ArrowRight") showNext();
         }
     });
+
+    loadDriveGallery();
 });
 
+function bindMediaCardClicks() {
+    const mediaCards = document.querySelectorAll(".media-card");
+    mediaCards.forEach(card => {
+        // Prevent multiple bindings if called again
+        if (!card.dataset.bound) {
+            card.addEventListener("click", function() {
+                const galleryKey = this.getAttribute("data-gallery");
+                if (eventMedia[galleryKey]) {
+                    currentGallery = eventMedia[galleryKey];
+                    currentIndex = 0;
+                    openLightbox();
+                }
+            });
+            card.dataset.bound = "true";
+        }
+    });
+}
+
 function openLightbox() {
-    $(".lightbox-overlay").fadeIn(300).css("display", "flex");
+    const overlay = document.querySelector(".lightbox-overlay");
+    if (overlay) {
+        overlay.style.display = "flex";
+        overlay.style.opacity = 0;
+        // Fade in
+        let op = 0;
+        const timer = setInterval(() => {
+            if (op >= 1){
+                clearInterval(timer);
+                overlay.style.opacity = 1;
+            }
+            overlay.style.opacity = op;
+            op += 0.1;
+        }, 30);
+    }
     renderMediaItem();
     renderThumbnails();
 }
 
 function closeLightbox() {
-    $(".lightbox-overlay").fadeOut(200);
+    const overlay = document.querySelector(".lightbox-overlay");
+    if (overlay) {
+        // Fade out
+        let op = 1;
+        const timer = setInterval(() => {
+            if (op <= 0){
+                clearInterval(timer);
+                overlay.style.display = "none";
+            }
+            overlay.style.opacity = op;
+            op -= 0.1;
+        }, 20);
+    }
+    
     // Pause any playing videos
-    const video = $(".lightbox-content-container video")[0];
+    const video = document.querySelector(".lightbox-content-container video");
     if (video) {
         video.pause();
     }
 }
 
 function renderMediaItem() {
+    if (!currentGallery) return;
+    
     const item = currentGallery.items[currentIndex];
-    const container = $(".lightbox-content-container");
+    const container = document.querySelector(".lightbox-content-container");
+    if (!container) return;
     
     // Pause previous video if any
-    const prevVideo = container.find("video")[0];
+    const prevVideo = container.querySelector("video");
     if (prevVideo) {
         prevVideo.pause();
     }
     
-    container.empty();
+    // Preserve navigation arrows, clear existing content
+    const prevArrow = container.querySelector(".lightbox-prev");
+    const nextArrow = container.querySelector(".lightbox-next");
+    
+    container.innerHTML = "";
+    if (prevArrow) container.appendChild(prevArrow);
+    
+    const contentEl = document.createElement(item.type === "video" ? "video" : "img");
+    console.log("Rendering:", item.src);
+    contentEl.src = item.src;
+    contentEl.className = "img-fluid";
+    contentEl.style.opacity = 0;
+    contentEl.style.transition = "opacity 0.3s ease";
     
     if (item.type === "image") {
-        container.append(`<img src="${item.src}" alt="${item.caption}" class="img-fluid" style="opacity: 0;">`);
-        container.find("img").animate({ opacity: 1 }, 300);
+        contentEl.alt = item.caption;
     } else if (item.type === "video") {
-        container.append(`<video src="${item.src}" controls autoplay class="img-fluid" style="opacity: 0;"></video>`);
-        container.find("video").animate({ opacity: 1 }, 300);
+        contentEl.controls = true;
+        contentEl.autoplay = true;
     }
+    
+    container.appendChild(contentEl);
+    if (nextArrow) container.appendChild(nextArrow);
+    
+    // Trigger reflow and fade in
+    void contentEl.offsetWidth;
+    contentEl.style.opacity = 1;
 
-    $(".lightbox-caption").text(`${currentGallery.title} - ${item.caption} (${currentIndex + 1}/${currentGallery.items.length})`);
+    const captionEl = document.querySelector(".lightbox-caption");
+    if (captionEl) {
+        captionEl.textContent = `${currentGallery.title} - ${item.caption} (${currentIndex + 1}/${currentGallery.items.length})`;
+    }
     
     // Sync active class on thumbnails
-    $(".lightbox-thumb").removeClass("active");
-    $(`.lightbox-thumb[data-index="${currentIndex}"]`).addClass("active");
+    const thumbnails = document.querySelectorAll(".lightbox-thumb");
+    thumbnails.forEach(thumb => thumb.classList.remove("active"));
     
-    // Auto-scroll thumbnails into view
-    const thumb = $(`.lightbox-thumb[data-index="${currentIndex}"]`)[0];
-    if (thumb) {
-        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    const activeThumb = document.querySelector(`.lightbox-thumb[data-index="${currentIndex}"]`);
+    if (activeThumb) {
+        activeThumb.classList.add("active");
+        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 }
 
 function renderThumbnails() {
-    const thumbContainer = $(".lightbox-thumbnails");
-    thumbContainer.empty();
+    if (!currentGallery) return;
+    
+    const thumbContainer = document.querySelector(".lightbox-thumbnails");
+    if (!thumbContainer) return;
+    
+    thumbContainer.innerHTML = "";
     
     currentGallery.items.forEach((item, index) => {
-        let thumbSrc = item.src;
-        // For video items, we can show a placeholder icon or represent it using a cover, or a play icon style.
-        // Let's use the video link itself for browser to render frames, or a generic placeholder.
-        // Actually, we can use a nice custom play icon block for video thumbnails.
         let isVideo = item.type === "video";
         
         if (isVideo) {
-            thumbContainer.append(`
-                <div class="position-relative" style="display:inline-block;">
-                    <video src="${item.src}" class="lightbox-thumb" data-index="${index}"></video>
-                    <i class="fas fa-play position-absolute text-white" style="top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;font-size:0.8rem;text-shadow:0 0 4px #000;"></i>
-                </div>
-            `);
+            const wrapper = document.createElement("div");
+            wrapper.className = "position-relative";
+            wrapper.style.display = "inline-block";
+            
+            const videoEl = document.createElement("video");
+            videoEl.src = item.src;
+            videoEl.className = "lightbox-thumb";
+            videoEl.setAttribute("data-index", index);
+            
+            const icon = document.createElement("i");
+            icon.className = "fas fa-play position-absolute text-white";
+            icon.style.cssText = "top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;font-size:0.8rem;text-shadow:0 0 4px #000;";
+            
+            wrapper.appendChild(videoEl);
+            wrapper.appendChild(icon);
+            thumbContainer.appendChild(wrapper);
         } else {
-            thumbContainer.append(`<img src="${item.src}" alt="Thumb" class="lightbox-thumb" data-index="${index}">`);
+            const imgEl = document.createElement("img");
+            imgEl.src = item.src;
+            imgEl.alt = "Thumb";
+            imgEl.className = "lightbox-thumb";
+            imgEl.setAttribute("data-index", index);
+            if (item.thumb) imgEl.src = item.thumb; // Use thumb URL if available
+            thumbContainer.appendChild(imgEl);
         }
     });
 
-    // Thumbnails click binders
-    $(".lightbox-thumb").click(function() {
-        currentIndex = parseInt($(this).data("index"));
-        renderMediaItem();
+    const thumbs = thumbContainer.querySelectorAll(".lightbox-thumb");
+    thumbs.forEach(thumb => {
+        thumb.addEventListener("click", function() {
+            currentIndex = parseInt(this.getAttribute("data-index"), 10);
+            renderMediaItem();
+        });
     });
 }
 
@@ -190,5 +283,106 @@ function showNext() {
     if (currentGallery) {
         currentIndex = (currentIndex + 1) % currentGallery.items.length;
         renderMediaItem();
+    }
+}
+
+async function loadDriveGallery() {
+    const driveUrl = localStorage.getItem("acc_drive_url");
+    if (!driveUrl) {
+        window._driveGalleryLoaded = true;
+        document.dispatchEvent(new Event('driveGalleryReady'));
+        return;
+    }
+
+    const galleryContainer = document.querySelector(".library .row.g-4.justify-content-center");
+    if (galleryContainer) {
+        galleryContainer.insertAdjacentHTML("beforeend", `
+<div class="col-lg-4 col-md-6 drive-skeleton">
+  <div class="media-card" style="opacity:0.4;pointer-events:none;">
+    <div class="media-card-img-wrapper" style="background:#2a2a2a;min-height:180px;"></div>
+    <div class="media-card-body"><h4 style="color:#555;">Loading...</h4></div>
+  </div>
+</div>`);
+    }
+
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000);
+        const response = await fetch(driveUrl, { signal: controller.signal });
+        clearTimeout(timeout);
+        
+        if (!response.ok) throw new Error("Failed to fetch drive gallery");
+        const data = await response.json();
+        
+        if (!data || !data.events) {
+            const skeleton = document.querySelector(".drive-skeleton");
+            if (skeleton) skeleton.remove();
+            window._driveGalleryLoaded = true;
+            document.dispatchEvent(new Event('driveGalleryReady'));
+            return;
+        }
+        
+        if (!galleryContainer) {
+            window._driveGalleryLoaded = true;
+            document.dispatchEvent(new Event('driveGalleryReady'));
+            return;
+        }
+        
+        data.events.forEach((eventData, index) => {
+            const galleryKey = `drive_${index}`;
+            
+            // Format title by stripping leading number prefix like "01_"
+            const title = eventData.event.replace(/^\d+_/, '');
+            
+            // Register in eventMedia
+            eventMedia[galleryKey] = {
+                title: title,
+                items: eventData.images.map(img => ({
+                    type: "image",
+                    src: img.url,
+                    caption: img.name,
+                    thumb: img.thumb || img.url
+                }))
+            };
+            
+            // Create card HTML
+            const colDiv = document.createElement("div");
+            colDiv.className = "col-lg-4 col-md-6 drive-injected";
+            
+            colDiv.innerHTML = `
+                <div class="media-card" data-gallery="${galleryKey}">
+                  <div class="media-card-img-wrapper">
+                    <img src="${eventData.cover}" alt="${title}" onerror="this.style.background='#2a2a2a';this.style.opacity='0.3';this.removeAttribute('onerror');">
+                  </div>
+                  <div class="media-card-body">
+                    <h4>${title}</h4>
+                    <p>${eventData.images.length} Photos</p>
+                  </div>
+                </div>
+            `;
+            
+            galleryContainer.appendChild(colDiv);
+        });
+        
+        const skeleton = document.querySelector(".drive-skeleton");
+        if (skeleton) skeleton.remove();
+
+        // Rebind clicks so new cards work
+        bindMediaCardClicks();
+        
+        window._driveGalleryLoaded = true;
+        document.dispatchEvent(new Event('driveGalleryReady'));
+        
+    } catch (err) {
+        const skeleton = document.querySelector(".drive-skeleton");
+        if (skeleton) skeleton.remove();
+
+        if (err.name === "AbortError") {
+            console.warn("Drive gallery timed out — skipping.");
+        } else {
+            console.error("Drive gallery error:", err);
+        }
+        window._driveGalleryLoaded = true;
+        document.dispatchEvent(new Event('driveGalleryReady'));
     }
 }
