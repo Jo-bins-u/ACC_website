@@ -155,22 +155,20 @@ function buildMobileNav() {
 
 // ─── Hero Writing Reveal (CSS clip-path, not JS typewriter) ───────────────
 function startHeroTypewriter() {
-    const h1 = document.querySelector('.over-text h1');
-    if (!h1) return;
-
-    const btn = document.querySelector('.over-text a.btn-gold');
+    const h1s = document.querySelectorAll('.over-text h1');
+    const btns = document.querySelectorAll('.over-text a.btn-gold');
 
     // Small pause, then trigger the fade-up reveal
     setTimeout(() => {
-        h1.classList.add('hero-reveal');
+        h1s.forEach(h1 => h1.classList.add('hero-reveal'));
 
         // Reveal button slightly after text fades up
         setTimeout(() => {
-            if (btn) {
+            btns.forEach(btn => {
                 btn.style.transition = 'opacity 1.5s ease, transform 1.5s cubic-bezier(0.16,1,0.3,1)';
                 btn.style.opacity = '1';
                 btn.style.transform = 'translateY(0)';
-            }
+            });
         }, 800);
 
         startRotator();
@@ -178,10 +176,8 @@ function startHeroTypewriter() {
 }
 
 function startRotator() {
-    var words = ['Faith', 'Grace', 'Love', 'Purpose'];
-    var el = document.getElementById('rotatorWord');
-    if (!el) return;
-    var idx = 0;
+    var els = document.querySelectorAll('.rotator-word');
+    if (!els || els.length === 0) return;
 
     var HOLD = 2600;        // how long each word stays visible, ms
     var TRANSITION = 600;   // must match the CSS transition duration above
@@ -189,27 +185,35 @@ function startRotator() {
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var timer = null;
 
+    els.forEach(function(el) {
+        el.idx = 0;
+        var wordsData = el.getAttribute('data-words');
+        el.words = wordsData ? JSON.parse(wordsData) : ['Faith', 'Grace', 'Love', 'Purpose'];
+    });
+
     function showNextWord() {
-        idx = (idx + 1) % words.length;
+        els.forEach(function(el) {
+            el.idx = (el.idx + 1) % el.words.length;
 
-        if (reduceMotion) {
-            el.textContent = words[idx];
-            return;
-        }
+            if (reduceMotion) {
+                el.textContent = el.words[el.idx];
+                return;
+            }
 
-        el.classList.add('exiting');
+            el.classList.add('exiting');
 
-        setTimeout(function () {
-            el.style.transition = 'none';
-            el.classList.remove('exiting');
-            el.classList.add('entering');
-            el.textContent = words[idx];
-            void el.offsetWidth; // force reflow so the entering state applies instantly
-            el.style.transition = '';
-            requestAnimationFrame(function () {
-                el.classList.remove('entering');
-            });
-        }, TRANSITION);
+            setTimeout(function () {
+                el.style.transition = 'none';
+                el.classList.remove('exiting');
+                el.classList.add('entering');
+                el.textContent = el.words[el.idx];
+                void el.offsetWidth; // force reflow so the entering state applies instantly
+                el.style.transition = '';
+                requestAnimationFrame(function () {
+                    el.classList.remove('entering');
+                });
+            }, TRANSITION);
+        });
     }
 
     function start() {

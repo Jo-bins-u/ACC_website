@@ -39,10 +39,24 @@ document.addEventListener("DOMContentLoaded", function() {
     let currentVerseIndex = 0;
 
     function switchVerse() {
-      currentVerseIndex = (currentVerseIndex + 1) % verses.length;
-      document.getElementById("verse-title").innerHTML = verses[currentVerseIndex].title;
-      document.getElementById("verse-reference").innerHTML = verses[currentVerseIndex].reference;
+      const verseContent = document.getElementById("verse-content");
+      
+      // Trigger the cinematic blur-out
+      if(verseContent) {
+          verseContent.classList.add("verse-exiting");
+      }
+      
+      // Wait for blur-out to finish, then swap text and remove class
+      setTimeout(() => {
+          currentVerseIndex = (currentVerseIndex + 1) % verses.length;
+          document.getElementById("verse-title").innerHTML = verses[currentVerseIndex].title;
+          document.getElementById("verse-reference").innerHTML = verses[currentVerseIndex].reference;
+          
+          if(verseContent) {
+              verseContent.classList.remove("verse-exiting");
+          }
+      }, 600); // 600ms perfectly matches the CSS transition
     }
 
-    setInterval(switchVerse, 4000); // Switch every 5 seconds
+    setInterval(switchVerse, 4500); // Give enough time to read before switching
   });

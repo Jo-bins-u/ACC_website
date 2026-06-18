@@ -1,46 +1,6 @@
 /* About Us Page Specific Stylesheet */
 
-/* Landing Banner */
-.bnr {
-    height: 60vh;
-    min-height: 350px;
-    overflow: hidden;
-    position: relative;
-    background: #000;
-}
 
-.bnr img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: var(--video-opacity, 0.45);
-    filter: brightness(0.6) contrast(1.1);
-}
-
-.bnr::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--inner-container-gradient);
-    z-index: 1;
-}
-
-.welctext-abt {
-    z-index: 2;
-}
-
-.welctext-abt h1 {
-    color: #ffffff;
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 3.5rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-}
 
 /* History Text */
 #abthis h1 {
@@ -381,3 +341,4 @@ body.light-theme .mv-quote-card {
         margin: 1.5rem 0;
     }
 }
+

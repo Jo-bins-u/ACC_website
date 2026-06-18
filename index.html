@@ -71,8 +71,7 @@
               <i class="fas fa-moon"></i>
             </button>
             <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around ms-3"
-              type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              type="button" aria-expanded="false" aria-label="Toggle navigation">
               <span class="toggler-icon top-bar"></span>
               <span class="toggler-icon middle-bar"></span>
               <span class="toggler-icon bottom-bar"></span>
@@ -110,9 +109,11 @@
     <!-- Verse Section -->
     <section class="verse">
       <div class="container">
-        <div class="versetxt text-center" data-aos="fade-up" data-aos-duration="1000">
-          <h1 id="verse-title">The greatest among you shall be your servant</h1>
-          <p id="verse-reference">Matthew 23:11</p>
+        <div class="versetxt text-center" data-aos="blur-reveal" data-aos-duration="1200">
+          <div id="verse-content">
+            <h1 id="verse-title">The greatest among you shall be your servant</h1>
+            <p id="verse-reference">Matthew 23:11</p>
+          </div>
         </div>
       </div>
     </section>
@@ -120,14 +121,16 @@
     <!-- About Section -->
     <section class="py-5">
       <div class="container py-3">
-        <div class="row align-items-center">
-          <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-right" data-aos-duration="1000">
-            <img src="Images/Jesus_Laugh.jpg" alt="Jesus Laughing" class="abtimg img-fluid w-100">
+        <div class="row align-items-center" id="about-us-row">
+          <div class="col-md-4 mb-4 mb-md-0">
+            <div class="premium-img-wrap" data-aos="blur-reveal" data-aos-duration="1200" data-aos-anchor="#about-us-row">
+              <img src="Images/Jesus_Laugh.jpg" alt="Jesus Laughing" class="abtimg img-fluid w-100 premium-img-inner">
+            </div>
           </div>
-          <div class="col-md-8" data-aos="fade-left" data-aos-duration="1000">
+          <div class="col-md-8">
             <div id="abt">
-              <h1 class="gold-glow-text">About Us</h1>
-              <p>The Association of Christian Christites (ACC) is a thriving community at Christ (Deemed to Be
+              <h1 class="gold-glow-text" data-aos="blur-reveal" data-aos-duration="1200" data-aos-anchor="#about-us-row">About Us</h1>
+              <p data-aos="blur-reveal" data-aos-duration="1200" data-aos-anchor="#about-us-row">The Association of Christian Christites (ACC) is a thriving community at Christ (Deemed to Be
                 University),
                 uniting over 5,000 Christian students. We aim to spread the good news, fostering fellowship and a
                 positive
@@ -138,7 +141,9 @@
                 Additionally, ACC offers various domains like Animation, Audio Visual, Media & Documentation, Liturgy,
                 and Outreach, allowing members to glorify God through their unique talents.
               </p>
-              <a href="about.html">Read More <i class="fas fa-arrow-right"></i></a>
+              <div data-aos="blur-reveal" data-aos-duration="1200" data-aos-anchor="#about-us-row">
+                <a href="about.html">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
             </div>
           </div>
         </div>
@@ -148,53 +153,74 @@
     <!-- Service Timings -->
     <section class="py-5">
       <div class="container" id="serv-time">
-        <div class="section-title-block" data-aos="fade-up" data-aos-duration="800">
+        <div class="section-title-block" data-aos="blur-reveal" data-aos-duration="1200">
           <h1 class="gold-glow-text">Service Timings</h1>
           <div class="section-divider"><span></span></div>
         </div>
-        <div class="row text-center justify-content-center px-lg-4" style="gap: 20px;">
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-            <div class="serv-icon"><i class="fa-solid fa-church"></i></div>
-            <h2>Daily Mass</h2>
-            <div class="serv-time-badge">7:30 am</div>
-            <p>at PU Chapel</p>
+        <div class="row text-center justify-content-center px-lg-4 g-4">
+          <!-- Card 1 -->
+          <div class="col-lg-3 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="100">
+              <div class="serv-icon"><i class="fa-solid fa-church fa-fw"></i></div>
+              <h2>Daily Mass</h2>
+              <div class="serv-time-badge">7:30 am</div>
+              <p>at PU Chapel</p>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-            <div class="serv-icon"><i class="fa-solid fa-cross"></i></div>
-            <h2>Sunday Mass</h2>
-            <div class="serv-time-badge">8:00 am</div>
-            <p>at St. Kuriakose Elias Chapel</p>
+          <!-- Card 2 -->
+          <div class="col-lg-3 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="200">
+              <div class="serv-icon"><i class="fa-solid fa-cross fa-fw"></i></div>
+              <h2>Sunday Mass</h2>
+              <div class="serv-time-badge">8:00 am</div>
+              <p>at St. Kuriakose Elias Chapel</p>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-            <div class="serv-icon"><i class="fa-solid fa-calendar-day"></i></div>
-            <h2>Monthly Mass</h2>
-            <div class="serv-time-badge">12:00 pm</div>
-            <p>at St. Kuriakose Elias Chapel</p>
+          <!-- Card 3 -->
+          <div class="col-lg-3 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="300">
+              <div class="serv-icon"><i class="fa-solid fa-calendar-day fa-fw"></i></div>
+              <h2>Monthly Mass</h2>
+              <div class="serv-time-badge">12:00 pm</div>
+              <p>at St. Kuriakose Elias Chapel</p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="col-lg-3 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="400">
+              <div class="serv-icon"><i class="fa-solid fa-hands-praying fa-fw"></i></div>
+              <h2>Rosary</h2>
+              <div class="serv-time-badge">7:00 pm</div>
+              <p>at St. Kuriakose Elias Chapel</p>
+            </div>
           </div>
 
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-            <div class="serv-icon"><i class="fa-solid fa-hands-praying"></i></div>
-            <h2>Rosary</h2>
-            <div class="serv-time-badge">7:00 pm</div>
-            <p>at St. Kuriakose Elias Chapel</p>
+          <!-- Card 5 -->
+          <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="500">
+              <div class="serv-icon"><i class="fa-solid fa-dove fa-fw"></i></div>
+              <h2>Adoration</h2>
+              <div class="serv-time-badge">8:00 pm</div>
+              <p>at St. Kuriakose Elias Chapel <br> <span class="serv-note">(First Friday Only)</span></p>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
-            <div class="serv-icon"><i class="fa-solid fa-dove"></i></div>
-            <h2>Adoration</h2>
-            <div class="serv-time-badge">8:00 pm</div>
-            <p>at St. Kuriakose Elias Chapel <br> <span class="serv-note">(First Friday Only)</span></p>
+          <!-- Card 6 -->
+          <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="600">
+              <div class="serv-icon"><i class="fa-solid fa-ear-listen fa-fw"></i></div>
+              <h2>Confessions</h2>
+              <div class="serv-time-badge">Varies</div>
+              <p>Every day before Daily Mass<br>&amp; Once every month</p>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
-            <div class="serv-icon"><i class="fa-solid fa-ear-listen"></i></div>
-            <h2>Confessions</h2>
-            <div class="serv-time-badge">Varies</div>
-            <p>Every day before Daily Mass<br>&amp; Once every month</p>
-          </div>
-          <div class="col-md-4 col-sm-6 mb-4 flex-fill" style="max-width: 350px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="700">
-            <div class="serv-icon"><i class="fa-solid fa-person-walking"></i></div>
-            <h2>Way of The Cross</h2>
-            <div class="serv-time-badge">Lent Season</div>
-            <p>Every Friday before Rosary<br>&amp; Every Sunday after Holy Mass</p>
+          <!-- Card 7 -->
+          <div class="col-lg-4 col-md-6 col-sm-12 d-flex">
+            <div class="serv-card flex-fill w-100" data-aos="blur-reveal" data-aos-duration="1000" data-aos-delay="700">
+              <div class="serv-icon"><i class="fa-solid fa-person-walking fa-fw"></i></div>
+              <h2>Way of The Cross</h2>
+              <div class="serv-time-badge">Lent Season</div>
+              <p>Every Friday before Rosary<br>&amp; Every Sunday after Holy Mass</p>
+            </div>
           </div>
         </div>
       </div>
@@ -203,7 +229,7 @@
     <!-- Events Section -->
     <section class="texent py-5">
       <div class="container">
-        <div class="section-title-block" data-aos="fade-up" data-aos-duration="800">
+        <div class="section-title-block" data-aos="blur-reveal" data-aos-duration="1200">
           <h1 class="gold-glow-text">Events</h1>
           <div class="section-divider"><span></span></div>
         </div>
@@ -233,7 +259,7 @@
     </section>
   </main>
 
-      <footer>
+        <footer>
     <div class="container py-5">
       <div class="row fttr justify-content-between">
         <!-- Brand & Address Column -->
@@ -250,7 +276,8 @@
             <span>CHRIST (Deemed to be University), Kengeri Campus, Bengaluru, 560074.</span>
           </a>
 
-          <div class="footer-map-card">
+          <!-- Map for Desktop -->
+          <div class="footer-map-card d-none d-lg-block">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
               width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
@@ -310,6 +337,16 @@
                 <img class="img-fluid fim uni-logo" src="Images/University_logo_WH.png" alt="University Logo">
               </a>
             </div>
+          </div>
+        </div>
+
+        <!-- Map for Mobile -->
+        <div class="col-12 mt-4 d-flex justify-content-center d-lg-none">
+          <div class="footer-map-card w-100" style="max-width: 400px; margin-top: 0;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+              width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" aria-label="Google Map Location"></iframe>
           </div>
         </div>
       </div>

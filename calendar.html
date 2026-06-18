@@ -67,8 +67,7 @@
               <i class="fas fa-moon"></i>
             </button>
             <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around ms-3"
-              type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              type="button" aria-expanded="false" aria-label="Toggle navigation">
               <span class="toggler-icon top-bar"></span>
               <span class="toggler-icon middle-bar"></span>
               <span class="toggler-icon bottom-bar"></span>
@@ -82,16 +81,7 @@
   <main>
     <!-- Landing Banner -->
     <section>
-      <div class="bnr d-flex align-items-center justify-content-center text-center">
-        <img src="Images/Chapel_photo.png" alt="Events Calendar Banner">
-        <div class="row w-95 position-absolute">
-          <div class="welctext-abt col-12 text-center" data-aos="zoom-in" data-aos-duration="1000">
-            <div class="glass-title-capsule">
-              <h1 class="calendar-hero-title mb-0">ACC Calendar</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="bnr d-flex align-items-center justify-content-center text-center"><img src="Images/Chapel_photo.png" alt="Events Calendar Banner"><div class="row w-100 position-absolute over-text text-center mx-auto" style="z-index: 2;"><div class="col-12"><h1 class="hero-title-rotating"><span class="d-block hero-line-1">ACC</span><span class="d-block hero-line-2">Calendar</span></h1></div></div></div>
     </section>
 
     <!-- Calendar Interactive System -->
@@ -183,7 +173,7 @@
     </section>
   </main>
 
-      <footer>
+        <footer>
     <div class="container py-5">
       <div class="row fttr justify-content-between">
         <!-- Brand & Address Column -->
@@ -200,7 +190,8 @@
             <span>CHRIST (Deemed to be University), Kengeri Campus, Bengaluru, 560074.</span>
           </a>
 
-          <div class="footer-map-card">
+          <!-- Map for Desktop -->
+          <div class="footer-map-card d-none d-lg-block">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
               width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
@@ -262,6 +253,16 @@
             </div>
           </div>
         </div>
+
+        <!-- Map for Mobile -->
+        <div class="col-12 mt-4 d-flex justify-content-center d-lg-none">
+          <div class="footer-map-card w-100" style="max-width: 400px; margin-top: 0;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+              width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" aria-label="Google Map Location"></iframe>
+          </div>
+        </div>
       </div>
 
       <!-- Copyright Row -->
@@ -300,3 +301,6 @@
 </body>
 
 </html>
+
+
+

@@ -69,8 +69,7 @@
               <i class="fas fa-moon"></i>
             </button>
             <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around ms-3"
-              type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              type="button" aria-expanded="false" aria-label="Toggle navigation">
               <span class="toggler-icon top-bar"></span>
               <span class="toggler-icon middle-bar"></span>
               <span class="toggler-icon bottom-bar"></span>
@@ -86,9 +85,12 @@
     <section>
       <div class="bnr d-flex align-items-center justify-content-center text-center">
         <img src="Images/lndABT.png" alt="About Us Banner">
-        <div class="row w-95 position-absolute">
-          <div class="welctext-abt col-12 text-center" data-aos="zoom-in" data-aos-duration="1000">
-            <h1>About Us</h1>
+        <div class="row w-100 position-absolute over-text text-center mx-auto" style="z-index: 2;">
+          <div class="col-12">
+            <h1 class="hero-title-rotating">
+              <span class="d-block hero-line-1">A Community of</span>
+              <span class="d-block hero-line-2">Faith &amp; Fellowship</span>
+            </h1>
           </div>
         </div>
       </div>
@@ -98,7 +100,7 @@
     <section class="py-5">
       <div class="container py-3">
         <div class="row justify-content-center">
-          <div class="col-lg-10" data-aos="fade-up" data-aos-duration="1000">
+          <div class="col-lg-10" data-aos="blur-reveal" data-aos-duration="1200">
             <div id="abthis">
               <h1>Know Us</h1>
               <p>Association of Christian Christites is a community of all Christian students studying in
@@ -139,7 +141,7 @@
         <div class="row g-4 align-items-stretch justify-content-center">
           
           <!-- Mission Card -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+          <div class="col-md-4" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="100">
             <div class="mv-card h-100">
               <div class="mv-icon"><i class="fa-solid fa-bullseye"></i></div>
               <h1>MISSION</h1>
@@ -149,7 +151,7 @@
           </div>
 
           <!-- Quote Card -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+          <div class="col-md-4" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="200">
             <div class="mv-quote-card h-100 d-flex align-items-center justify-content-center">
               <i class="fa-solid fa-quote-left quote-icon-bg"></i>
               <h5>We Cry, We Pray,<br>We Rejoice Together<br><span class="highlight-acc">We Are ACC!</span></h5>
@@ -157,7 +159,7 @@
           </div>
 
           <!-- Vision Card -->
-          <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+          <div class="col-md-4" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="300">
             <div class="mv-card h-100">
               <div class="mv-icon"><i class="fa-solid fa-eye"></i></div>
               <h1>VISION</h1>
@@ -191,7 +193,7 @@
     </section>
   </main>
 
-      <footer>
+        <footer>
     <div class="container py-5">
       <div class="row fttr justify-content-between">
         <!-- Brand & Address Column -->
@@ -208,7 +210,8 @@
             <span>CHRIST (Deemed to be University), Kengeri Campus, Bengaluru, 560074.</span>
           </a>
 
-          <div class="footer-map-card">
+          <!-- Map for Desktop -->
+          <div class="footer-map-card d-none d-lg-block">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
               width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
@@ -270,6 +273,16 @@
             </div>
           </div>
         </div>
+
+        <!-- Map for Mobile -->
+        <div class="col-12 mt-4 d-flex justify-content-center d-lg-none">
+          <div class="footer-map-card w-100" style="max-width: 400px; margin-top: 0;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+              width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" aria-label="Google Map Location"></iframe>
+          </div>
+        </div>
       </div>
 
       <!-- Copyright Row -->
@@ -307,3 +320,5 @@
 </body>
 
 </html>
+
+

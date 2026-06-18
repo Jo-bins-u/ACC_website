@@ -319,3 +319,89 @@ body.light-theme .btn-theme-toggle .fa-moon {
 body.light-theme .btn-theme-toggle .fa-sun {
   color: #ffffff; /* White inside the gold knob in light mode */
 }
+
+/* ==============================================================
+   UNIFIED SUB-PAGE HERO BANNER
+   ============================================================== */
+.bnr {
+    height: 60vh;
+    min-height: 350px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.bnr img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--video-opacity, 0.45);
+    filter: brightness(0.7) contrast(1.1);
+    animation: cinematicZoom 25s linear infinite alternate;
+    z-index: 0;
+}
+
+@keyframes cinematicZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.12); }
+}
+
+.bnr::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bnr-glass-pill {
+    position: relative;
+    z-index: 2;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 18px 45px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: inline-block;
+}
+
+.bnr-glass-pill h1 {
+    color: #ffffff;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .bnr-glass-pill h1 { font-size: 2.2rem; }
+    .bnr-glass-pill { padding: 14px 30px; }
+}
+
+.over-text { width: 100%; z-index: 2; padding: 0 20px; text-align: center; }
+.over-text h1.hero-title-rotating { font-weight: 400; line-height: 1.1; letter-spacing: normal; text-shadow: 0 8px 30px rgba(0,0,0,0.9); display: block; margin: 0 auto; clip-path: none; transition: opacity 1.5s ease, transform 1.5s ease; opacity: 0; transform: translateY(20px); }
+.over-text h1.hero-reveal { opacity: 1; transform: translateY(0); }
+.hero-line-1, .hero-line-3 { font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.2rem); color: #ffffff; text-transform: uppercase; letter-spacing: 2px; }
+.hero-line-2 { font-family: var(--font-curvy); font-size: clamp(4rem, 8vw, 8rem); color: var(--accent-gold); margin: -10px 0; text-shadow: 0 0 30px rgba(255,111,0,0.15); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rotator-word { display: inline-block; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; filter: blur(0); transform: translateY(0); }
+.rotator-word.exiting { opacity: 0; filter: blur(10px); transform: translateY(-15px); }
+.rotator-word.entering { opacity: 0; filter: blur(10px); transform: translateY(15px); }
+@media (prefers-reduced-motion: reduce) { .rotator-word { transition: none; } }
+

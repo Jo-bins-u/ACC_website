@@ -145,7 +145,7 @@
       const container = $(`#${containerId}`);
       if (!container.length) return;
       container.empty();
-      container.append(`<h2 class="col-12 text-center" data-aos="fade-up">${title}</h2>`);
+      container.append(`<h2 class="col-12 text-center" data-aos="blur-reveal">${title}</h2>`);
       
       const members = db.filter(m => m.category === category);
       members.forEach((m, idx) => {
@@ -163,7 +163,7 @@
         
         const delay = (idx + 1) * 50;
         const memberHtml = `
-          <div class="col-lg-3 col-md-4 col-6 mb-4 profile" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="${delay}">
+          <div class="col-lg-3 col-md-4 col-6 mb-4 profile" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="${delay}">
             <div class="profile-card">
               <div class="img-box">
                 <img src="${m.image || ''}" alt="${m.name}">
@@ -220,7 +220,7 @@
         }
         
         const html = `
-          <div class="profile-section-wrapper" data-aos="zoom-in" data-aos-duration="1000">
+          <div class="profile-section-wrapper" data-aos="blur-reveal" data-aos-duration="1200">
             <div class="profile-img-circle">
               <img src="${m.image || ''}" alt="${m.name}">
             </div>
@@ -271,7 +271,7 @@
           
           const delay = idx * 100;
           innerHtml += `
-            <div class="${colClass}" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="${delay}">
+            <div class="${colClass}" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="${delay}">
               <div class="${wrapperClass}">
                 <div class="profile-img-circle" style="${imgStyle}">
                   <img src="${m.image || ''}" alt="${m.name}">
@@ -298,7 +298,7 @@
       images.forEach((imgSrc, idx) => {
         const delay = (idx + 1) * 100;
         const imgHtml = `
-          <div class="col-md-3 col-6 work" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="${delay}">
+          <div class="col-md-3 col-6 work" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="${delay}">
             <div class="img-box">
               <img src="${imgSrc}" alt="${domainKey} Gallery ${idx + 1}">
             </div>
