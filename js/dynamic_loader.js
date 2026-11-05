@@ -211,6 +211,9 @@
       });
       container.append(section);
     });
+    if (window.AOS && typeof window.AOS.refreshHard === "function") {
+      window.AOS.refreshHard();
+    }
   };
 
   window.renderDomainHeadsAndGalleries = async function(domainKey) {
