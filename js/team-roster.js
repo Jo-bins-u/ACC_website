@@ -5,7 +5,7 @@ window.ACC_DEFAULT_TEAM = [
   { id: "jerin_geo_jacob", name: "Jerin Geo Jacob", role: "Faculty Coordinator", category: "coordinators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Jerin Geo Jacob.JPG")}`, links: [] },
   { id: "jincy_cherian", name: "Jincy Cherian", role: "Faculty Coordinator", category: "coordinators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Jincy Cherian.JPG")}`, links: [] },
   { id: "abraham_aiden_joseph", name: "Abraham Aiden Joseph", role: "Student Coordinator", category: "student_coordinators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Aiden.JPG")}`, links: [] },
-  { id: "kripa_mariya_justin", name: "Kripa Mariya Justin", role: "Student Coordinator", category: "student_coordinators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Kripa.JPG")}`, links: [] },
+  { id: "kripa_mariya_justin", name: "Kripa Maria Jestin", role: "Student Coordinator", category: "student_coordinators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Kripa.JPG")}`, links: [] },
   { id: "shohil", name: "Shohil", role: "Animator", category: "animators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Shohil.JPG")}`, links: [] },
   { id: "atlin_chacko", name: "Atlin Chacko", role: "Animator", category: "animators", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Atlin.JPG")}`, links: [] },
   { id: "jis_mariya", name: "Jis Mariya", role: "Documentation", category: "documentation", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Jis.JPG")}`, links: [] },
@@ -47,3 +47,4 @@ window.ACC_DEFAULT_TEAM = [
   { id: "benison_johnson", name: "Benison Johnson", role: "MBA", category: "mba", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Benison.JPG")}`, links: [] },
   { id: "agnas_saju", name: "Agnas Saju", role: "MBA", category: "mba", image: `${TEAM_ASSET_BASE}${encodeURIComponent("Agnas.JPG")}`, links: [] }
 ];
+
