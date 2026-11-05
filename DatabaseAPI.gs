@@ -44,7 +44,7 @@ function getOrCreateDbFile() {
 }
 
 /**
- * Handles GET requests to read the database.
+ * Handles public GET requests to read the database. This endpoint is read-only.
  * To support CORS, Apps Script automatically handles OPTIONS requests and 
  * adds CORS headers when returning JSON from a Web App using ContentService.
  */
@@ -56,31 +56,18 @@ function doGet(e) {
     return ContentService.createTextOutput(content)
       .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({ error: error.toString() }))
+    return ContentService.createTextOutput(JSON.stringify({ error: "Unable to load public site data." }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 /**
- * Handles POST requests to update the database.
- * Apps Script Web Apps handle POST requests via doPost.
+ * Reject all public writes. Publish a new Apps Script deployment after updating
+ * this file; existing deployments keep running their previously deployed code.
  */
 function doPost(e) {
-  try {
-    if (!e.postData || !e.postData.contents) {
-      throw new Error("No payload provided in POST request.");
-    }
-    
-    const payload = JSON.parse(e.postData.contents);
-    const file = getOrCreateDbFile();
-    
-    // Write new content
-    file.setContent(JSON.stringify(payload));
-    
-    return ContentService.createTextOutput(JSON.stringify({ success: true, message: "Database updated successfully." }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({ success: false, error: error.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
+  return ContentService.createTextOutput(JSON.stringify({
+    success: false,
+    error: "This endpoint is read-only."
+  })).setMimeType(ContentService.MimeType.JSON);
 }

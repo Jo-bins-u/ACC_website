@@ -273,9 +273,6 @@ html_bottom = """    </div>
         <div class="col-lg-4 col-md-12 mb-5 mb-lg-0 text-start pr-lg-5">
           <div class="mb-4 d-flex align-items-center">
             <span class="footer-brand-name">Association of Christian Christites</span>
-            <a href="admin/index.html" id="admin-hidden-trigger"
-              style="opacity: 0.15; margin-left: 8px; color: inherit; text-decoration: none;"
-              aria-label="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8rem;"></i></a>
           </div>
           
           <a id="lcft" href="https://g.co/kgs/7q6tTKC" target="_blank" rel="noopener noreferrer" class="mb-4">
@@ -417,7 +414,7 @@ html_bottom = """    </div>
                 let iconClass = "fab fa-linkedin";
                 if (l.type === "instagram") iconClass = "fab fa-instagram";
                 else if (l.type === "whatsapp") iconClass = "fab fa-whatsapp";
-                linksHtml += `<li><a href="${l.url}" target="_blank"><i class="${iconClass}"></i></a></li>`;
+                linksHtml += `<li><a href="${window.ACC_SAFE_LINK(l.url)}" target="_blank"><i class="${iconClass}"></i></a></li>`;
               });
               linksHtml += '</ul>';
             }
@@ -425,11 +422,11 @@ html_bottom = """    </div>
             container.html(`
               <div class="profile-section-wrapper">
                 <div class="profile-img-circle">
-                  <img src="${m.image || ''}" alt="${m.name}">
+                  <img src="${window.ACC_ESCAPE_HTML(window.ACC_ASSET_URL(m.image || ''))}" alt="${window.ACC_ESCAPE_HTML(m.name)}">
                 </div>
                 <div class="proftext">
-                  <h3>${m.name}</h3>
-                  <h4>${m.role}</h4>
+                  <h3>${window.ACC_ESCAPE_HTML(m.name)}</h3>
+                  <h4>${window.ACC_ESCAPE_HTML(m.role)}</h4>
                   ${linksHtml}
                 </div>
               </div>
@@ -444,7 +441,7 @@ html_bottom = """    </div>
                   let iconClass = "fab fa-linkedin";
                   if (l.type === "instagram") iconClass = "fab fa-instagram";
                   else if (l.type === "whatsapp") iconClass = "fab fa-whatsapp";
-                  linksHtml += `<li><a href="${l.url}" target="_blank"><i class="${iconClass}"></i></a></li>`;
+                  linksHtml += `<li><a href="${window.ACC_SAFE_LINK(l.url)}" target="_blank"><i class="${iconClass}"></i></a></li>`;
                 });
                 linksHtml += '</ul>';
               }
@@ -475,11 +472,11 @@ html_bottom = """    </div>
                 <div class="${colClass}">
                   <div class="${wrapperClass}">
                     <div class="profile-img-circle" style="${imgStyle}">
-                      <img src="${m.image || ''}" alt="${m.name}">
+                      <img src="${window.ACC_ESCAPE_HTML(window.ACC_ASSET_URL(m.image || ''))}" alt="${window.ACC_ESCAPE_HTML(m.name)}">
                     </div>
                     <div class="proftext">
-                      <h3 style="${titleStyle}">${m.name}</h3>
-                      <h4 style="${subtitleStyle}">${m.role}</h4>
+                      <h3 style="${titleStyle}">${window.ACC_ESCAPE_HTML(m.name)}</h3>
+                      <h4 style="${subtitleStyle}">${window.ACC_ESCAPE_HTML(m.role)}</h4>
                       ${linksHtml}
                     </div>
                   </div>
@@ -500,7 +497,7 @@ html_bottom = """    </div>
             html += `
               <div class="col-md-3 col-6 work">
                 <div class="img-box">
-                  <img src="${imgSrc}" alt="${domKey} Gallery ${idx + 1}">
+                  <img src="${window.ACC_ESCAPE_HTML(window.ACC_ASSET_URL(imgSrc))}" alt="${window.ACC_ESCAPE_HTML(domKey)} Gallery ${idx + 1}">
                 </div>
               </div>
             `;

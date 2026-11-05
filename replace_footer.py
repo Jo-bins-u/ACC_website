@@ -8,9 +8,6 @@ new_footer = '''  <footer>
         <div class="col-lg-4 col-md-12 mb-5 mb-lg-0 text-start pr-lg-5">
           <div class="mb-4 d-flex align-items-center">
             <span class="footer-brand-name">Association of Christian Christites</span>
-            <a href="admin/index.html" id="admin-hidden-trigger"
-              style="opacity: 0.15; margin-left: 8px; color: inherit; text-decoration: none;"
-              aria-label="Admin Portal"><i class="fas fa-lock" style="font-size: 0.8rem;"></i></a>
           </div>
           
           <a id="lcft" href="https://g.co/kgs/7q6tTKC" target="_blank" rel="noopener noreferrer" class="mb-4">
@@ -105,7 +102,6 @@ new_footer = '''  <footer>
   </footer>'''
 
 files = [f for f in os.listdir('.') if f.endswith('.html')]
-files.append('admin/index.html')
 
 for f in files:
     if os.path.exists(f):

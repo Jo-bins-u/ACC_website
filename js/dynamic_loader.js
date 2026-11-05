@@ -57,6 +57,13 @@
     const objectPath = match[1].replace(/\\/g, "/").split("/").map(encodeURIComponent).join("/");
     return SUPABASE_ASSET_PREFIX + objectPath;
   };
+  window.ACC_ESCAPE_HTML = function(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+  };
+  window.ACC_SAFE_LINK = function(value) {
+    try { const url = new URL(String(value || ""), window.location.href); return url.protocol === "https:" ? url.href : "#"; }
+    catch (_) { return "#"; }
+  };
   const teamPhotoOverrides = {
     "jerin geo jacob": "https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Core%20Team%20Photos/Jerin%20Geo%20Jacob.JPG",
     "jincy cherian": "https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Core%20Team%20Photos/Jincy%20Cherian.JPG"
@@ -99,7 +106,7 @@
     // Render from local data immediately; refresh the cache in the background.
     if (refreshStarted) return;
     refreshStarted = true;
-    const dbApiUrl = localStorage.getItem('acc_db_api_url') || "https://script.google.com/macros/s/AKfycbwh0oKgp7KbjyKzsSlzv_KvgUJPBlh6_7C8uJMcLiOgl8cD-FjF59BWbHKpJiSLCL_ytA/exec";
+    const dbApiUrl = "https://script.google.com/macros/s/AKfycbwh0oKgp7KbjyKzsSlzv_KvgUJPBlh6_7C8uJMcLiOgl8cD-FjF59BWbHKpJiSLCL_ytA/exec";
     if (dbApiUrl) {
       fetch(dbApiUrl, { signal: AbortSignal.timeout(7000) })
         .then(response => response.ok ? response.json() : null)
@@ -121,31 +128,6 @@
     }
   }
 
-  // Master Sync Function
-  async function syncDatabaseToCloud() {
-    const dbApiUrl = localStorage.getItem('acc_db_api_url') || "https://script.google.com/macros/s/AKfycbwh0oKgp7KbjyKzsSlzv_KvgUJPBlh6_7C8uJMcLiOgl8cD-FjF59BWbHKpJiSLCL_ytA/exec";
-    if (!dbApiUrl || !window.ACC_DB_CACHE) return;
-
-    try {
-      // Use text/plain to avoid CORS preflight issues with Google Apps Script
-      const response = await fetch(dbApiUrl, {
-        method: 'POST',
-        body: JSON.stringify(window.ACC_DB_CACHE),
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        }
-      });
-      const result = await response.json();
-      if (!result.success) {
-        console.error("Database save failed:", result.error);
-      } else {
-        console.log("Database successfully synced to Google Drive.");
-      }
-    } catch (err) {
-      console.error("Error syncing database:", err);
-    }
-  }
-
   // 3. Centralized Database Operations (Promises / Async)
 
   // 3.1 EVENTS API
@@ -154,36 +136,16 @@
     return window.ACC_DB_CACHE.events;
   };
 
-  window.saveEventsDB = async function(data) {
-    if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.events = data;
-    localStorage.setItem('acc_calendar_events_v2', JSON.stringify(data));
-    await syncDatabaseToCloud();
-  };
-
   // 3.2 TEAM API
   window.getTeamDB = async function() {
     await ensureCacheLoaded();
     return window.ACC_DB_CACHE.team;
   };
 
-  window.saveTeamDB = async function(data) {
-    if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.team = data;
-    window.ACC_DB_DIRTY = true;
-    localStorage.setItem('acc_db_team_v4', JSON.stringify(data));
-    localStorage.setItem('acc_db_team_version', '4');
-    await syncDatabaseToCloud();
-  };
-
   // 3.3 GALLERY API
   window.getGalleryDB = async function() {
     await ensureCacheLoaded();
     return window.ACC_DB_CACHE.gallery;
-  };
-
-  window.saveGalleryDB = async function(data) {
-    if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.gallery = data;
-    localStorage.setItem('acc_db_gallery_v3', JSON.stringify(data));
-    await syncDatabaseToCloud();
   };
 
   // 4. Render Handlers (Async-Aware)
@@ -206,7 +168,7 @@
         image.on("error", function(){ this.onerror=null; this.src=teamPhotoPlaceholder; });
         imageBox.append(image); profile.append(imageBox);
         profile.append($("<h3></h3>").text(member.name), $("<h4></h4>").text(member.role));
-        if(member.links && member.links.length){ const links=$("<ul class=\"social-media-icons\"></ul>"); member.links.forEach(function(link){ const icon=link.type==="instagram"?"fa-brands fa-instagram":link.type==="whatsapp"?"fa-brands fa-whatsapp":"fa-brands fa-linkedin"; links.append($("<li></li>").append($("<a target=\"_blank\" rel=\"noopener noreferrer\"></a>").attr("href",link.url).append($("<i></i>").addClass(icon)))); }); profile.append(links); }
+        if(member.links && member.links.length){ const links=$("<ul class=\"social-media-icons\"></ul>"); member.links.forEach(function(link){ const icon=link.type==="instagram"?"fa-brands fa-instagram":link.type==="whatsapp"?"fa-brands fa-whatsapp":"fa-brands fa-linkedin"; links.append($("<li></li>").append($("<a target=\"_blank\" rel=\"noopener noreferrer\"></a>").attr("href",window.ACC_SAFE_LINK(link.url)).append($("<i></i>").addClass(icon)))); }); profile.append(links); }
         card.append(profile); section.append(card);
       });
       container.append(section);
@@ -246,7 +208,7 @@
             let iconClass = "fab fa-linkedin";
             if (l.type === "instagram") iconClass = "fab fa-instagram";
             else if (l.type === "whatsapp") iconClass = "fab fa-whatsapp";
-            linksHtml += `<li><a href="${l.url}" target="_blank"><i class="${iconClass}"></i></a></li>`;
+            linksHtml += `<li><a href="${window.ACC_SAFE_LINK(l.url)}" target="_blank"><i class="${iconClass}"></i></a></li>`;
           });
           linksHtml += `</ul>`;
         }
@@ -254,11 +216,11 @@
         const html = `
           <div class="profile-section-wrapper" data-aos="blur-reveal" data-aos-duration="1200">
             <div class="profile-img-circle">
-              <img src="${window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(m))}" alt="${m.name}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a1d2e\'/%3E%3Ccircle cx=\'50\' cy=\'38\' r=\'20\' fill=\'%23d4af37\' opacity=\'0.2\'/%3E%3Cpath d=\'M15 90 Q15 65 50 65 Q85 65 85 90\' fill=\'%23d4af37\' opacity=\'0.15\'/%3E%3C/svg%3E'">
+              <img src="${window.ACC_ESCAPE_HTML(window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(m)))}" alt="${window.ACC_ESCAPE_HTML(m.name)}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a1d2e\'/%3E%3Ccircle cx=\'50\' cy=\'38\' r=\'20\' fill=\'%23d4af37\' opacity=\'0.2\'/%3E%3Cpath d=\'M15 90 Q15 65 50 65 Q85 65 85 90\' fill=\'%23d4af37\' opacity=\'0.15\'/%3E%3C/svg%3E'">
             </div>
             <div class="proftext">
-              <h3>${m.name}</h3>
-              <h4>${m.role}</h4>
+              <h3>${window.ACC_ESCAPE_HTML(m.name)}</h3>
+              <h4>${window.ACC_ESCAPE_HTML(m.role)}</h4>
               ${linksHtml}
             </div>
           </div>
@@ -274,7 +236,7 @@
               let iconClass = "fab fa-linkedin";
               if (l.type === "instagram") iconClass = "fab fa-instagram";
               else if (l.type === "whatsapp") iconClass = "fab fa-whatsapp";
-              linksHtml += `<li><a href="${l.url}" target="_blank"><i class="${iconClass}"></i></a></li>`;
+              linksHtml += `<li><a href="${window.ACC_SAFE_LINK(l.url)}" target="_blank"><i class="${iconClass}"></i></a></li>`;
             });
             linksHtml += `</ul>`;
           }
@@ -306,11 +268,11 @@
             <div class="${colClass}" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="${delay}">
               <div class="${wrapperClass}">
                 <div class="profile-img-circle" style="${imgStyle}">
-                  <img src="${window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(m))}" alt="${m.name}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a1d2e\'/%3E%3Ccircle cx=\'50\' cy=\'38\' r=\'20\' fill=\'%23d4af37\' opacity=\'0.2\'/%3E%3Cpath d=\'M15 90 Q15 65 50 65 Q85 65 85 90\' fill=\'%23d4af37\' opacity=\'0.15\'/%3E%3C/svg%3E'">
+                  <img src="${window.ACC_ESCAPE_HTML(window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(m)))}" alt="${window.ACC_ESCAPE_HTML(m.name)}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a1d2e\'/%3E%3Ccircle cx=\'50\' cy=\'38\' r=\'20\' fill=\'%23d4af37\' opacity=\'0.2\'/%3E%3Cpath d=\'M15 90 Q15 65 50 65 Q85 65 85 90\' fill=\'%23d4af37\' opacity=\'0.15\'/%3E%3C/svg%3E'">
                 </div>
                 <div class="proftext">
-                  <h3 style="${titleStyle}">${m.name}</h3>
-                  <h4 style="${subtitleStyle}">${m.role}</h4>
+                  <h3 style="${titleStyle}">${window.ACC_ESCAPE_HTML(m.name)}</h3>
+                  <h4 style="${subtitleStyle}">${window.ACC_ESCAPE_HTML(m.role)}</h4>
                   ${linksHtml}
                 </div>
               </div>
@@ -332,7 +294,7 @@
         const imgHtml = `
           <div class="col-md-3 col-6 work" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="${delay}">
             <div class="img-box">
-              <img src="${window.ACC_ASSET_URL(imgSrc)}" alt="${domainKey} Gallery ${idx + 1}">
+              <img src="${window.ACC_ESCAPE_HTML(window.ACC_ASSET_URL(imgSrc))}" alt="${window.ACC_ESCAPE_HTML(domainKey)} Gallery ${idx + 1}">
             </div>
           </div>
         `;

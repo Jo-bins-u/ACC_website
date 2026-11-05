@@ -4,7 +4,6 @@ import re
 nav_replacement = '<a class="nav-item nav-link" href="domains.html">Domains</a>'
 
 files = [f for f in os.listdir('.') if f.endswith('.html')]
-files.append('admin/index.html')
 
 for f in files:
     if os.path.exists(f):

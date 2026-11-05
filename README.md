@@ -2,7 +2,7 @@
 
 A modern, responsive, and feature-rich static web portal for the **Association of Christian Christites (ACC)** at Christ (Deemed to be University), Kengeri Campus.
 
-This repository hosts a multi-page web application complete with interactive domain portals, a custom calendar engine, an media gallery viewer, local form validation, and a standalone administrator dashboard.
+This repository hosts a multi-page web application complete with interactive domain portals, a custom calendar engine, an media gallery viewer, local form validation, and read-only public content data.
 
 ---
 
@@ -12,11 +12,6 @@ This repository hosts a multi-page web application complete with interactive dom
 - **Calendar & Events Planner:** Interactive calendar view displaying solemn feasts, saints' days (e.g., St. Kuriakose Elias Chavara), and general ACC community events. Includes categorization filters.
 - **Interactive Media Galleries:** High-fidelity custom lightbox overlay with responsive image sliding, video play integration, keyboard navigation hookups, and dynamic thumbnail syncing.
 - **Christ University Form Validation:** The Contact Form employs strict domain matching (`christuniversity.in`) using the jQuery Validation plugin.
-- **Admin Dashboard Portal:** A hidden standalone interface (`/admin/index.html` or double-clicking the calendar hero title) featuring:
-  - Passcode-secured authentication session.
-  - Tabbed controls to add/remove events from the calendar.
-  - Core team roster management (updates name, role, social links, and profile photos).
-  - Gallery image upload and URL binding per department domain.
 - **Theming Engine:** Seamless Dark and Light theme toggle, optimized with a client-side head hook script to completely eliminate Flash of Unstyled Content (FOUC).
 
 ---
@@ -25,9 +20,6 @@ This repository hosts a multi-page web application complete with interactive dom
 
 ```plaintext
 acc-website-main/
-├── admin/
-│   ├── index.html        # Secure Administrator Dashboard Portal
-│   └── admin.js          # Tab routing, form hooks & CRUD database mutations
 ├── css/
 │   ├── theme.css         # Typography, global variables & HSL-curated core palettes
 │   ├── indexstyle.css    # Custom styles for home page components & fact carousels
@@ -45,7 +37,7 @@ acc-website-main/
 ├── Images/               # Optimized asset assets, logo variations, and domain media directories
 ├── Video/                # Media video files & event highlight reels
 ├── index.html            # Main Landing Portal
-├── about.html            # About Page (renders administrative & domain headers roster)
+├── about.html            # About Page (renders core team roster)
 ├── calendar.html         # Feast Calendar Page
 ├── media.html            # Event Gallery & Lightbox Page
 ├── contactus.html        # Custom Contact & Submission Page
@@ -58,7 +50,7 @@ acc-website-main/
 
 The website uses a client-side database model utilizing the browser's `localStorage`.
 On first load, the database checks for local records. If none are found, it seeds standard default arrays for events, core team profiles, and domain galleries.
-Any updates made in the **Admin Dashboard** are stored directly in `localStorage` and will persist across browser sessions.
+The public website reads events, team profiles, and galleries from the configured read-only Google Apps Script endpoint, with local cache and built-in defaults for resilience. The public pages have no browser write interface.
 
 ## 🖼️ Image Storage
 
@@ -92,13 +84,3 @@ npx local-server
 
 Open `http://localhost:8000` (or the port specified) in your browser.
 
----
-
-## 🛠️ Admin Access
-
-1. Open the website and navigate to `calendar.html`.
-2. Access the Admin portal using any of the following methods:
-   - Double-click on the calendar hero title "Events Calendar".
-   - Navigate directly to `/admin/index.html`.
-   - Append `?admin` to your URL (e.g. `http://localhost:8000/calendar.html?admin`).
-3. Enter the default passcode: **`admin123`**

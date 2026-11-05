@@ -73,6 +73,9 @@ $(document).ready(function() {
 
   initCalendar();
 
+  const escapeHtml = value => String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","\'":"&#39;"}[ch]));
+  const safeCategory = value => ["feast","event","prayer","meeting","other"].includes(String(value)) ? String(value) : "other";
+
   // 3. Render Calendar Grid function
   function renderCalendar() {
     const year = currentDate.getFullYear();
@@ -122,7 +125,7 @@ $(document).ready(function() {
       // Generate indicators HTML
       let indicatorsHtml = '<div class="day-indicators">';
       dateEvents.forEach(event => {
-        indicatorsHtml += `<span class="indicator-dot ${event.category}-dot" title="${event.title}"></span>`;
+        indicatorsHtml += `<span class="indicator-dot ${safeCategory(event.category)}-dot" title="${escapeHtml(event.title)}"></span>`;
       });
       indicatorsHtml += '</div>';
 
@@ -214,13 +217,13 @@ $(document).ready(function() {
     }
 
     const eventHtml = `
-      <div class="event-item ${event.category} fade-in-up">
-        <h4 class="event-item-title">${event.title}</h4>
+      <div class="event-item ${safeCategory(event.category)} fade-in-up">
+        <h4 class="event-item-title">${escapeHtml(event.title)}</h4>
         <div class="event-item-time">
           ${dateLabel}
-          <i class="far fa-clock"></i> ${event.time}
+          <i class="far fa-clock"></i> ${escapeHtml(event.time)}
         </div>
-        <p class="event-item-desc">${event.description}</p>
+        <p class="event-item-desc">${escapeHtml(event.description)}</p>
       </div>
     `;
     eventsContainer.append(eventHtml);
@@ -287,29 +290,4 @@ $(document).ready(function() {
     updateEventsSidebar(selectedDate, true); 
   });
 
-  // 6. ADMIN PORTAL REDIRECTIONS
-  $(document).on("dblclick", ".calendar-hero-title", function() {
-    openAdminPortal();
-  });
-
-  $(document).on("click", "#admin-hidden-trigger", function(e) {
-    e.preventDefault();
-    openAdminPortal();
-  });
-
-  checkUrlForAdmin();
-
-  $(window).on("hashchange", function() {
-    checkUrlForAdmin();
-  });
-
-  function checkUrlForAdmin() {
-    if (window.location.hash === '#admin' || window.location.search.includes('admin')) {
-      openAdminPortal();
-    }
-  }
-
-  function openAdminPortal() {
-    window.location.href = "admin/index.html";
-  }
 });

@@ -332,16 +332,21 @@ async function loadDriveGallery() {
             const galleryKey = `drive_${index}`;
             
             // Format title by stripping leading number prefix like "01_"
-            const title = eventData.event.replace(/^\d+_/, '');
+            const title = String(eventData.event || "").replace(/^\d+_/, '');
+            const images = Array.isArray(eventData.images) ? eventData.images : [];
+            const safeImageUrl = value => {
+                try { const url = new URL(String(value || ""), window.location.href); return url.protocol === "https:" ? url.href : ""; }
+                catch (_) { return ""; }
+            };
             
             // Register in eventMedia
             eventMedia[galleryKey] = {
                 title: title,
-                items: eventData.images.map(img => ({
+                items: images.map(img => ({
                     type: "image",
-                    src: img.url,
-                    caption: img.name,
-                    thumb: img.thumb || img.url
+                    src: safeImageUrl(img.url),
+                    caption: String(img.name || ""),
+                    thumb: safeImageUrl(img.thumb || img.url)
                 }))
             };
             
@@ -349,17 +354,26 @@ async function loadDriveGallery() {
             const colDiv = document.createElement("div");
             colDiv.className = "col-lg-4 col-md-6 drive-injected";
             
-            colDiv.innerHTML = `
-                <div class="media-card" data-gallery="${galleryKey}">
-                  <div class="media-card-img-wrapper">
-                    <img src="${eventData.cover}" alt="${title}" onerror="this.style.background='#2a2a2a';this.style.opacity='0.3';this.removeAttribute('onerror');">
-                  </div>
-                  <div class="media-card-body">
-                    <h4>${title}</h4>
-                    <p>${eventData.images.length} Photos</p>
-                  </div>
-                </div>
-            `;
+            const card = document.createElement("div");
+            card.className = "media-card";
+            card.dataset.gallery = galleryKey;
+            const imageWrapper = document.createElement("div");
+            imageWrapper.className = "media-card-img-wrapper";
+            const cover = document.createElement("img");
+            cover.src = safeImageUrl(eventData.cover);
+            cover.alt = title;
+            cover.loading = "lazy";
+            cover.onerror = () => { cover.style.background = "#2a2a2a"; cover.style.opacity = "0.3"; cover.onerror = null; };
+            imageWrapper.appendChild(cover);
+            const body = document.createElement("div");
+            body.className = "media-card-body";
+            const heading = document.createElement("h4");
+            heading.textContent = title;
+            const count = document.createElement("p");
+            count.textContent = `${images.length} Photos`;
+            body.append(heading, count);
+            card.append(imageWrapper, body);
+            colDiv.appendChild(card);
             
             galleryContainer.appendChild(colDiv);
         });
