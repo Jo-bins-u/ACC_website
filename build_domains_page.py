@@ -138,6 +138,7 @@ html_top = """<!DOCTYPE html>
               <div class="navbar-nav ms-auto align-items-center">
                 <a class="nav-item nav-link" href="index.html">Home</a>
                 <a class="nav-item nav-link" href="about.html">About</a>
+                <a class="nav-item nav-link" href="rophe.html">Rophe</a>
                 <a class="nav-item nav-link active" href="domains.html">Domains</a>
                 <a class="nav-item nav-link" href="prayer.html">Prayers</a>
                 <a class="nav-item nav-link" href="calendar.html">Calendar</a>
@@ -297,6 +298,7 @@ html_bottom = """    </div>
               <ul class="list-unstyled mb-0">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
+                <li><a href="rophe.html">Rophe</a></li>
                 <li><a href="prayer.html">Prayers</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="media.html">Media</a></li>

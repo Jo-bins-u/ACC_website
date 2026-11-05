@@ -38,6 +38,7 @@ acc-website-main/
 ├── Video/                # Media video files & event highlight reels
 ├── index.html            # Main Landing Portal
 ├── about.html            # About Page (renders core team roster)
+├── rophe.html            # Rophe Bible Fest page
 ├── calendar.html         # Feast Calendar Page
 ├── media.html            # Event Gallery & Lightbox Page
 ├── contactus.html        # Custom Contact & Submission Page

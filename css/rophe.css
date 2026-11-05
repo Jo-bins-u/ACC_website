@@ -1,0 +1,54 @@
+/* Rophe Bible Fest page */
+.rophe-page { overflow: clip; }
+.rophe-hero { min-height: min(760px, 88vh); min-height: min(760px, 88svh); position: relative; display: grid; place-items: center; isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 50% 42%, rgba(122, 45, 18, .2), transparent 48%), linear-gradient(180deg, rgba(7,9,14,.52), var(--bg-primary)); }
+.rophe-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .16; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E"); }
+.rophe-hero-content { position: relative; z-index: 2; padding-top: 4.5rem; padding-bottom: 6rem; }
+.rophe-hero-glow { position: absolute; z-index: -1; border-radius: 50%; filter: blur(2px); pointer-events: none; }
+.rophe-hero-glow-one { width: min(55vw, 650px); aspect-ratio: 1; background: radial-gradient(circle, rgba(255,111,0,.13), transparent 68%); top: 8%; left: 50%; transform: translateX(-50%); }
+.rophe-hero-glow-two { width: 430px; aspect-ratio: 1; background: radial-gradient(circle, rgba(129,38,28,.15), transparent 70%); bottom: -26%; right: -9%; }
+.rophe-eyebrow,.rophe-kicker { color: var(--accent-gold); text-transform: uppercase; letter-spacing: .22em; font-size: .76rem; font-weight: 700; }
+.rophe-eyebrow { display: inline-flex; align-items: center; gap: .65rem; padding: .65rem 1rem; border: 1px solid var(--glass-border); border-radius: 99px; background: var(--glass-bg); backdrop-filter: blur(12px); }
+.rophe-eyebrow i { font-size: .9rem; }
+.rophe-hero h1 { margin: 1.4rem 0 .45rem; font-family: var(--font-serif); font-size: clamp(5rem, 15vw, 11rem); line-height: .95; letter-spacing: .02em; color: var(--text-primary); text-shadow: 0 0 40px rgba(255,111,0,.18); }
+.rophe-hero-subtitle { color: var(--text-secondary); font-size: clamp(1rem, 2vw, 1.25rem); letter-spacing: .03em; }
+.rophe-theme-pill { display: inline-flex; align-items: center; gap: .8rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; padding: .85rem 1.25rem; border: 1px solid rgba(255,111,0,.32); border-radius: 99px; background: rgba(255,111,0,.065); box-shadow: 0 0 40px rgba(255,111,0,.06); }
+.rophe-theme-pill span { color: var(--text-secondary); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+.rophe-theme-pill i { color: var(--accent-gold); font-size: .8rem; }
+.rophe-theme-pill strong { color: var(--text-primary); font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; }
+.rophe-scroll-cue { position: absolute; bottom: 1.3rem; left: 50%; transform: translateX(-50%); display: flex; align-items: center; flex-direction: column; gap: .55rem; color: var(--text-secondary); text-decoration: none; font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; }
+.rophe-scroll-cue i { color: var(--accent-gold); animation: rophe-bob 1.8s ease-in-out infinite; }
+@keyframes rophe-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+.rophe-hero-bottom-line { position: absolute; bottom: 0; left: 50%; width: min(86%, 900px); height: 1px; transform: translateX(-50%); background: linear-gradient(90deg, transparent, var(--glass-border-hover), transparent); }
+.rophe-intro-section,.rophe-gallery-section { padding: clamp(4rem, 8vw, 7rem) 0; }
+.rophe-section-heading { max-width: 760px; margin: 0 auto 3rem; }
+.rophe-section-heading h2,.rophe-acc-copy h2 { margin: .7rem 0 1rem; color: var(--text-primary); font: 600 clamp(2rem, 4vw, 3.3rem)/1.15 var(--font-serif); }
+.rophe-divider { display: flex; justify-content: center; align-items: center; gap: .9rem; margin-top: 1.25rem; color: var(--accent-gold); font-size: .85rem; }
+.rophe-divider span { width: 52px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-gold)); }
+.rophe-divider span:last-child { transform: rotate(180deg); }
+.rophe-about-card { display: grid; grid-template-columns: 66px 1fr; gap: 1.5rem; max-width: 980px; margin: auto; padding: clamp(1.5rem, 4vw, 3.2rem); border: 1px solid var(--glass-border); border-radius: 24px; background: linear-gradient(140deg, var(--glass-bg-hover), var(--glass-bg)); box-shadow: var(--glass-shadow); }
+.rophe-card-icon { display: grid; place-items: center; width: 58px; height: 58px; color: var(--accent-gold); border: 1px solid rgba(255,111,0,.22); border-radius: 18px; background: rgba(255,111,0,.08); font-size: 1.25rem; }
+.rophe-about-card p,.rophe-acc-copy p { color: var(--text-secondary); line-height: 1.9; font-size: 1rem; }
+.rophe-about-card p:first-of-type { margin-top: 1rem; }
+.rophe-about-card strong { color: var(--text-primary); }
+.rophe-highlight { color: var(--accent-gold) !important; }
+.rophe-acc-section { position: relative; padding: clamp(4rem, 8vw, 7rem) 0; background: linear-gradient(180deg, transparent, var(--bg-secondary), transparent); }
+.rophe-acc-layout { display: grid; grid-template-columns: minmax(220px, .75fr) 1.5fr; gap: clamp(2rem, 7vw, 6rem); align-items: center; max-width: 1080px; margin: auto; }
+.rophe-acc-mark { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .7rem; border: 1px solid var(--glass-border); border-radius: 26px; background: radial-gradient(circle at center, rgba(255,111,0,.11), var(--glass-bg) 67%); box-shadow: var(--glass-shadow); }
+.rophe-acc-mark span { font: 700 clamp(4rem, 8vw, 6rem)/1 var(--font-serif); letter-spacing: .08em; color: var(--text-primary); }
+.rophe-acc-mark i { color: var(--accent-gold); font-size: 2rem; filter: drop-shadow(0 0 14px var(--accent-gold-glow)); }
+.rophe-acc-mark small { margin-top: .5rem; color: var(--text-secondary); text-transform: uppercase; font-size: .7rem; letter-spacing: .2em; }
+.rophe-acc-copy h2 { font-size: clamp(2rem, 3.5vw, 2.7rem); }
+.rophe-stat { display: inline-flex; flex-direction: column; padding: .85rem 1.2rem; margin-top: .7rem; border-left: 2px solid var(--accent-gold); background: var(--glass-bg); }
+.rophe-stat strong { color: var(--accent-gold); font: 700 1.65rem/1.2 var(--font-serif); }
+.rophe-stat span { color: var(--text-secondary); font-size: .78rem; }
+.rophe-heading-note { color: var(--text-secondary); }
+.rophe-gallery-grid { max-width: 1080px; margin: 0 auto; }
+.rophe-photo-card { position: relative; height: 330px; overflow: hidden; margin: 0; border: 1px solid var(--glass-border); border-radius: 18px; background: var(--bg-tertiary); box-shadow: var(--glass-shadow); }
+.rophe-photo-card.rophe-photo-tall { height: 410px; }
+.rophe-photo-card::after { content: ""; position: absolute; inset: 40% 0 0; pointer-events: none; background: linear-gradient(transparent, rgba(0,0,0,.78)); }
+.rophe-photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16,1,.3,1), filter .6s ease; }
+.rophe-photo-card:hover img { transform: scale(1.055); filter: saturate(1.12); }
+.rophe-photo-card figcaption { position: absolute; z-index: 1; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.15rem 1.25rem; color: #fff; font-family: var(--font-serif); font-size: 1.06rem; }
+.rophe-photo-card figcaption i { color: #ff9b51; font-size: .82rem; }
+@media (max-width: 767.98px) { .rophe-hero { min-height: 76svh; } .rophe-hero-content { padding-top: 3rem; } .rophe-theme-pill { gap: .55rem; padding: .75rem 1rem; } .rophe-theme-pill strong { font-size: 1rem; } .rophe-about-card { grid-template-columns: 1fr; gap: 1rem; border-radius: 18px; } .rophe-card-icon { width: 48px; height: 48px; border-radius: 14px; } .rophe-acc-layout { grid-template-columns: 1fr; } .rophe-acc-mark { min-height: 220px; } .rophe-photo-card,.rophe-photo-card.rophe-photo-tall { height: 310px; } }
+@media (prefers-reduced-motion: reduce) { .rophe-scroll-cue i { animation: none; } .rophe-photo-card img { transition: none; } }

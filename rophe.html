@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        const showLoader = !sessionStorage.getItem("acc-page-seen") || (nav && nav.type === "reload");
+        sessionStorage.setItem("acc-page-seen", "1");
+        if (!showLoader) document.documentElement.classList.add("skip-page-loader");
+      } catch (_) {}
+    })();
+  </script>
+
+  <!-- Site Metas -->
+  <meta name="keywords"
+    content="Rophe Bible Fest, Love without Measure, ACC Kengeri, association of christian christites, Christ University kengeri,
+                                  acc, christ university, christ university (deemed to be university), animation domain acc,
+                                  liturgy domain acc, media and communication domain acc, outreach domain acc, audio & visual domain acc" />
+
+  <meta name="description"
+    content="Rophe is the ACC Kengeri Bible Fest. Rophe ’26 celebrates Love without Measure through Scripture, worship, creativity, and fellowship. Association of Christian Christites is a community of all Christian students studying in 
+                                      Christ University (Deemed To Be University). We spread the message of Jesus and help ourselves 
+                                      lead a good Christian life and strive to make a change through our activities." />
+  <meta name="author" content="Alphy Jose" />
+
+  <title>Rophe ’26 | ACC Kengeri</title>
+  <link rel="icon" href="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- Style Links Local -->
+  <link rel="stylesheet" href="css/theme.css" type="text/css">
+  <link rel="stylesheet" href="css/preloader.css" type="text/css">
+  <link rel="stylesheet" href="css/indexstyle.css" type="text/css">
+  <link rel="stylesheet" href="css/hnfstyle.css" type="text/css">
+  <link rel="stylesheet" href="css/rophe.css" type="text/css">
+</head>
+
+<body>
+
+  <!-- Ambient background glows -->
+  <div class="ambient-glow" style="top: 15%; left: -10%;"></div>
+  <div class="ambient-glow" style="top: 55%; right: -15%;"></div>
+
+  <div id="preloader">
+    <div class="loader"><div class="loader-mark"><img src="assets/acc-loader-bird.png" alt="ACC dove logo" class="loader-logo" width="331" height="255" fetchpriority="high"></div></div>
+  </div>
+
+  <header>
+    <div class="container-fluid py-2">
+      <div class="row align-items-center">
+        <div class="col-md-6 col-7">
+          <a href="index.html">
+            <img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/ACC_WHITE.png" alt="ACC Logo" class="img-fluid acc-logo" width="180" height="auto">
+          </a>
+        </div>
+        <div class="col-md-6 col-5">
+          <nav class="navbar navbar-expand-lg navbar-dark p-0 justify-content-end">
+            <div class="collapse navbar-collapse text-start" id="navbarNavAltMarkup">
+              <div class="navbar-nav ms-auto align-items-center">
+                <a class="nav-item nav-link" href="index.html">Home</a>
+                <a class="nav-item nav-link" href="about.html">About</a>
+                <a class="nav-item nav-link active" href="rophe.html" aria-current="page">Rophe</a>
+                <a class="nav-item nav-link" href="domains.html">Domains</a>
+                <a class="nav-item nav-link" href="prayer.html">Prayers</a>
+                <a class="nav-item nav-link" href="calendar.html">Calendar</a>
+                <a class="nav-item nav-link" href="media.html">Media</a>
+                <a class="nav-item nav-link" href="contactus.html">Contact Us</a>
+              </div>
+            </div>
+            <button id="theme-toggle" class="btn-theme-toggle ms-lg-3 ms-auto" aria-label="Toggle Theme">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around ms-3"
+              type="button" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="toggler-icon top-bar"></span>
+              <span class="toggler-icon middle-bar"></span>
+              <span class="toggler-icon bottom-bar"></span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="rophe-page">
+    <section class="rophe-hero" aria-labelledby="rophe-title">
+      <div class="rophe-hero-glow rophe-hero-glow-one"></div>
+      <div class="rophe-hero-glow rophe-hero-glow-two"></div>
+      <div class="container rophe-hero-content text-center">
+        <span class="rophe-eyebrow" data-aos="fade-down" data-aos-duration="1000"><i class="fa-solid fa-book-bible"></i> ACC Kengeri presents</span>
+        <h1 id="rophe-title" data-aos="zoom-in" data-aos-duration="1100">Rophe</h1>
+        <p class="rophe-hero-subtitle" data-aos="fade-up" data-aos-delay="180">A Bible Fest rooted in the Word, renewed in fellowship.</p>
+        <div class="rophe-theme-pill" data-aos="fade-up" data-aos-delay="320"><span>Rophe ’26</span><i class="fa-solid fa-cross"></i><strong>Love without Measure</strong></div>
+        <a class="rophe-scroll-cue" href="#about-rophe" aria-label="Scroll to discover Rophe" data-aos="fade-up" data-aos-delay="500"><span>Discover Rophe</span><i class="fa-solid fa-chevron-down"></i></a>
+      </div>
+      <div class="rophe-hero-bottom-line"></div>
+    </section>
+
+    <section class="rophe-intro-section" id="about-rophe">
+      <div class="container">
+        <div class="rophe-section-heading text-center" data-aos="blur-reveal" data-aos-duration="1000">
+          <span class="rophe-kicker">Faith • Fellowship • Purpose</span>
+          <h2>Gathered in His name</h2>
+          <div class="rophe-divider"><span></span><i class="fa-solid fa-cross"></i><span></span></div>
+        </div>
+        <article class="rophe-about-card" data-aos="fade-up" data-aos-duration="1000">
+          <div class="rophe-card-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div>
+            <span class="rophe-kicker">About the Bible Fest</span>
+            <p>Rophe is the Bible Fest initiated by the ACC Kengeri Campus, envisioned as a faith-based platform to engage the university community with the Word of God through worship, creativity, and fellowship. The word <em>Rophe</em> means “to bind up the broken.” That meaning shaped the first edition, held last year, which received an encouraging response from the university community and laid a strong spiritual foundation.</p>
+            <p>Building on this legacy, <strong>Rophe ’26</strong> marks the second edition, carrying forward the theme <strong class="rophe-highlight">“Love without Measure.”</strong> It brings students and faculty together for a meaningful celebration rooted in Scripture, worship, and the boundless love of Christ.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="rophe-acc-section">
+      <div class="container">
+        <div class="rophe-acc-layout">
+          <div class="rophe-acc-mark" data-aos="fade-right" data-aos-duration="1000"><span>ACC</span><i class="fa-solid fa-dove"></i><small>Faith in action</small></div>
+          <div class="rophe-acc-copy" data-aos="fade-left" data-aos-duration="1000">
+            <span class="rophe-kicker">The community behind Rophe</span>
+            <h2>What is Association of Christian Christites?</h2>
+            <p>Association of Christian Christites (ACC) is a vibrant, student-led community of Christ University, dedicated to nurturing faith and personal growth. ACC offers a supportive, inclusive space where peers can connect with like-minded individuals, explore spirituality, and discover their full potential.</p>
+            <p>Through a balance of fun, creativity, and faith-based activities, ACC empowers students to build lasting friendships, deepen their relationship with God, and become the best version of themselves. We spread the message of Jesus and help one another lead a good Christian life, striving to make a change through our activities.</p>
+            <p>ACC creates fellowship and bonding between fellow Christites. Our vision is to create a positive atmosphere on campus and glorify God. We organize Holy Mass, Leadership Training Programmes, Retreats, Fests, Feast Celebrations, intercessory prayers, Outreach programmes, and more.</p>
+            <div class="rophe-stat" data-aos="fade-up" data-aos-delay="150"><strong>10,000+</strong><span>members across six CHRIST campuses</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rophe-gallery-section" id="rophe-gallery">
+      <div class="container">
+        <div class="rophe-section-heading text-center" data-aos="blur-reveal" data-aos-duration="1000">
+          <span class="rophe-kicker">Moments in the Word</span>
+          <h2>Bible Fest memories</h2>
+          <p class="rophe-heading-note">A glimpse of Scripture, worship, and fellowship shared by our community.</p>
+          <div class="rophe-divider"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+        </div>
+        <div class="row g-4 rophe-gallery-grid">
+          <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="900">
+            <figure class="rophe-photo-card rophe-photo-tall"><img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Berishith%201%20and%202/_DSC4285.JPG" alt="Students gathered for a Bible Fest celebration" loading="lazy" decoding="async"><figcaption><span>Gathered in faith</span><i class="fa-solid fa-arrow-up-right-from-square"></i></figcaption></figure>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            <figure class="rophe-photo-card"><img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Berishith%201%20and%202/DSC05036.JPG" alt="Bible Fest worship and prayer" loading="lazy" decoding="async"><figcaption><span>Worship together</span><i class="fa-solid fa-arrow-up-right-from-square"></i></figcaption></figure>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
+            <figure class="rophe-photo-card rophe-photo-tall"><img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Berishith%201%20and%202/DSC04992.JPG" alt="Students sharing fellowship during a Bible Fest" loading="lazy" decoding="async"><figcaption><span>Growing in fellowship</span><i class="fa-solid fa-arrow-up-right-from-square"></i></figcaption></figure>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="900">
+            <figure class="rophe-photo-card"><img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Berishith%201%20and%202/_DSC4372.JPG" alt="Bible Fest participants taking part in an activity" loading="lazy" decoding="async"><figcaption><span>Faith in action</span><i class="fa-solid fa-arrow-up-right-from-square"></i></figcaption></figure>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            <figure class="rophe-photo-card rophe-photo-tall"><img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Berishith%201%20and%202/DSC05097.JPG" alt="Friends sharing a moment at Bible Fest" loading="lazy" decoding="async"><figcaption><span>Joy in community</span><i class="fa-solid fa-arrow-up-right-from-square"></i></figcaption></figure>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
+            <figure class="rophe-photo-card"><img src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/Berishith%201%20and%202/_DSC4374.JPG" alt="Bible Fest community celebrating together" loading="lazy" decoding="async"><figcaption><span>Bound together in Christ</span><i class="fa-solid fa-arrow-up-right-from-square"></i></figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container py-5">
+      <div class="row fttr justify-content-between">
+        <!-- Brand & Address Column -->
+        <div class="col-lg-4 col-md-12 mb-5 mb-lg-0 text-start pr-lg-5">
+          <div class="mb-4 d-flex align-items-center">
+            <span class="footer-brand-name">Association of Christian Christites</span>
+          </div>
+
+          <a id="lcft" href="https://g.co/kgs/7q6tTKC" target="_blank" rel="noopener noreferrer" class="mb-4">
+            <i class="fas fa-map-marker-alt mt-1"></i>
+            <span>CHRIST (Deemed to be University), Kengeri Campus, Bengaluru, 560074.</span>
+          </a>
+
+          <!-- Map for Desktop -->
+          <div class="footer-map-card d-none d-lg-block">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+              width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" aria-label="Google Map Location"></iframe>
+          </div>
+        </div>
+
+        <!-- Links Columns Wrapper -->
+        <div class="col-lg-8 col-md-12 pl-lg-5">
+          <div class="row">
+            <!-- Quick Links -->
+            <div class="col-6 col-md-3 mb-4 mb-md-0">
+              <h5>Quick Links</h5>
+              <ul class="list-unstyled mb-0">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="rophe.html" aria-current="page">Rophe</a></li>
+                <li><a href="prayer.html">Prayers</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="media.html">Media</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+              </ul>
+            </div>
+
+            <!-- Domains -->
+            <div class="col-6 col-md-3 mb-4 mb-md-0">
+              <h5>Domains</h5>
+              <ul class="list-unstyled mb-0">
+                <li><a href="domains.html#animation">Animation</a></li>
+                <li><a href="domains.html#liturgy">Liturgy</a></li>
+                <li><a href="domains.html#outreach">Outreach</a></li>
+                <li><a href="domains.html#audiovisual">Audio &amp; Visual</a></li>
+                <li><a href="domains.html#logistic">Logistics</a></li>
+                <li><a href="domains.html#mediadoc">Media &amp; Doc</a></li>
+              </ul>
+            </div>
+
+            <!-- Campuses -->
+            <div class="col-6 col-md-3 mb-4 mb-md-0">
+              <h5>Campuses</h5>
+              <ul class="list-unstyled mb-0">
+                <li><a href="https://www.instagram.com/acc_christ/" target="_blank">Central</a></li>
+                <li><a href="https://www.instagram.com/acc_kengeri/" target="_blank">Kengeri</a></li>
+                <li><a href="https://www.instagram.com/acc_bgr/" target="_blank">Bannerghatta</a></li>
+                <li><a href="https://www.instagram.com/acc_byc/" target="_blank">Yeshwanthpur</a></li>
+                <li><a href="https://www.instagram.com/acc_christ_ncr/" target="_blank">Delhi NCR</a></li>
+              </ul>
+            </div>
+
+            <!-- Social Media & Logo -->
+            <div class="col-6 col-md-3 mb-4 mb-md-0">
+              <h5>Connect</h5>
+              <div class="social-links mb-4">
+                <a href="https://www.instagram.com/acc_kengeri/" target="_blank" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i></a>
+                <a href="https://chat.whatsapp.com/KoTpbOt0HZB8Uq0PbNUqrj" target="_blank" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i></a>
+              </div>
+              <a href="https://christuniversity.in/" target="_blank" class="d-inline-block mt-2">
+                <img class="img-fluid fim uni-logo" src="https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/University_logo_WH.png" alt="University Logo">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map for Mobile -->
+        <div class="col-12 mt-4 d-flex justify-content-center d-lg-none">
+          <div class="footer-map-card w-100" style="max-width: 400px; margin-top: 0;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.4602952788982!2d77.43629971030114!3d12.863339128212573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangalore%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1719460544242!5m2!1sen!2sin"
+              width="100%" height="170" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" aria-label="Google Map Location"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright Row -->
+      <div class="footer-bottom mt-5 pt-4">
+        <div class="row align-items-center">
+          <div class="col-12 text-center">
+            <p class="mb-0">&copy; 2026 Association of Christian Christites. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!--JavaScript Begins Here-->
+  <script src="https://kit.fontawesome.com/6d286a1171.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/preloader.js"></script>
+
+  <script>
+    AOS.init({
+      once: true,
+      duration: 800
+    });
+  </script>
+  <!--JavaScript Ends Here-->
+</body>
+
+</html>

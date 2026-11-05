@@ -33,6 +33,7 @@ new_footer = '''  <footer>
               <ul class="list-unstyled mb-0">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
+                <li><a href="rophe.html">Rophe</a></li>
                 <li><a href="prayer.html">Prayers</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="media.html">Media</a></li>
