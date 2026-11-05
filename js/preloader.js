@@ -239,32 +239,36 @@ function startRotator() {
 }
 
 // ─── Preloader Logic ──────────────────────────────────────────────────────
+let preloaderDismissed = false;
+
 function hidePreloader() {
+    if (preloaderDismissed) return;
+    preloaderDismissed = true;
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        preloader.style.transition = 'opacity 0.5s ease';
+        preloader.style.transition = 'opacity 0.24s ease';
         preloader.style.opacity = '0';
         setTimeout(function() {
             if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
             startHeroTypewriter();
-        }, 520);
+        }, 250);
     } else {
         startHeroTypewriter();
     }
 }
 
-window.addEventListener('load', function() {
-    if (window._driveGalleryLoaded) {
+// Reveal the page after its DOM is ready; image and gallery downloads continue
+// in the background and no longer hold the whole screen behind the preloader.
+const preloaderFallback = setTimeout(hidePreloader, 2200);
+function dismissPreloaderSoon() {
+    setTimeout(function() {
+        clearTimeout(preloaderFallback);
         hidePreloader();
-    } else {
-        // Only wait long on pages with a drive gallery component
-        const hasDriveGallery = !!document.querySelector('.gallery-container, #media-gallery, [data-drive-gallery]');
-        const timeout = hasDriveGallery ? 9000 : 1800;
+    }, 350);
+}
 
-        const fallbackTimer = setTimeout(hidePreloader, timeout);
-        document.addEventListener('driveGalleryReady', function() {
-            clearTimeout(fallbackTimer);
-            hidePreloader();
-        }, { once: true });
-    }
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', dismissPreloaderSoon, { once: true });
+} else {
+    dismissPreloaderSoon();
+}

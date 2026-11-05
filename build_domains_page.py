@@ -111,10 +111,7 @@ html_top = """<!DOCTYPE html>
   <div class="ambient-glow" style="top: 60%; right: -15%;"></div>
 
   <div id="preloader">
-    <div class="loader">
-        <div class="horizontal"></div>
-        <div class="vertical"></div>
-    </div>
+    <div class="loader"><img src="assets/acc-loader-logo.png" alt="Association of Christian Christites" class="loader-logo" width="260" height="260" fetchpriority="high"></div>
   </div>
 
   <header>

@@ -1,105 +1,78 @@
-/*------------------ PRELOADER Style Begins Here -------------------------*/
+/* Fast, lightweight branded loading screen. */
 #preloader {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--bg-primary);
+    inset: 0;
     z-index: 99999;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
+    background: var(--bg-primary, #07090e);
+    transition: opacity 0.24s ease;
 }
 
-/* Subtle background glowing orb in preloader */
 #preloader::before {
-    content: '';
+    content: "";
     position: absolute;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(7, 9, 14, 0) 70%);
-    filter: blur(20px);
-    pointer-events: none;
-    animation: glowPulse 2.5s infinite ease-in-out;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.13), transparent 70%);
+    filter: blur(18px);
+    animation: loaderGlow 1.8s ease-in-out infinite;
 }
 
 .loader {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 150px;
+    display: grid;
+    width: 270px;
+    height: 270px;
+    place-items: center;
 }
 
-.horizontal {
-    border-radius: 4px;
-    width: 80px;
-    height: 6px;
-    background-color: var(--accent-gold);
+.loader::before {
+    content: "";
     position: absolute;
-    top: 55px; /* Positioned cross horizontal bar */
-    box-shadow: 0 0 15px var(--accent-gold-glow);
-    animation: pulseHorizontal 2s infinite ease-in-out;
+    inset: 16px;
+    border: 2px solid rgba(212, 175, 55, 0.15);
+    border-top-color: var(--accent-gold, #d4af37);
+    border-right-color: rgba(212, 175, 55, 0.6);
+    border-radius: 50%;
+    animation: loaderOrbit 1.6s linear infinite;
 }
 
-.vertical {
-    border-radius: 4px;
-    width: 6px;
-    height: 120px;
-    background-color: var(--accent-gold);
-    position: absolute;
-    box-shadow: 0 0 15px var(--accent-gold-glow);
-    animation: pulseVertical 2s infinite ease-in-out;
+.loader-logo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(230px, 68vw);
+    height: auto;
+    filter: brightness(0) invert(1);
+    animation: logoBreathe 1.8s ease-in-out infinite;
 }
 
-@keyframes glowPulse {
-    0%, 100% {
-        transform: scale(0.9);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
+.light-theme #preloader .loader-logo {
+    filter: none;
 }
 
-@keyframes pulseHorizontal {
-    0%, 100% {
-        transform: scaleX(1);
-        filter: brightness(1);
-    }
-    50% {
-        transform: scaleX(1.15);
-        filter: brightness(1.3);
-        box-shadow: 0 0 25px var(--accent-gold);
-    }
+@keyframes loaderOrbit {
+    to { transform: rotate(360deg); }
 }
 
-@keyframes pulseVertical {
-    0%, 100% {
-        transform: scaleY(1);
-        filter: brightness(1);
-    }
-    50% {
-        transform: scaleY(1.1);
-        filter: brightness(1.3);
-        box-shadow: 0 0 25px var(--accent-gold);
-    }
+@keyframes loaderGlow {
+    0%, 100% { opacity: 0.55; transform: scale(0.92); }
+    50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* Responsive fixes */
-@media (max-width: 900px) {
-    .horizontal {
-        width: 70px;
-        height: 5px;
-        top: 50px;
-    }
-    .vertical {
-        width: 5px;
-        height: 100px;
+@keyframes logoBreathe {
+    0%, 100% { opacity: 0.84; transform: scale(0.97); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #preloader::before,
+    .loader::before,
+    .loader-logo {
+        animation-duration: 4s;
     }
 }
-/*------------------ PRELOADER Style Ends Here -------------------------*/
