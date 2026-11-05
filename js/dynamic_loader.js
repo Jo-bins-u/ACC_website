@@ -36,30 +36,7 @@
     { id: 32, title: "Feast of St. Stephen", date: "2026-12-26", category: "feast", time: "All Day", description: "Feast of the first Christian martyr." }
   ];
 
-  const defaultTeam = [
-    { id: "frshijin", name: "Fr. Shijin PJ CMI", role: "Coordinator", category: "coordinators", image: "", links: [] },
-    { id: "jeringeo", name: "Jerin Geo Jacob", role: "Faculty Coordinator", category: "coordinators", image: "", links: [] },
-    { id: "jincy", name: "Jincy Cherian", role: "Faculty Coordinator", category: "coordinators", image: "", links: [] },
-    { id: "edwin", name: "Edwin Jose Cyril", role: "Student Coordinator", category: "student_coordinators", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/edwin-jose-9b7b8221a/" }] },
-    { id: "cherry", name: "Cherry Rose Prakash", role: "Student Coordinator", category: "student_coordinators", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/cherry-rose-prakash-470960254/" }] },
-    { id: "teresa", name: "Teresa Jose", role: "Animation Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/teresa-jose-643330260/" }, { type: "instagram", url: "https://www.instagram.com/_alp_hy_/" }, { type: "whatsapp", url: "https://wa.me/qr/7YQ4BGDJNV6YM1" }] },
-    { id: "alphy", name: "Alphy Jose", role: "Liturgy Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/alphyjose777/" }] },
-    { id: "akhilesh", name: "Akhilesh Kumar", role: "Media Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/akhilesh-kumar-4402a8248/" }] },
-    { id: "steeva", name: "Steeva Xavier", role: "Communication Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/steeva-xavier-aba68a262/" }] },
-    { id: "joel", name: "Joel Mathew", role: "Choir Head", category: "domain_heads", image: "", links: [] },
-    { id: "alin", name: "Alin Teresa Jose", role: "Dance Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/alin-theresa-jose-a4a8b72a4/" }] },
-    { id: "ashin", name: "Ashin Shibu Joseph", role: "Theatre Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/ashin-shibu-joseph-68300126b/" }] },
-    { id: "manjeera", name: "Manjeera Manoj", role: "Outreach Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/manjeera-manoj-088a7123b/" }] },
-    { id: "elvin", name: "Elvin Davis", role: "Logistics & Hospitality Head", category: "domain_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/elvin-davis-ba68a0246/" }] },
-    { id: "williams", name: "Williams Palathingal", role: "Engineering Head", category: "department_heads", image: "", links: [] },
-    { id: "alex", name: "Alex OS", role: "Engineering Head", category: "department_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/os-alex/" }] },
-    { id: "dona", name: "Dona Milton", role: "Architecture Head", category: "department_heads", image: "", links: [] },
-    { id: "karishma", name: "Karishma Devasia", role: "Architecture Head", category: "department_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/karishma-devasia-07368a2a3/" }] },
-    { id: "ruben", name: "Reuben Richards", role: "Psychology Head", category: "department_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/richards-reuben-6707a4230/" }] },
-    { id: "elaine", name: "Elaine Elsa Siby", role: "Psychology Head", category: "department_heads", image: "", links: [{ type: "linkedin", url: "https://www.linkedin.com/in/elaine-elsa-siby-a1b93026b/" }] },
-    { id: "melvin", name: "Melvin Kochummen Biju", role: "BBA Head", category: "department_heads", image: "", links: [] },
-    { id: "soshan", name: "Soshan Ramung", role: "BBA Head", category: "department_heads", image: "", links: [] }
-  ];
+  const defaultTeam = window.ACC_DEFAULT_TEAM || [];
 
   const defaultGalleries = {
     "animation": ["https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/anim/anim1.png", "https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/anim/anim2.png", "https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/anim/anim3.JPG", "https://snddwjckkdejnnmnwrgz.supabase.co/storage/v1/object/public/acc-site-media/anim/anim4.jpg"],
@@ -204,49 +181,28 @@
   // 4. Render Handlers (Async-Aware)
   window.renderAboutTeam = async function() {
     const db = await window.getTeamDB();
-    
-    const renderCategory = (category, containerId, title) => {
-      const container = $(`#${containerId}`);
-      if (!container.length) return;
-      container.empty();
-      container.append(`<h2 class="col-12 text-center" data-aos="blur-reveal">${title}</h2>`);
-      
-      const members = db.filter(m => m.category === category);
-      members.forEach((m, idx) => {
-        let linksHtml = '';
-        if (m.links && m.links.length > 0) {
-          linksHtml = `<ul class="social-media-icons">`;
-          m.links.forEach(l => {
-            let iconClass = "fa-brands fa-linkedin";
-            if (l.type === "instagram") iconClass = "fa-brands fa-instagram";
-            else if (l.type === "whatsapp") iconClass = "fa-brands fa-whatsapp";
-            linksHtml += `<li><a href="${l.url}" target="_blank"><i class="${iconClass}"></i></a></li>`;
-          });
-          linksHtml += `</ul>`;
-        }
-        
-        const delay = (idx + 1) * 50;
-        const memberHtml = `
-          <div class="col-lg-3 col-md-4 col-6 mb-4 profile" data-aos="blur-reveal" data-aos-duration="1200" data-aos-delay="${delay}">
-            <div class="profile-card">
-              <div class="img-box">
-                <img src="${window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(m))}" alt="${m.name}" loading="lazy"
-                  onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'130\' height=\'130\' viewBox=\'0 0 130 130\'%3E%3Crect width=\'130\' height=\'130\' fill=\'%231a1d2e\'/%3E%3Ccircle cx=\'65\' cy=\'50\' r=\'28\' fill=\'%23d4af37\' opacity=\'0.25\'/%3E%3Ccircle cx=\'65\' cy=\'50\' r=\'22\' fill=\'%23d4af37\' opacity=\'0.15\'/%3E%3Cpath d=\'M25 115 Q25 88 65 88 Q105 88 105 115\' fill=\'%23d4af37\' opacity=\'0.18\'/%3E%3C/svg%3E'">
-              </div>
-              <h3>${m.name}</h3>
-              <h4>${m.role}</h4>
-              ${linksHtml}
-            </div>
-          </div>
-        `;
-        container.append(memberHtml);
+    const container = $("#team-groups-container");
+    if (!container.length) return;
+    container.empty();
+    const groups = [["coordinators","Coordinators"],["student_coordinators","Student Coordinators"],["animators","Animators"],["documentation","Documentation"],["finance","Finance"],["logistics","Logistics"],["decor","Decor"],["outreach","Outreach"],["liturgy","Liturgy"],["choir","Choir"],["dance","Dance"],["theatre","Theatre"],["media","Media"],["engineering","Engineering"],["psychology","Psychology"],["bba","BBA"],["architecture","Architecture"],["mba","MBA"]];
+    groups.forEach(function(group) {
+      const members = db.filter(function(member){ return member.category === group[0]; });
+      if (!members.length) return;
+      const section = $("<div class=\"row justify-content-center px-2 team-group\"></div>");
+      section.append($("<h2 class=\"col-12 text-center\" data-aos=\"blur-reveal\"></h2>").text(group[1]));
+      members.forEach(function(member, idx) {
+        const card = $("<div class=\"col-lg-3 col-md-4 col-6 mb-4 profile\" data-aos=\"blur-reveal\"></div>");
+        const profile = $("<div class=\"profile-card\"></div>");
+        const imageBox = $("<div class=\"img-box\"></div>");
+        const image = $("<img loading=\"lazy\">").attr("src", window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(member))).attr("alt", member.name);
+        image.on("error", function(){ this.onerror=null; this.src=teamPhotoPlaceholder; });
+        imageBox.append(image); profile.append(imageBox);
+        profile.append($("<h3></h3>").text(member.name), $("<h4></h4>").text(member.role));
+        if(member.links && member.links.length){ const links=$("<ul class=\"social-media-icons\"></ul>"); member.links.forEach(function(link){ const icon=link.type==="instagram"?"fa-brands fa-instagram":link.type==="whatsapp"?"fa-brands fa-whatsapp":"fa-brands fa-linkedin"; links.append($("<li></li>").append($("<a target=\"_blank\" rel=\"noopener noreferrer\"></a>").attr("href",link.url).append($("<i></i>").addClass(icon)))); }); profile.append(links); }
+        card.append(profile); section.append(card);
       });
-    };
-    
-    renderCategory("coordinators", "coordinators-container", "Coordinators");
-    renderCategory("student_coordinators", "student-coordinators-container", "Student Coordinators");
-    renderCategory("domain_heads", "domain-heads-container", "Domain Heads");
-    renderCategory("department_heads", "dept-heads-container", "Department Heads");
+      container.append(section);
+    });
   };
 
   window.renderDomainHeadsAndGalleries = async function(domainKey) {
@@ -259,12 +215,12 @@
       headContainer.empty();
       
       const domainHeadMap = {
-        "animation": ["teresa"],
-        "liturgy": ["alphy"],
-        "outreach": ["manjeera"],
-        "logistic": ["elvin"],
-        "mediadoc": ["akhilesh", "steeva"],
-        "audiovisual": ["joel", "alin", "ashin"]
+        "animation": ["shohil", "atlin_chacko"],
+        "liturgy": ["joseph_john", "sreya_ann_binoy", "abin_joseph"],
+        "outreach": ["kevin_samuel", "jonnet_shaji_john", "sani_sajayan"],
+        "logistic": ["abel_francis", "savio_soy"],
+        "mediadoc": ["jis_mariya", "cerine_roy_thomas", "joseph_padayatty", "daine_cyriac_sinoj", "george_sebastian"],
+        "audiovisual": ["michelle_devasia", "alex_baby", "tobit_siby", "ann_maria_aby", "tisha_pinheiro", "amvi_jerone", "diya_susan_binu", "max_t_alenchery", "anson_toji"]
       };
       
       const headIds = domainHeadMap[domainKey] || [];

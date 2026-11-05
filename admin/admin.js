@@ -314,12 +314,7 @@ $(document).ready(function() {
     }
     
     filtered.forEach(m => {
-      const catLabels = {
-        coordinators: "Coordinator",
-        student_coordinators: "Student Coordinator",
-        domain_heads: "Domain Head",
-        department_heads: "Department Head"
-      };
+      const catLabels = Object.fromEntries(Array.from(document.querySelectorAll("#filter-team-category option")).map(option => [option.value, option.textContent.trim()]));
       
       const avatarHtml = m.image 
         ? `<img class="admin-row-avatar" src="${window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(m))}" alt="${m.name}">`
