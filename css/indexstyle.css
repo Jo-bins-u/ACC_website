@@ -1,0 +1,752 @@
+/* ============================================================
+   Home Page Specific Stylesheet — Premium Rewrite
+   ============================================================ */
+
+/* ── Body offset for fixed header ──────────────────────────── */
+body {
+    padding-top: 0; /* hero is full viewport, header overlays it */
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+
+.inner-container {
+    height: 100vh;
+    min-height: 560px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.vdo-bnr {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: var(--video-opacity, 0.45);
+    filter: brightness(0.62) contrast(1.05) saturate(1.1);
+    transition: opacity 1s ease;
+}
+
+/* In light mode, video should look brighter (not darkened as much) */
+body.light-theme .vdo-bnr {
+    filter: brightness(0.88) contrast(1.0) saturate(1.05);
+}
+
+/* Multi-layer cinematic gradient overlay */
+.inner-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 60% 40%, rgba(255,111,0,0.06) 0%, transparent 60%),
+        linear-gradient(to bottom,
+            rgba(7,9,14,0.2) 0%,
+            rgba(7,9,14,0.1) 40%,
+            rgba(7,9,14,0.85) 100%);
+    z-index: 1;
+}
+
+/* Hero text container */
+.over-text {
+    width: 100%;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+/* ── Typewriter / Blur-Reveal animation ─────────────────────── */
+@keyframes heroFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(12px);
+        letter-spacing: 0.8em;
+    }
+    60% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+@keyframes textBreatheSoft {
+    0%, 100% {
+        text-shadow:
+            0 8px 30px rgba(0,0,0,0.9),
+            0 0 30px rgba(255,111,0,0.07);
+    }
+    50% {
+        text-shadow:
+            0 8px 30px rgba(0,0,0,0.9),
+            0 0 70px rgba(255,111,0,0.28),
+            0 0 120px rgba(255,111,0,0.08);
+    }
+}
+
+
+
+/* CTA button — sits BELOW the h1, hidden until JS reveals it */
+.over-text a {
+    margin-top: 36px;
+    opacity: 0;
+    transform: translateY(14px);
+    display: inline-block;    /* inline-block keeps it centered under the h1 */
+    /* JS sets transition + opacity:1 + transform:none after writing finishes */
+}
+
+/* Hero button always white text on video */
+.over-text a.btn-gold {
+    color: #ffffff !important;
+}
+
+
+/* Scroll indicator arrow */
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation:
+        heroBtnFade 0.8s ease 3s forwards,
+        scrollHintBounce 2.5s ease-in-out 3.8s infinite;
+}
+
+@keyframes scrollHintBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.hero-scroll-hint span {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+}
+
+.hero-scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255,111,0,0.7), transparent);
+    animation: scrollLine 2s ease-in-out 3.5s infinite;
+}
+
+@keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    50.1%{ transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+
+/* ============================================================
+   VERSE SECTION
+   ============================================================ */
+
+.verse {
+    padding: 7rem 0 6rem 0; /* Slightly less padding on bottom, or shift text down */
+    background: var(--verse-gradient);
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+}
+
+/* Large decorative quote mark */
+.verse::before {
+    content: '\201C';
+    position: absolute;
+    top: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16rem;
+    font-family: var(--font-serif);
+    color: rgba(255,111,0,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Animated golden line accent */
+.verse::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    box-shadow: 0 0 12px var(--accent-gold-glow);
+}
+
+.versetxt {
+    max-width: 820px;
+    margin: 1.5rem auto 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+    min-height: 180px; /* Keeps the container a fixed size */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#verse-content {
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+}
+
+#verse-content.verse-exiting {
+    opacity: 0;
+    filter: blur(12px);
+}
+
+.versetxt h1 {
+    font-family: var(--font-serif);
+    font-size: 2.3rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--text-primary);
+    font-style: italic;
+    letter-spacing: 0.3px;
+    transition: all 0.6s ease;
+}
+
+.versetxt p {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent-gold);
+    margin-top: 24px;
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+
+/* ============================================================
+   SECTION TITLE STYLE (shared)
+   ============================================================ */
+
+.section-title-block {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.section-title-block h1 {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    color: var(--accent-gold);
+    text-shadow: 0 0 15px var(--accent-gold-glow);
+    margin-bottom: 0;
+}
+
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.section-divider::before,
+.section-divider::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-gold));
+}
+
+.section-divider::after {
+    background: linear-gradient(to left, transparent, var(--accent-gold));
+}
+
+.section-divider span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-gold);
+    display: inline-block;
+}
+
+
+/* ============================================================
+   ABOUT US SECTION
+   ============================================================ */
+
+/* Premium Image Wrap - AOS trigger */
+.premium-img-wrap {
+    position: relative;
+    display: block;
+    border-radius: 24px;
+    overflow: hidden;
+    /* Box shadow goes on wrapper if overflow is hidden, wait, no, if wrapper has shadow and no bg it works fine */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Base state matching the 100% keyframe so hover transforms work after animation ends */
+.premium-img-inner {
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+}
+
+/* Inner image animation when wrapper is revealed */
+.premium-img-wrap.aos-animate .premium-img-inner {
+    animation: premiumImageWipeScale 1.8s cubic-bezier(0.16, 1, 0.3, 1) ease-out;
+}
+
+@keyframes premiumImageWipeScale {
+    0% {
+        transform: scale(1.15);
+        filter: brightness(0.8) saturate(1.1);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1) saturate(1);
+    }
+}
+
+/* Cinematic Blur Reveal for Text */
+[data-aos="blur-reveal"] {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(15px);
+    transition-property: transform, opacity, filter !important;
+}
+
+[data-aos="blur-reveal"].aos-animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+.abtimg {
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+.abtimg:hover {
+    transform: scale(1.025) translateY(-6px);
+    border-color: rgba(255,111,0,0.4);
+    box-shadow:
+        0 30px 60px rgba(255, 111, 0, 0.15),
+        inset 0 2px 2px rgba(255, 255, 255, 0.12);
+}
+
+#abt {
+    padding-left: 36px;
+}
+
+#abt h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--accent-gold);
+    text-shadow: 0 0 20px var(--accent-gold-glow);
+}
+
+#abt p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    text-align: justify;
+    margin-bottom: 28px;
+}
+
+#abt a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.4s ease;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+}
+
+#abt a:hover {
+    color: var(--accent-gold-hover);
+    gap: 14px;
+    border-bottom-color: var(--accent-gold-hover);
+}
+
+
+/* ============================================================
+   SERVICE TIMINGS SECTION
+   ============================================================ */
+
+#serv-time {
+    padding: 5rem 20px 6rem;
+    position: relative;
+}
+
+#serv-time h1 {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    margin-bottom: 0;
+}
+
+#serv-time hr {
+    display: none; /* replaced by .section-divider */
+}
+
+/* Grid layout */
+#serv-time .row {
+    justify-content: center;
+}
+
+.serv-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 36px 24px !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.07),
+        0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Subtle inner top shine edge */
+.serv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.serv-card:hover::before {
+    opacity: 1;
+}
+
+.serv-card:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(255,111,0,0.4);
+    transform: translateY(-8px);
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.1),
+        0 20px 40px rgba(255, 111, 0, 0.15);
+}
+
+.serv-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 111, 0, 0.1);
+    color: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 111, 0, 0.2);
+    box-shadow: 0 0 20px rgba(255, 111, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.serv-card:hover .serv-icon {
+    background: var(--accent-gold);
+    color: #ffffff;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 30px rgba(255, 111, 0, 0.4);
+}
+
+.serv-time-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+    transition: all 0.4s ease;
+}
+
+body.light-theme .serv-time-badge {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.serv-card:hover .serv-time-badge {
+    border-color: rgba(255, 111, 0, 0.3);
+    color: var(--accent-gold);
+    background: rgba(255, 111, 0, 0.05);
+}
+
+.serv-note {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    font-style: italic;
+    opacity: 0.9;
+}
+
+#serv-time h2 {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.serv-card:hover h2 {
+    color: var(--accent-gold);
+}
+
+#serv-time p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 0;
+}
+
+
+
+/* ============================================================
+   EVENTS SLIDER SECTION
+   ============================================================ */
+
+.texent {
+    padding: 5rem 0 6rem;
+}
+
+.texent h1 {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+}
+
+.texent hr {
+    display: none; /* replaced by .section-divider */
+}
+
+.slider {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/* Allow overflow so scaled center card doesn't get clipped */
+.slider .owl-stage-outer {
+    overflow: visible !important;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    margin-top: -30px;
+    margin-bottom: -40px;
+}
+
+/* Base card state: dimmed and shrunk */
+.slider-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.45;
+    transform: scale(0.86);
+    position: relative;
+}
+
+/* Light mode slider cards */
+body.light-theme .slider-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.slider-card img {
+    border-radius: 16px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Made perfectly square */
+    object-fit: cover; /* Cover ensures it completely fills the square */
+    background: transparent;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
+}
+
+/* Active center card — full scale, glowing border */
+.slider .owl-item.active.center .slider-card {
+    opacity: 1;
+    transform: scale(1.06);
+    border-color: var(--accent-gold);
+    box-shadow:
+        0 0 0 1px var(--accent-gold),
+        0 20px 50px rgba(255,111,0,0.3),
+        0 0 60px rgba(255,111,0,0.08);
+}
+
+/* Hover on any card — brighten and lift */
+.slider-card:hover {
+    opacity: 0.95;
+    border-color: rgba(255,111,0,0.6);
+    box-shadow:
+        0 20px 40px rgba(255,111,0,0.2),
+        0 0 30px rgba(255,111,0,0.08);
+    transform: scale(0.9);
+}
+
+.slider .owl-item.active.center .slider-card:hover {
+    transform: scale(1.07);
+}
+
+/* Owl carousel nav arrows — premium pill style */
+.owl-nav button {
+    background: rgba(14,17,26,0.8) !important;
+    border: 1px solid rgba(255,111,0,0.3) !important;
+    color: var(--accent-gold) !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: blur(10px);
+    font-size: 1.1rem !important;
+}
+
+/* Light mode: arrows need a light background so they're visible */
+body.light-theme .owl-nav button {
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-color: rgba(230, 74, 25, 0.35) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
+    color: var(--accent-gold) !important;
+}
+
+.owl-nav button:hover {
+    background: var(--accent-gold) !important;
+    color: #fff !important;
+    border-color: var(--accent-gold) !important;
+    box-shadow:
+        0 0 0 4px rgba(255,111,0,0.15),
+        0 8px 20px rgba(255,111,0,0.35) !important;
+    transform: scale(1.08);
+}
+
+body.light-theme .owl-nav button:hover {
+    color: #fff !important;
+}
+
+.owl-nav .owl-prev { margin-right: 8px; }
+.owl-nav .owl-next { margin-left: 8px; }
+
+
+/* Carousel dots */
+.owl-dots {
+    margin-top: 20px !important;
+}
+
+.owl-dots .owl-dot span {
+    height: 6px !important;
+    width: 6px !important;
+    background: var(--glass-border) !important;
+    margin: 0 4px !important;
+    border-radius: 3px !important;
+    transition: all 0.4s cubic-bezier(0.16,1,0.3,1) !important;
+    display: block;
+}
+
+.owl-dots .owl-dot.active span {
+    background: var(--accent-gold) !important;
+    width: 22px !important;
+    border-radius: 3px !important;
+    box-shadow: 0 0 8px var(--accent-gold-glow) !important;
+}
+
+
+/* ============================================================
+   AOS ENHANCEMENTS
+   ============================================================ */
+
+[data-aos="fade-up"] {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 991px) {
+    .over-text h1 { font-size: 5.5rem; }
+
+    .serv-card {
+        flex: 0 0 calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 767px) {
+    .over-text h1 { font-size: 4rem; }
+
+    #abt {
+        padding-left: 0;
+        margin-top: 30px;
+    }
+
+    .serv-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .versetxt h1 { font-size: 1.65rem; }
+
+    .section-title-block h1 { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .over-text h1 { font-size: 3.2rem; }
+}
