@@ -4,6 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        const showLoader = !sessionStorage.getItem("acc-page-seen") || (nav && nav.type === "reload");
+        sessionStorage.setItem("acc-page-seen", "1");
+        if (!showLoader) document.documentElement.classList.add("skip-page-loader");
+      } catch (_) {}
+    })();
+  </script>
 
   <!-- Site Metas -->
   <meta name="keywords"
@@ -83,8 +93,8 @@
     <!-- Hero Banner -->
     <section>
       <div class="inner-container d-flex align-items-center">
-        <video webkit-playsinline playsinline autoplay muted loop class="vdo-bnr">
-          <source src="Video/church_-_42472 (Original).mp4" type="video/mp4" />
+        <video webkit-playsinline playsinline muted loop preload="none" class="vdo-bnr" aria-hidden="true">
+          <source data-src="Video/church_-_42472 (Original).mp4" type="video/mp4" />
         </video>
         <div class="row over-text text-center mx-auto">
           <div class="col-12">
@@ -371,6 +381,7 @@
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/home-video.js"></script>
   <script src="js/javaindex.js"></script>
   <script src="js/preloader.js"></script>
   <!--JavaScript Ends Here-->

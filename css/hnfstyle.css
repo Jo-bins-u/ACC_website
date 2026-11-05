@@ -665,6 +665,18 @@ body.light-theme .mnav-link:hover {
     background: rgba(230, 74, 25, 0.05);
 }
 
+/* Keep the navigation drawer usable on short landscape phone screens. */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 600px) {
+    header { padding: 6px 0; }
+    header .acc-logo { height: 34px !important; }
+    header.nav-scrolled { top: 4px; left: 8px; right: 8px; border-radius: 14px; }
+    .mnav-drawer { height: 100vh; height: 100dvh; }
+    .mnav-header { padding: 10px 20px; }
+    .mnav-body { padding: 4px 0 8px; }
+    .mnav-link { padding: 8px 24px; }
+    .mnav-footer { padding: 10px 24px 14px; }
+}
+
 /* Social icons row at the bottom */
 .mnav-footer {
     padding: 20px 32px 36px;

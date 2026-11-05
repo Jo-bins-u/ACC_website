@@ -245,7 +245,13 @@ function hidePreloader() {
     if (preloaderDismissed) return;
     preloaderDismissed = true;
     const preloader = document.getElementById('preloader');
+    const skipLoader = document.documentElement.classList.contains('skip-page-loader');
     if (preloader) {
+        if (skipLoader) {
+            preloader.remove();
+            startHeroTypewriter();
+            return;
+        }
         preloader.style.transition = 'opacity 0.24s ease';
         preloader.style.opacity = '0';
         setTimeout(function() {
@@ -259,16 +265,20 @@ function hidePreloader() {
 
 // Reveal the page after its DOM is ready; image and gallery downloads continue
 // in the background and no longer hold the whole screen behind the preloader.
-const preloaderFallback = setTimeout(hidePreloader, 2400);
-function dismissPreloaderSoon() {
-    setTimeout(function() {
-        clearTimeout(preloaderFallback);
-        hidePreloader();
-    }, 1150);
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', dismissPreloaderSoon, { once: true });
+if (document.documentElement.classList.contains('skip-page-loader')) {
+    hidePreloader();
 } else {
-    dismissPreloaderSoon();
+    const preloaderFallback = setTimeout(hidePreloader, 2400);
+    function dismissPreloaderSoon() {
+        setTimeout(function() {
+            clearTimeout(preloaderFallback);
+            hidePreloader();
+        }, 1150);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', dismissPreloaderSoon, { once: true });
+    } else {
+        dismissPreloaderSoon();
+    }
 }

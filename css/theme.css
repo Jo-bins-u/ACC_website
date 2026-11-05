@@ -400,6 +400,20 @@ body.light-theme .btn-theme-toggle .fa-sun {
 .hero-line-1, .hero-line-3 { font-family: var(--font-sans); font-weight: 500; font-size: clamp(1.2rem, 2.5vw, 2.2rem); color: #ffffff; text-transform: uppercase; letter-spacing: 2px; }
 .hero-line-2 { font-family: var(--font-curvy); font-size: clamp(4rem, 8vw, 8rem); color: var(--accent-gold); margin: -10px 0; text-shadow: 0 0 30px rgba(255,111,0,0.15); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* A modest zoomed-out feel on phones while preserving readable body text. */
+@media (max-width: 767px) {
+  html { font-size: 93.75%; }
+}
+
+@media (max-width: 420px) {
+  html { font-size: 90%; }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  html { font-size: 87.5%; }
+  img, video, iframe { max-width: 100%; }
+}
 .rotator-word { display: inline-block; transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; filter: blur(0); transform: translateY(0); }
 .rotator-word.exiting { opacity: 0; filter: blur(10px); transform: translateY(-15px); }
 .rotator-word.entering { opacity: 0; filter: blur(10px); transform: translateY(15px); }

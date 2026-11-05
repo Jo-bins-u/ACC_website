@@ -4,6 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        const showLoader = !sessionStorage.getItem("acc-page-seen") || (nav && nav.type === "reload");
+        sessionStorage.setItem("acc-page-seen", "1");
+        if (!showLoader) document.documentElement.classList.add("skip-page-loader");
+      } catch (_) {}
+    })();
+  </script>
 
   <!-- Site Metas -->
   <meta name="description" content="ACC Website standalone Administration Portal." />

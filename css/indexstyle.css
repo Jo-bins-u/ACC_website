@@ -13,10 +13,11 @@ body {
 
 .inner-container {
     height: 100vh;
+    height: 100svh;
     min-height: 560px;
     overflow: hidden;
     position: relative;
-    background: #000;
+    background: radial-gradient(ellipse at 50% 32%, #20202a 0%, #0b0c11 62%, #05060a 100%);
 }
 
 .vdo-bnr {
@@ -29,9 +30,14 @@ body {
     height: auto;
     transform: translate(-50%, -50%);
     object-fit: cover;
-    opacity: var(--video-opacity, 0.45);
+    opacity: 0;
+    background: transparent;
     filter: brightness(0.62) contrast(1.05) saturate(1.1);
-    transition: opacity 1s ease;
+    transition: opacity 0.8s ease;
+}
+
+.vdo-bnr.video-ready {
+    opacity: var(--video-opacity, 0.45);
 }
 
 /* In light mode, video should look brighter (not darkened as much) */
@@ -749,4 +755,28 @@ body.light-theme .owl-nav button:hover {
 
 @media (max-width: 480px) {
     .over-text h1 { font-size: 3.2rem; }
+}
+
+/* Short phone landscape viewports should keep the hero within the screen. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+    .inner-container {
+        height: 100vh;
+        height: 100svh;
+        min-height: 320px;
+    }
+
+    .vdo-bnr { display: none; }
+    .hero-line-1, .hero-line-3 { font-size: clamp(0.85rem, 3.2vw, 1.25rem); }
+    .hero-line-2 { font-size: clamp(2.8rem, 11vh, 4.4rem); margin: -4px 0; }
+    .over-text .btn-gold { padding: 8px 18px; font-size: 0.9rem; }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    .inner-container {
+        height: 100vh;
+        height: 100svh;
+        min-height: 520px;
+    }
+
+    .vdo-bnr { display: none; }
 }
