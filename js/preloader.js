@@ -259,12 +259,12 @@ function hidePreloader() {
 
 // Reveal the page after its DOM is ready; image and gallery downloads continue
 // in the background and no longer hold the whole screen behind the preloader.
-const preloaderFallback = setTimeout(hidePreloader, 2200);
+const preloaderFallback = setTimeout(hidePreloader, 2400);
 function dismissPreloaderSoon() {
     setTimeout(function() {
         clearTimeout(preloaderFallback);
         hidePreloader();
-    }, 350);
+    }, 1150);
 }
 
 if (document.readyState === 'loading') {

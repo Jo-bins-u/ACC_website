@@ -1,4 +1,4 @@
-/* Fast, lightweight branded loading screen. */
+/* Branded loading screen with a left-to-right logo reveal and light sweep. */
 #preloader {
     position: fixed;
     inset: 0;
@@ -14,65 +14,94 @@
 #preloader::before {
     content: "";
     position: absolute;
-    width: 270px;
-    height: 270px;
+    width: 340px;
+    height: 340px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.13), transparent 70%);
-    filter: blur(18px);
-    animation: loaderGlow 1.8s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.13), transparent 68%);
+    filter: blur(22px);
+    animation: auraBloom 1.4s ease-out both;
 }
 
 .loader {
     position: relative;
     display: grid;
-    width: 270px;
-    height: 270px;
+    width: min(330px, 82vw);
+    aspect-ratio: 1;
     place-items: center;
 }
 
-.loader::before {
-    content: "";
+.loader-mark {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.loader-aura {
     position: absolute;
-    inset: 16px;
-    border: 2px solid rgba(212, 175, 55, 0.15);
-    border-top-color: var(--accent-gold, #d4af37);
-    border-right-color: rgba(212, 175, 55, 0.6);
+    inset: 12%;
     border-radius: 50%;
-    animation: loaderOrbit 1.6s linear infinite;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.15), transparent 70%);
+    opacity: 0;
+    animation: auraBloom 1.2s 0.08s ease-out forwards;
 }
 
 .loader-logo {
     position: relative;
     z-index: 1;
     display: block;
-    width: min(230px, 68vw);
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     filter: brightness(0) invert(1);
-    animation: logoBreathe 1.8s ease-in-out infinite;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    animation: logoReveal 0.82s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
 }
 
 .light-theme #preloader .loader-logo {
     filter: none;
 }
 
-@keyframes loaderOrbit {
-    to { transform: rotate(360deg); }
+.loader-shimmer {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(108deg, transparent 35%, rgba(255, 255, 255, 0.05) 43%, rgba(255, 224, 142, 0.95) 50%, rgba(255, 255, 255, 0.12) 56%, transparent 64%);
+    -webkit-mask: url("../assets/acc-loader-logo.png") center / contain no-repeat;
+    mask: url("../assets/acc-loader-logo.png") center / contain no-repeat;
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: logoShimmer 0.82s 0.74s ease-in-out 1;
 }
 
-@keyframes loaderGlow {
-    0%, 100% { opacity: 0.55; transform: scale(0.92); }
-    50% { opacity: 1; transform: scale(1.08); }
+@keyframes logoReveal {
+    0% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-12px) scale(0.97); }
+    100% { opacity: 1; clip-path: inset(0); transform: translateX(0) scale(1); }
 }
 
-@keyframes logoBreathe {
-    0%, 100% { opacity: 0.84; transform: scale(0.97); }
-    50% { opacity: 1; transform: scale(1.02); }
+@keyframes logoShimmer {
+    0% { opacity: 0; transform: translateX(-100%); }
+    20% { opacity: 0.95; }
+    85% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateX(100%); }
+}
+
+@keyframes auraBloom {
+    0% { opacity: 0; transform: scale(0.72); }
+    65% { opacity: 0.9; }
+    100% { opacity: 0.35; transform: scale(1.08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #preloader::before,
-    .loader::before,
     .loader-logo {
-        animation-duration: 4s;
+        opacity: 1;
+        clip-path: none;
+        animation: none;
+    }
+    .loader-shimmer,
+    .loader-aura,
+    #preloader::before {
+        animation: none;
     }
 }
