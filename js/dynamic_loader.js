@@ -73,46 +73,52 @@
 
   // 2. Global cache Database layer
   window.ACC_DB_CACHE = null;
+  let refreshStarted = false;
+
+  function readLocalJson(key, fallback) {
+    try {
+      const value = localStorage.getItem(key);
+      return value ? JSON.parse(value) : fallback;
+    } catch (_) {
+      return fallback;
+    }
+  }
 
   async function ensureCacheLoaded() {
     if (window.ACC_DB_CACHE) return;
-    
-    let remoteDb = null;
-    const dbApiUrl = localStorage.getItem('acc_db_api_url') || "https://script.google.com/macros/s/AKfycbwh0oKgp7KbjyKzsSlzv_KvgUJPBlh6_7C8uJMcLiOgl8cD-FjF59BWbHKpJiSLCL_ytA/exec";
 
-    // 1. Try fetching from Google Drive DB
-    if (dbApiUrl) {
-      try {
-        const response = await fetch(dbApiUrl);
-        if (response.ok) {
-          remoteDb = await response.json();
-          console.log("Successfully loaded data from Google Drive Database.");
-        }
-      } catch (err) {
-        console.error("Failed to fetch from Database API, falling back to local:", err);
-      }
-    }
-
-    // 2. Fallbacks
-    let localEvents = (remoteDb && remoteDb.events) ? remoteDb.events : JSON.parse(localStorage.getItem('acc_calendar_events_v2'));
-    if (!localEvents) localEvents = defaultEvents;
-    
-    let localTeam = (remoteDb && remoteDb.team && remoteDb.team.length > 0) ? remoteDb.team : JSON.parse(localStorage.getItem('acc_db_team_v3'));
-    if (!localTeam || localTeam.length === 0) localTeam = defaultTeam;
-    
-    let localGallery = (remoteDb && remoteDb.gallery) ? remoteDb.gallery : JSON.parse(localStorage.getItem('acc_db_gallery_v3'));
-    if (!localGallery) localGallery = defaultGalleries;
-    
+    const currentTeam = localStorage.getItem("acc_db_team_version") === "4"
+      ? readLocalJson("acc_db_team_v4", null)
+      : null;
     window.ACC_DB_CACHE = {
-      events: localEvents,
-      team: localTeam,
-      gallery: localGallery
+      events: readLocalJson("acc_calendar_events_v2", defaultEvents),
+      team: currentTeam && currentTeam.length ? currentTeam : defaultTeam,
+      gallery: readLocalJson("acc_db_gallery_v3", defaultGalleries)
     };
 
-    // Keep localStorage synced for faster initial loads
-    localStorage.setItem('acc_calendar_events_v2', JSON.stringify(localEvents));
-    localStorage.setItem('acc_db_team_v3', JSON.stringify(localTeam));
-    localStorage.setItem('acc_db_gallery_v3', JSON.stringify(localGallery));
+    // Render from local data immediately; refresh the cache in the background.
+    if (refreshStarted) return;
+    refreshStarted = true;
+    const dbApiUrl = localStorage.getItem('acc_db_api_url') || "https://script.google.com/macros/s/AKfycbwh0oKgp7KbjyKzsSlzv_KvgUJPBlh6_7C8uJMcLiOgl8cD-FjF59BWbHKpJiSLCL_ytA/exec";
+    if (dbApiUrl) {
+      fetch(dbApiUrl, { signal: AbortSignal.timeout(7000) })
+        .then(response => response.ok ? response.json() : null)
+        .then(remoteDb => {
+          if (!remoteDb || !window.ACC_DB_CACHE || window.ACC_DB_DIRTY) return;
+          const previousTeam = JSON.stringify(window.ACC_DB_CACHE.team);
+          if (Array.isArray(remoteDb.events)) window.ACC_DB_CACHE.events = remoteDb.events;
+          if (Array.isArray(remoteDb.team) && remoteDb.team.length) window.ACC_DB_CACHE.team = remoteDb.team;
+          if (remoteDb.gallery && typeof remoteDb.gallery === "object") window.ACC_DB_CACHE.gallery = remoteDb.gallery;
+          localStorage.setItem("acc_calendar_events_v2", JSON.stringify(window.ACC_DB_CACHE.events));
+          localStorage.setItem("acc_db_team_v4", JSON.stringify(window.ACC_DB_CACHE.team));
+          localStorage.setItem("acc_db_team_version", "4");
+          localStorage.setItem("acc_db_gallery_v3", JSON.stringify(window.ACC_DB_CACHE.gallery));
+          if (previousTeam !== JSON.stringify(window.ACC_DB_CACHE.team)) {
+            window.dispatchEvent(new Event("acc:team-updated"));
+          }
+        })
+        .catch(err => console.warn("Using cached ACC content; database refresh failed:", err));
+    }
   }
 
   // Master Sync Function
@@ -162,7 +168,9 @@
 
   window.saveTeamDB = async function(data) {
     if (window.ACC_DB_CACHE) window.ACC_DB_CACHE.team = data;
-    localStorage.setItem('acc_db_team_v3', JSON.stringify(data));
+    window.ACC_DB_DIRTY = true;
+    localStorage.setItem('acc_db_team_v4', JSON.stringify(data));
+    localStorage.setItem('acc_db_team_version', '4');
     await syncDatabaseToCloud();
   };
 
@@ -194,7 +202,7 @@
         const card = $("<div class=\"col-lg-3 col-md-4 col-6 mb-4 profile\" data-aos=\"blur-reveal\"></div>");
         const profile = $("<div class=\"profile-card\"></div>");
         const imageBox = $("<div class=\"img-box\"></div>");
-        const image = $("<img loading=\"lazy\">").attr("src", window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(member))).attr("alt", member.name);
+        const image = $("<img loading=\"lazy\" decoding=\"async\" width=\"320\" height=\"320\">").attr("src", window.ACC_ASSET_URL(window.ACC_TEAM_IMAGE(member))).attr("alt", member.name);
         image.on("error", function(){ this.onerror=null; this.src=teamPhotoPlaceholder; });
         imageBox.append(image); profile.append(imageBox);
         profile.append($("<h3></h3>").text(member.name), $("<h4></h4>").text(member.role));
@@ -333,7 +341,8 @@
   // 5. Auto Render Trigger on Document Ready
   $(document).ready(function() {
     // Determine which page we are on by looking at unique elements in the DOM
-    if ($('#coordinators-container').length > 0) {
+    if ($('#team-groups-container').length > 0) {
+      window.addEventListener("acc:team-updated", window.renderAboutTeam);
       window.renderAboutTeam();
     } 
     
